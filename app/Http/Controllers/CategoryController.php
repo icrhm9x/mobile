@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryRequest;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::all();
+        return view('admin.categories.index', compact("category"));
     }
 
     /**
@@ -25,6 +28,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.categories.create');
     }
 
     /**
@@ -33,9 +37,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create([
+            'name' => $request->name,
+            'slug' => utf8tourl($request->name),
+            'status' => $request->status
+        ]);
+        return redirect()->route('category.index');
     }
 
     /**
@@ -52,34 +61,57 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return response()->json($category, 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|min:2|max:255',
+            ],
+            [
+                'required' => ':attribute không được để trống',
+                'min' => ':attribute phải từ 2 - 255 ký tự',
+                'max' => ':attribute phải từ 2 - 255 ký tự',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json(['error' => 'true', 'message' => $validator->errors()], 200);
+        }
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+            'slug' => utf8tourl($request->name),
+            'status' => $request->status
+        ]);
+        return response()->json(['success' => 'Sửa thành công']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        return response()->json(['success' => 'Xóa thành công']);
     }
 }

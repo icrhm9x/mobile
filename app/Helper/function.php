@@ -32,4 +32,14 @@
         $text = str_replace("--","-",$text);
 		return $text;
 	}
+	if (!function_exists('notifyError')) {
+		function notifyError($errors, $name)
+		{
+			if ($errors->has($name)) {
+				echo '<p class="text-danger font-italic">';
+				echo $errors->first($name);
+				echo '</p>';
+			}
+		}
+	}
 ?>

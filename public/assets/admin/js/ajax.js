@@ -4,70 +4,121 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function() {
+    // function reload when modal hidden
+    function reloadModal(nameModal) {
+        nameModal.on("hidden.bs.modal", function() {
+            setTimeout(function() {
+                window.location.reload(1);
+            }, 500);
+        });
+    }
+
+    // add category
+    $(".addCatJS").click(function() {
+        var addCatModal = $("#addCatModal");
+        reloadModal(addCatModal);
+
+        $(".errorAddCatJS").hide();
+        $(".btn-saveAddCatJS").click(function() {
+            $.ajax({
+                url: "/admin/category",
+                data: {
+                    name: $(".nameAddCatJS").val(),
+                    status: $(".statusAddCatJS").val()
+                },
+                type: "POST",
+                dataType: "json",
+                success: function($result) {
+                    toastr.success($result.message, "Thông báo", {
+                        timeOut: 1500
+                    });
+                    addCatModal.modal("hide");
+                },
+                error: function(errors) {
+                    var error = errors.responseJSON.errors.name;
+                    $(".errorAddCatJS").show();
+                    $(".errorAddCatJS").text(error);
+                }
+            });
+        });
+    });
+
     // edit category
-    $(".editJS").click(function() {
-        $(".errorJS").hide();
-        let id = $(this).data("id");
+    $(".editCatJS").click(function() {
+        var editCatModal = $("#editCatModal");
+        reloadModal(editCatModal);
+
+        $(".errorEditCatJS").hide();
+        var id = $(this).data("id");
         $.ajax({
-            url: "category/" + id + "/edit",
+            url: "/admin/category/" + id + "/edit",
             dataType: "json",
             type: "get",
             success: function($result) {
-                $(".nameJS").val($result.name);
-                $(".titleJS").text($result.name);
+                $(".titleEditCatJS").text($result.name);
+                $(".nameEditCatJS").val($result.name);
                 if ($result.status == 1) {
-                    $(".activeJS").attr("selected", "selected");
+                    $(".activeEditCatJS").attr("selected", "selected");
                 } else {
-                    $(".hiddenJS").attr("selected", "selected");
+                    $(".hiddenEditCatJS").attr("selected", "selected");
                 }
             }
         });
-        $(".updateJS").click(function() {
-            let name = $(".nameJS").val();
-            let status = $(".statusJS").val();
+
+        $(".btn-saveEditCatJS").click(function() {
             $.ajax({
-                url: "category/" + id,
+                url: "/admin/category/" + id,
                 data: {
-                    name: name,
-                    status: status
+                    name: $(".nameEditCatJS").val(),
+                    status: $(".statusEditCatJS").val(),
+                    id: id // truyền id sang request để check trùng tên
                 },
                 type: "put",
                 dataType: "json",
                 success: function($result) {
-                    if ($result.error == "true") {
-                        $(".errorJS").show();
-                        $(".errorJS").text($result.message.name[0]);
-                    } else {
-                        toastr.success($result.success, "Thông báo", {
-                            timeOut: 1500
-                        });
-                        $("#editModal").modal("hide");
-                        setTimeout(function() {
-                            window.location.reload(1);
-                        }, 1500);
-                    }
+                    toastr.success($result.message, "Thông báo", {
+                        timeOut: 1500
+                    });
+                    editCatModal.modal("hide");
+                },
+                error: function(errors) {
+                    var error = errors.responseJSON.errors.name;
+                    $(".errorEditCatJS").show();
+                    $(".errorEditCatJS").text(error);
+
+                    // console.log(errors);
                 }
             });
         });
     });
     // delete category
-    $(".delJS").click(function() {
+    $(".delCatJS").click(function() {
+        var delCatModal = $("#delCatModal");
+        reloadModal(delCatModal);
+
         let id = $(this).data("id");
-        $(".acceptDelJS").click(function() {
+        $.ajax({
+            url: "/admin/category/" + id,
+            dataType: "json",
+            type: "get",
+            success: function($result) {
+                $(".titleDelCatJS").text($result.name);
+            }
+        });
+        $(".btn-acceptDelCatJS").click(function() {
             $.ajax({
-                url: "category/" + id,
+                url: "/admin/category/" + id,
                 dataType: "json",
                 type: "delete",
                 success: function($result) {
-                    toastr.success($result.success, "Thông báo", {
-                        timeOut: 1500
+                    toastr.success($result.message, "Thông báo", {
+                        timeOut: 500
                     });
-                    $("#delModal").modal("hide");
-                    setTimeout(function() {
-                        window.location.reload(1);
-                    }, 1500);
+                    delCatModal.modal("hide");
                 }
             });
         });
     });
+
+    // edit productType
 });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCategoryRequest;
-use Validator;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -28,7 +28,6 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('admin.categories.create');
     }
 
     /**
@@ -44,7 +43,7 @@ class CategoryController extends Controller
             'slug' => utf8tourl($request->name),
             'status' => $request->status
         ]);
-        return redirect()->route('category.index');
+        return response()->json(['message' => 'Thêm mới thành công']);
     }
 
     /**
@@ -53,9 +52,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return response()->json($category, 200);
     }
 
     /**
@@ -77,29 +77,15 @@ class CategoryController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|min:2|max:255',
-            ],
-            [
-                'required' => ':attribute không được để trống',
-                'min' => ':attribute phải từ 2 - 255 ký tự',
-                'max' => ':attribute phải từ 2 - 255 ký tự',
-            ]
-        );
-        if ($validator->fails()) {
-            return response()->json(['error' => 'true', 'message' => $validator->errors()], 200);
-        }
         $category = Category::find($id);
         $category->update([
             'name' => $request->name,
             'slug' => utf8tourl($request->name),
             'status' => $request->status
         ]);
-        return response()->json(['success' => 'Sửa thành công']);
+        return response()->json(['message' => 'Sửa thành công']);
     }
 
     /**
@@ -112,6 +98,6 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        return response()->json(['success' => 'Xóa thành công']);
+        return response()->json(['message' => 'Xóa thành công']);
     }
 }

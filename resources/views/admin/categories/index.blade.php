@@ -2,10 +2,13 @@
 @section('content')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
     <li class="breadcrumb-item active" aria-current="page">Danh mục</li>
   </ol>
 </nav>
+<button type="button" data-toggle="modal" data-target="#addCatModal" class="btn btn-primary mb-3 addCatJS">
+  <i class="fas fa-plus"></i> Thêm mới
+</button>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -33,10 +36,10 @@
                 <span class="badge badge-{{ $value->status == 1 ? 'success' : 'secondary' }}">{{ $value->status == 1 ? 'Hiển thị' : 'Không hiển thị' }}</span>
               </td>
               <td>
-                <button type="button" title="{{ "Sửa" }}" data-toggle="modal" data-target="#editModal" class="btn btn-sm btn-outline-primary editJS" data-id="{{ $value->id }}">
+                <button type="button" title="{{ "Sửa" }}" data-toggle="modal" data-target="#editCatModal" class="btn btn-sm btn-outline-primary editCatJS" data-id="{{ $value->id }}">
                   <i class="far fa-edit"></i>
                 </button>
-                <button type="button" title="{{ "Xóa" }}" data-toggle="modal" data-target="#delModal" class="btn btn-sm ml-2 btn-outline-danger delJS" data-id="{{ $value->id }}">
+                <button type="button" title="{{ "Xóa" }}" data-toggle="modal" data-target="#delCatModal" class="btn btn-sm ml-2 btn-outline-danger delCatJS" data-id="{{ $value->id }}">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>
@@ -47,60 +50,13 @@
     </div>
   </div>
 </div>
+<!-- Add Modal-->
+@include('admin.categories.addModal')
 <!-- Edit Modal-->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Sửa danh mục <span class="titleJS"></span></h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <div class="row" style="margin: 5px">
-          <div class="col-lg-12">
-              <form role="form">
-                  <fieldset class="form-group">
-                      <label class="font-weight-bold">Tên danh mục</label>
-                      <input class="form-control nameJS" name="name" placeholder="Nhập tên danh mục">
-                      <span class="errorJS" style="color: red;font-size: 1rem;"></span>
-                  </fieldset>
-                  <div class="form-group">
-                      <label class="font-weight-bold">Status</label>
-                      <select class="form-control statusJS" name="status">
-                          <option value="1" class="activeJS">Hiển Thị</option>
-                          <option value="0" class="hiddenJS">Không Hiển Thị</option>
-                      </select>
-                  </div>
-              </form>
-          </div>
-      </div>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-success updateJS">Save</button>
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          </div>
-      </div>
-  </div>
-</div>
+@include('admin.categories.editModal')
 <!-- delete Modal-->
-<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Bạn có muốn xóa ?</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-              </button>
-          </div>
-          <div class="modal-body" style="margin-left: 183px;">
-              <button type="button" class="btn btn-success acceptDelJS">Có</button>
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
-          <div>
-      </div>
-  </div>
-</div>
+@include('admin.categories.delModal')
+
 @endsection
 @push('adminJS')
   <!-- ajax modal -->

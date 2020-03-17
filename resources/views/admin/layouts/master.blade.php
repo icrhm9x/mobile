@@ -59,7 +59,13 @@
     <script src="/assets/admin/js/sb-admin-2.min.js"></script>
 
     <script src="/assets/admin/js/toastr.min.js"></script>
-    
-    @stack('adminJS')
+    <!-- ajax modal -->
+    <script src="/assets/admin/js/ajax.js"></script>
+
+    @if (session('thongbao'))
+      <script type="text/javascript">
+        toastr.success('{{ session('thongbao') }}', "Thông báo", {timeOut: 1500});
+      </script>        
+    @endif
   </body>
 </html>

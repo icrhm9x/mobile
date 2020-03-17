@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class StoreProductTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,24 +24,24 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:255|unique:categories,name'
+            'name' => 'required|min:2|max:255|unique:product_types,name'
         ];
     }
 
     public function messages()
     {
         return [
-            'required' => ':attribute không được để trống',
+            'required' => ':attribute không được bỏ trống',
             'min' => ':attribute phải từ 2 - 255 ký tự',
             'max' => ':attribute phải từ 2 - 255 ký tự',
-            'unique' => ':attribute đã được sử dụng'
+            'unique' => ':attribute đã tồn tại'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Tên danh mục',
+            'name' => 'Tên loại sản phẩm',
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ProductType;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Requests\StoreProductTypeRequest;
 
 class ProductTypeController extends Controller
 {
@@ -14,7 +16,8 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        //
+        $productType = ProductType::orderBy('id', 'desc')->paginate(10);
+        return view('admin.productType.index', compact('productType'));
     }
 
     /**
@@ -24,7 +27,8 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::where('status',1)->get();
+        return view('admin.productType.create', compact('category'));
     }
 
     /**
@@ -33,9 +37,15 @@ class ProductTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductTypeRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = utf8tourl($request->name);
+        if(ProductType::create($data)){
+            return redirect()->route('productType.index')->with('thongbao','Thêm mới thành công');
+        }else{
+            return back()->with('thongbao','Có lỗi xảy ra, vui lòng kiểm tra lại');
+        }
     }
 
     /**
@@ -52,34 +62,62 @@ class ProductTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProductType  $productType
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductType $productType)
+    public function edit($id)
     {
-        //
+        $productType = ProductType::find($id);
+        $category = Category::where('status',1)->get();
+        return response()->json(['category' => $category, 'productType' => $productType],200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProductType  $productType
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductType $productType)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required|min:2|max:255|unique:product_types,name'
+            ],
+            [
+                'name.required' => 'Tên loại sản phẩm không được bỏ trống',
+                'name.min' => 'Tên loại sản phẩm phải từ 2 - 255 ký tự',
+                'name.max' => 'Tên loại sản phẩm phải từ 2 - 255 ký tự',
+                'name.unique' => 'Tên loại sản phẩm đã tồn tại'
+            ]
+        );
+        if($validator->fails()){
+            return response()->json(['error' => 'true', 'message' => $validator->errors()],200);
+        }
+        $productType = ProductType::find($id);
+        $data = $request->all();
+        $data['slug'] = utf8tourl($request->name);
+        if($productType->update($data)){
+            return response()->json(['message' => 'Sửa thành công'],200);
+        }else{
+            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProductType  $productType
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductType $productType)
+    public function destroy($id)
     {
-        //
+        $productType = ProductType::find($id);
+        if($productType->delete()){
+            return response()->json(['message' => 'Xóa thành công'],200);
+        }else{
+            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
+        }
     }
 }

@@ -18,15 +18,20 @@
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/category" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <a class="nav-link" href="{{ route('category.index') }}">
       <i class="fas fa-fw fa-folder"></i>
-      <span>Danh mục</span>
+      <span>Danh mục</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/admin/productType" data-toggle="collapse" data-target="#productType" aria-expanded="true" aria-controls="productType">
+      <i class="far fa-folder-open"></i>
+      <span>Loại sản phẩm</span>
       </a>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div id="productType" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Danh mục sản phẩm:</h6>
-          <a class="collapse-item" href="{{ route('category.index') }}">Danh sách</a>
-          <a class="collapse-item" href="{{ route('category.create') }}">Thêm mới</a>
+          <h6 class="collapse-header">Danh mục loại sản phẩm:</h6>
+          <a class="collapse-item" href="{{ route('productType.index') }}">Danh sách</a>
+          <a class="collapse-item" href="{{ route('productType.create') }}">Thêm mới</a>
         </div>
       </div>
     </li>

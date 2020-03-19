@@ -23,17 +23,9 @@
       <span>Danh mục</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/admin/productType" data-toggle="collapse" data-target="#productType" aria-expanded="true" aria-controls="productType">
+      <a class="nav-link" href="{{ route('productType.index') }}">
       <i class="far fa-folder-open"></i>
-      <span>Loại sản phẩm</span>
-      </a>
-      <div id="productType" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Danh mục loại sản phẩm:</h6>
-          <a class="collapse-item" href="{{ route('productType.index') }}">Danh sách</a>
-          <a class="collapse-item" href="{{ route('productType.create') }}">Thêm mới</a>
-        </div>
-      </div>
+      <span>Loại sản phẩm</span></a>
     </li>
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">

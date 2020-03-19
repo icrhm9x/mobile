@@ -96,7 +96,7 @@ $(document).ready(function() {
         var delCatModal = $("#delCatModal");
         reloadModal(delCatModal);
 
-        let id = $(this).data("id");
+        var id = $(this).data("id");
         $.ajax({
             url: "/admin/category/" + id,
             dataType: "json",
@@ -119,6 +119,4 @@ $(document).ready(function() {
             });
         });
     });
-
-    // edit productType
 });

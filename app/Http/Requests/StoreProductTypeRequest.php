@@ -24,7 +24,7 @@ class StoreProductTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:255|unique:product_types,name'
+            'name' => 'required|min:2|max:255|unique:product_types,name,' . ($this->id ?? ''),
         ];
     }
 

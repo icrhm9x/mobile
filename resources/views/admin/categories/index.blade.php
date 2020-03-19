@@ -58,7 +58,7 @@
 @include('admin.categories.delModal')
 
 @endsection
-@push('adminJS')
+@push('adminAjax')
   <!-- ajax modal -->
-  <script src="/assets/admin/js/ajax.js"></script>
+  <script src="/assets/admin/js/category-ajax.js"></script>
 @endpush

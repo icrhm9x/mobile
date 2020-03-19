@@ -60,7 +60,7 @@
 
     <script src="/assets/admin/js/toastr.min.js"></script>
     <!-- ajax modal -->
-    <script src="/assets/admin/js/ajax.js"></script>
+    @stack('adminAjax')
 
     @if (session('thongbao'))
       <script type="text/javascript">

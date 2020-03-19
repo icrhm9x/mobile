@@ -16,7 +16,7 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productType = ProductType::orderBy('id', 'desc')->paginate(10);
+        $productType = ProductType::orderBy('id', 'desc')->paginate(6);
         return view('admin.productType.index', compact('productType'));
     }
 
@@ -28,7 +28,7 @@ class ProductTypeController extends Controller
     public function create()
     {
         $category = Category::where('status',1)->get();
-        return view('admin.productType.create', compact('category'));
+        return response()->json(['category' => $category],200);
     }
 
     /**
@@ -42,9 +42,9 @@ class ProductTypeController extends Controller
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);
         if(ProductType::create($data)){
-            return redirect()->route('productType.index')->with('thongbao','Thêm mới thành công');
+            return response()->json(['message' => 'Thêm mới thành công'],200);
         }else{
-            return back()->with('thongbao','Có lỗi xảy ra, vui lòng kiểm tra lại');
+            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
         }
     }
 
@@ -54,9 +54,11 @@ class ProductTypeController extends Controller
      * @param  \App\ProductType  $productType
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductType $productType)
+    public function show($id)
     {
         //
+        $productType = ProductType::find($id);
+        return response()->json($productType,200);
     }
 
     /**
@@ -79,22 +81,9 @@ class ProductTypeController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductTypeRequest $request, $id)
     {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|min:2|max:255|unique:product_types,name'
-            ],
-            [
-                'name.required' => 'Tên loại sản phẩm không được bỏ trống',
-                'name.min' => 'Tên loại sản phẩm phải từ 2 - 255 ký tự',
-                'name.max' => 'Tên loại sản phẩm phải từ 2 - 255 ký tự',
-                'name.unique' => 'Tên loại sản phẩm đã tồn tại'
-            ]
-        );
-        if($validator->fails()){
-            return response()->json(['error' => 'true', 'message' => $validator->errors()],200);
-        }
+        
         $productType = ProductType::find($id);
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);

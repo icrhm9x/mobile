@@ -11,7 +11,7 @@
                     <fieldset class="form-group">
                         <label class="font-weight-bold">Tên danh mục</label>
                         <input class="form-control nameEditCatJS" name="name" placeholder="Nhập tên danh mục">
-                        <span class="errorEditCatJS" style="color: red;font-size: 1rem;"></span>
+                        <span class="errorEditCatJS" style="color: red"></span>
                     </fieldset>
                     <div class="form-group">
                         <label class="font-weight-bold">Status</label>

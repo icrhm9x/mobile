@@ -1,4 +1,4 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
       <div class="sidebar-brand-icon rotate-n-15">
@@ -9,39 +9,26 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
+    <li class="nav-item {{ (Request::is('admin') ? 'active' : '') }}">
       <a class="nav-link" href="/admin">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Trang chủ</span></a>
     </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {{ (Request::is('admin/category') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('category.index') }}">
       <i class="fas fa-fw fa-folder"></i>
       <span>Danh mục</span></a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item {{ (Request::is('admin/productType') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('productType.index') }}">
       <i class="far fa-folder-open"></i>
       <span>Loại sản phẩm</span></a>
     </li>
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-      <i class="fas fa-fw fa-wrench"></i>
-      <span>Utilities</span>
-      </a>
-      <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Custom Utilities:</h6>
-          <a class="collapse-item" href="utilities-color.html">Colors</a>
-          <a class="collapse-item" href="utilities-border.html">Borders</a>
-          <a class="collapse-item" href="utilities-animation.html">Animations</a>
-          <a class="collapse-item" href="utilities-other.html">Other</a>
-        </div>
-      </div>
+    <li class="nav-item {{ (Request::is('admin/product') ? 'active' : '') }}">
+      <a class="nav-link" href="{{ route('product.index') }}">
+      <i class="far fa-folder-open"></i>
+      <span>Sản phẩm</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">

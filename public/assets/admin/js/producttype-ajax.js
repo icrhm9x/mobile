@@ -4,28 +4,16 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function() {
-    // function reload when modal hidden
-    function reloadModal(nameModal) {
-        nameModal.on("hidden.bs.modal", function() {
-            setTimeout(function() {
-                window.location.reload(1);
-            }, 500);
-        });
-    }
-
     // add category
     $(".addPrTypeJS").click(function() {
-        var addPrTypeModal = $("#addPrTypeModal");
-        reloadModal(addPrTypeModal);
-
-        var errorAddPrType = $(".errorAddPrTypeJS");
+        let errorAddPrType = $(".errorAddPrTypeJS");
         errorAddPrType.hide();
         $.ajax({
             url: "/admin/productType/create",
             dataType: "json",
             type: "get",
             success: function($result) {
-                var html = "";
+                let html = "";
                 $.each($result.category, function($key, $value) {
                     html += "<option value=" + $value["id"] + ">";
                     html += $value["name"];
@@ -34,24 +22,29 @@ $(document).ready(function() {
                 $(".idCatAddPrTypeJS").html(html);
             }
         });
-        $(".btn-saveAddPrTypeJS").click(function() {
+        let btnSaveAddPrTypeJS = $(".btn-saveAddPrTypeJS");
+        btnSaveAddPrTypeJS.off("click");
+        btnSaveAddPrTypeJS.on("click", function() {
             $.ajax({
                 url: "/admin/productType",
                 data: {
                     idCategory: $(".idCatAddPrTypeJS").val(),
                     name: $(".nameAddPrTypeJS").val(),
-                    status: $(".statusAddCatJS").val()
+                    status: $(".statusAddPrTypeJS").val()
                 },
                 type: "POST",
                 dataType: "json",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 1500
+                        timeOut: 1000
                     });
-                    addPrTypeModal.modal("hide");
+                    $("#addPrTypeModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 },
                 error: function(errors) {
-                    var error = errors.responseJSON.errors.name;
+                    let error = errors.responseJSON.errors.name;
                     errorAddPrType.show();
                     errorAddPrType.text(error);
                 }
@@ -61,13 +54,12 @@ $(document).ready(function() {
 
     // edit category
     $(".editPrTypeJS").click(function() {
-        var editPrTypeModal = $("#editPrTypeModal");
-        reloadModal(editPrTypeModal);
-
-        var id = $(this).data("id");
-        var name = $(".nameEditPrTypeJS");
-        var idCat = $(".idCatEditPrTypeJS");
-        var errorEditPrType = $(".errorEditPrTypeJS");
+        let id = $(this).data("id");
+        let name = $(".nameEditPrTypeJS");
+        let idCat = $(".idCatEditPrTypeJS");
+        let errorEditPrType = $(".errorEditPrTypeJS");
+        let activeEditPrTypeJS = $(".activeEditPrTypeJS");
+        let hiddenEditPrTypeJS = $(".hiddenEditPrTypeJS");
         errorEditPrType.hide();
         $.ajax({
             url: "/admin/productType/" + id + "/edit",
@@ -76,7 +68,7 @@ $(document).ready(function() {
             success: function($result) {
                 $(".titleEditPrTypeJS").text($result.productType.name);
                 name.val($result.productType.name);
-                var html = "";
+                let html = "";
                 $.each($result.category, function($key, $value) {
                     if ($value["id"] == $result.productType.idCategory) {
                         html +=
@@ -91,14 +83,18 @@ $(document).ready(function() {
                 });
                 idCat.html(html);
                 if ($result.productType.status == 1) {
-                    $(".activeEditPrTypeJS").attr("selected", "selected");
+                    hiddenEditPrTypeJS.removeAttr("selected");
+                    activeEditPrTypeJS.attr("selected", "selected");
                 } else {
-                    $(".hiddenEditPrTypeJS").attr("selected", "selected");
+                    activeEditPrTypeJS.removeAttr("selected");
+                    hiddenEditPrTypeJS.attr("selected", "selected");
                 }
             }
         });
         // update
-        $(".btn-saveEditPrTypeJS").click(function() {
+        let btnSaveEditPrTypeJS = $(".btn-saveEditPrTypeJS");
+        btnSaveEditPrTypeJS.off("click");
+        btnSaveEditPrTypeJS.on("click", function() {
             $.ajax({
                 url: "/admin/productType/" + id,
                 data: {
@@ -111,12 +107,15 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 1500
+                        timeOut: 1000
                     });
-                    editPrTypeModal.modal("hide");
+                    $("#addPrTypeModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 },
                 error: function(errors) {
-                    var error = errors.responseJSON.errors.name;
+                    let error = errors.responseJSON.errors.name;
                     errorEditPrType.show();
                     errorEditPrType.text(error);
                 }
@@ -125,9 +124,6 @@ $(document).ready(function() {
     });
     // delete
     $(".delPrTypeJS").click(function() {
-        var delPrTypeModal = $("#delPrTypeModal");
-        reloadModal(delPrTypeModal);
-
         let id = $(this).data("id");
         $.ajax({
             url: "/admin/productType/" + id,
@@ -137,16 +133,21 @@ $(document).ready(function() {
                 $(".titleDelPrTypeJS").text($result.name);
             }
         });
-        $(".btn-acceptDelPrTypeJS").click(function() {
+        let btnAcceptDelPrTypeJS = $(".btn-acceptDelPrTypeJS");
+        btnAcceptDelPrTypeJS.off("click");
+        btnAcceptDelPrTypeJS.on("click", function() {
             $.ajax({
                 url: "/admin/productType/" + id,
                 dataType: "json",
                 type: "delete",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 500
+                        timeOut: 1000
                     });
-                    delPrTypeModal.modal("hide");
+                    $("#delPrTypeModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 }
             });
         });

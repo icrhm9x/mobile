@@ -16,7 +16,7 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productType = ProductType::orderBy('id', 'desc')->paginate(6);
+        $productType = ProductType::orderBy('id', 'desc')->paginate(10);
         return view('admin.productType.index', compact('productType'));
     }
 
@@ -27,7 +27,7 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        $category = Category::where('status',1)->get();
+        $category = Category::all();
         return response()->json(['category' => $category],200);
     }
 

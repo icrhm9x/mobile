@@ -2,12 +2,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Bạn có muốn xóa loại danh mục <span class="titleDelPrTypeJS"></span> ?</h5>
+                <h5 class="modal-title">Bạn có muốn xóa loại sản phẩm <span class="titleDelPrTypeJS text-danger"></span> ?</h5>
             </div>
-            <div class="modal-body mx-auto">
-                <button type="button" class="btn btn-success btn-acceptDelPrTypeJS">Có</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+            <div class="modal-body">
+                <p class="text-danger font-italic">Lưu ý: Nếu xóa Loại sản phẩm này hệ thống sẽ xóa toàn bộ Sản phẩm thuộc Loại sản phẩm này.</p>
+                <div class="float-right">
+                    <button type="button" class="btn btn-success btn-acceptDelPrTypeJS">Có</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                </div>
             </div>
         </div>
     </div>
-  </div>
+</div>

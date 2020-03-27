@@ -15,8 +15,9 @@ class CreateProductTypesTable extends Migration
     {
         Schema::create('product_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idCategory');
-            $table->string('name');
+            $table->integer('idCategory')->unsigned();        
+            $table->foreign('idCategory')->references('id')->on('categories')->onDelete('cascade');
+            $table->string('name')->unique();
             $table->string('slug');
             $table->integer('status')->default(1);
             $table->timestamps();

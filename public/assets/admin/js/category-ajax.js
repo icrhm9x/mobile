@@ -4,22 +4,13 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function() {
-    // function reload when modal hidden
-    function reloadModal(nameModal) {
-        nameModal.on("hidden.bs.modal", function() {
-            setTimeout(function() {
-                window.location.reload(1);
-            }, 500);
-        });
-    }
-
     // add category
-    $(".addCatJS").click(function() {
-        var addCatModal = $("#addCatModal");
-        reloadModal(addCatModal);
-
+    $(".addCatJS").on("click", function() {
         $(".errorAddCatJS").hide();
-        $(".btn-saveAddCatJS").click(function() {
+
+        let btnSaveAddCatJS = $(".btn-saveAddCatJS");
+        btnSaveAddCatJS.off("click");
+        btnSaveAddCatJS.on("click", function() {
             $.ajax({
                 url: "/admin/category",
                 data: {
@@ -30,12 +21,15 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 1500
+                        timeOut: 1000
                     });
-                    addCatModal.modal("hide");
+                    $("#addCatModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 },
                 error: function(errors) {
-                    var error = errors.responseJSON.errors.name;
+                    let error = errors.responseJSON.errors.name;
                     $(".errorAddCatJS").show();
                     $(".errorAddCatJS").text(error);
                 }
@@ -45,11 +39,10 @@ $(document).ready(function() {
 
     // edit category
     $(".editCatJS").click(function() {
-        var editCatModal = $("#editCatModal");
-        reloadModal(editCatModal);
-
         $(".errorEditCatJS").hide();
-        var id = $(this).data("id");
+        let id = $(this).data("id");
+        let activeEditCatJS = $(".activeEditCatJS");
+        let hiddenEditCatJS = $(".hiddenEditCatJS");
         $.ajax({
             url: "/admin/category/" + id + "/edit",
             dataType: "json",
@@ -58,14 +51,18 @@ $(document).ready(function() {
                 $(".titleEditCatJS").text($result.name);
                 $(".nameEditCatJS").val($result.name);
                 if ($result.status == 1) {
-                    $(".activeEditCatJS").attr("selected", "selected");
+                    hiddenEditCatJS.removeAttr("selected");
+                    activeEditCatJS.attr("selected", "selected");
                 } else {
-                    $(".hiddenEditCatJS").attr("selected", "selected");
+                    activeEditCatJS.removeAttr("selected");
+                    hiddenEditCatJS.attr("selected", "selected");
                 }
             }
         });
 
-        $(".btn-saveEditCatJS").click(function() {
+        let btnSaveEditCatJS = $(".btn-saveEditCatJS");
+        btnSaveEditCatJS.off("click");
+        btnSaveEditCatJS.on("click", function() {
             $.ajax({
                 url: "/admin/category/" + id,
                 data: {
@@ -77,12 +74,15 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 1500
+                        timeOut: 1000
                     });
-                    editCatModal.modal("hide");
+                    $("#editCatModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 },
                 error: function(errors) {
-                    var error = errors.responseJSON.errors.name;
+                    let error = errors.responseJSON.errors.name;
                     $(".errorEditCatJS").show();
                     $(".errorEditCatJS").text(error);
 
@@ -93,10 +93,7 @@ $(document).ready(function() {
     });
     // delete category
     $(".delCatJS").click(function() {
-        var delCatModal = $("#delCatModal");
-        reloadModal(delCatModal);
-
-        var id = $(this).data("id");
+        let id = $(this).data("id");
         $.ajax({
             url: "/admin/category/" + id,
             dataType: "json",
@@ -105,16 +102,21 @@ $(document).ready(function() {
                 $(".titleDelCatJS").text($result.name);
             }
         });
-        $(".btn-acceptDelCatJS").click(function() {
+        let btnAcceptDelCatJS = $(".btn-acceptDelCatJS");
+        btnAcceptDelCatJS.off("click");
+        btnAcceptDelCatJS.on("click", function() {
             $.ajax({
                 url: "/admin/category/" + id,
                 dataType: "json",
                 type: "delete",
                 success: function($result) {
                     toastr.success($result.message, "Thông báo", {
-                        timeOut: 500
+                        timeOut: 1000
                     });
-                    delCatModal.modal("hide");
+                    $("#delCatModal").modal("hide");
+                    setTimeout(function() {
+                        window.location.reload(1);
+                    }, 1000);
                 }
             });
         });

@@ -21,4 +21,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('category', 'CategoryController');
 
     Route::resource('productType', 'ProductTypeController');
+
+    Route::resource('product', 'ProductController');
+    Route::get('getprdtype', 'AjaxProductController@getPrdType');
+
 });

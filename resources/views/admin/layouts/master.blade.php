@@ -11,10 +11,15 @@
     <!-- Custom fonts for this template-->
     <link href="/assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <!-- Custom styles for this template-->
+    
     <link href="/assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="/assets/admin/css/style.css">
+
     <link rel="stylesheet" href="/assets/admin/css/toastr.css">
+
+    <script src="/ckeditor/ckeditor.js"></script>
   </head>
   <body id="page-top">
     <!-- Page Wrapper -->
@@ -59,12 +64,18 @@
     <script src="/assets/admin/js/sb-admin-2.min.js"></script>
 
     <script src="/assets/admin/js/toastr.min.js"></script>
+    
     <!-- ajax modal -->
     @stack('adminAjax')
 
-    @if (session('thongbao'))
+    @if (session('success'))
       <script type="text/javascript">
-        toastr.success('{{ session('thongbao') }}', "Thông báo", {timeOut: 1500});
+        toastr.success('{{ session('success') }}', "Thông báo", {timeOut: 1500});
+      </script>        
+    @endif
+    @if (session('error'))
+      <script type="text/javascript">
+        toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 1500});
       </script>        
     @endif
   </body>

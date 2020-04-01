@@ -24,12 +24,12 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:255|unique:products,name',
+            'name' => 'required|min:2|max:255|unique:products,name,'.($this->product ?? ''),
             'description' => 'required|min:2',
             'article' => 'required|min:2',
             'quantity' => 'required|numeric',
             'price' => 'required|numeric',
-            'img' => 'required|image'
+            'img' => ($this->product ? 'nullable' : 'required').'|image'
         ];
     }
     public function messages()
@@ -38,6 +38,7 @@ class StoreProductRequest extends FormRequest
             'required' => ':attribute không được bỏ trống',
             'min' => ':attribute tối thiểu có 2 ký tự',
             'max' => ':attribute tối đa có 255 ký tự',
+            'unique' => ':attribute đã tồn tại',
             'numeric' => ':attribute phải là một số nguyên',
             'image' => ':attribute phải là hình ảnh'
         ];

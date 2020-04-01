@@ -20,6 +20,14 @@
     <link rel="stylesheet" href="/assets/admin/css/toastr.css">
 
     <script src="/ckeditor/ckeditor.js"></script>
+    <script>
+      var options = {
+      filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+      filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+      filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+      filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+      };
+    </script>
   </head>
   <body id="page-top">
     <!-- Page Wrapper -->

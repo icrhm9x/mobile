@@ -16,22 +16,23 @@
     <div class="pb-3">
         <h1 class="h3">Sửa sản phẩm <span class="text-info">{{ $product->name }}</span></h1>
     </div>
-    <form action="{{ route('product.update') }}" method="PUT" enctype="multipart/form-data">
+    <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="form-row">
             <div class="col-md-8 pr-5">
                 <div class="form-group">
-                    <label>Tên sản phẩm</label>
+                    <label>Tên sản phẩm</label><span class="text-danger"> *</span>
                     <input name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm" value="{{ $product->name }}">
                     {{ notifyError($errors,'name') }}
                 </div>
                 <div class="form-group">
-                    <label>Số lượng</label>
+                    <label>Số lượng</label><span class="text-danger"> *</span>
                     <input name="quantity" type="number" min="1" class="form-control" value="{{ $product->quantity }}">
                     {{ notifyError($errors,'quantity') }}
                 </div>
                 <div class="form-group">
-                    <label>Đơn giá</label>
+                    <label>Đơn giá</label><span class="text-danger"> *</span>
                     <input name="price" type="number" min="0" class="form-control" value="{{ $product->price }}">
                     {{ notifyError($errors,'price') }}
                 </div>
@@ -40,16 +41,16 @@
                     <input name="promotion" type="number" min="0" class="form-control" placeholder="Nhập giá khuyến mại nếu có" value="{{ $product->promotion }}">
                 </div>
                 <div class="form-group">
-                    <label>Mô tả</label>
+                    <label>Mô tả</label><span class="text-danger"> *</span>
                     <textarea name="description" class="form-control" rows="3">{{ $product->description }}</textarea>
                     {{ notifyError($errors,'description') }}
                 </div>
                 <div class="form-group">
-                    <label>Bài viết</label>
+                    <label>Bài viết</label><span class="text-danger"> *</span>
                     <textarea name="article" class="form-control" id="article" rows="4">{{ $product->article }}</textarea>
                     {{ notifyError($errors,'article') }}
                     <script>
-                        CKEDITOR.replace( 'article' );
+                        CKEDITOR.replace( 'article', options);
                     </script>
                 </div>
             </div>
@@ -86,8 +87,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Ảnh minh họa</label>
-                    <input type="file" id="input_img" name="img" class="form-control-file">
+                    <label>Ảnh minh họa</label><span class="text-danger"> *</span>
+                    <div class="custom-file">
+                        <input name="img" type="file" class="custom-file-input" id="input_img">
+                        <label class="custom-file-label" for="input_img">Choose file</label>
+                    </div>
                     {{ notifyError($errors,'img') }}
                 </div>
                 <div class="form-group">

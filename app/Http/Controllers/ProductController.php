@@ -56,7 +56,7 @@ class ProductController extends Controller
 
                 if ($file_size <= 5242880) {
 
-                    $file_name = date('D-m-yyyy') . '_' . rand() . '_' . utf8tourl($file_name);
+                    $file_name = date('D-m-yyyy') . '-' . rand() . '-' . utf8tourl($file_name);
 
                     if ($file->move('img/upload/product', $file_name)) {
                         $data = $request->all();
@@ -109,9 +109,44 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductRequest $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $data = $request->all();
+        $data['slug'] = utf8tourl($request->name);
+
+        if ($request->hasFile('img')) {
+            $file = $request->img;
+            // lấy tên file
+            $file_name = $file->getClientOriginalName();
+            // lấy loại file
+            $file_type = $file->getMimeType();
+            // kích thước file đơn vị byte
+            $file_size = $file->getSize();
+
+            if ($file_type == 'image/png' || $file_type == 'image/jpg' || $file_type == 'image/jpeg') {
+
+                if ($file_size <= 5242880) {
+
+                    $file_name = date('D-m-yyyy') . '-' . rand() . '-' . utf8tourl($file_name);
+
+                    if ($file->move('img/upload/product', $file_name)) {
+                        $data['img'] = $file_name;
+                        if (File::exists('img/upload/product' . $product->img)) {
+                            unlink('img/upload/product' . $product->img);
+                        }
+                    }
+                } else {
+                    return back()->with('error', 'Bạn không thể upload ảnh quá 5mb');
+                }
+            } else {
+                return back()->with('error', 'File bạn chọn không phải là hình ảnh');
+            }
+        } else {
+            $data['img'] = $product->img;
+        }
+        $product->update($data);
+        return redirect()->route('product.index')->with('success', 'Sửa sản phẩm thành công');
     }
 
     /**
@@ -123,10 +158,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        if(File::exists('img/upload/product/'.$product->img)){
-            unlink('img/upload/product/'.$product->img);
+        if (File::exists('img/upload/product/' . $product->img)) {
+            unlink('img/upload/product/' . $product->img);
         }
         $product->delete();
-        return response()->json(['message' => 'Xóa thành công'],200);
+        return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

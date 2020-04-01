@@ -21,35 +21,35 @@
         <div class="form-row">
             <div class="col-md-8 pr-5">
                 <div class="form-group">
-                    <label>Tên sản phẩm</label>
-                    <input name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm">
+                    <label>Tên sản phẩm</label><span class="text-danger"> *</span>
+                    <input name="name" type="text" class="form-control" placeholder="Nhập tên sản phẩm" value="{{ old('name') }}">
                     {{ notifyError($errors,'name') }}
                 </div>
                 <div class="form-group">
-                    <label>Số lượng</label>
-                    <input name="quantity" type="number" min="1" class="form-control">
+                    <label>Số lượng</label><span class="text-danger"> *</span>
+                    <input name="quantity" type="number" min="0" class="form-control"  value="{{ old('quantity') }}">
                     {{ notifyError($errors,'quantity') }}
                 </div>
                 <div class="form-group">
-                    <label>Đơn giá</label>
-                    <input name="price" type="number" min="0" class="form-control">
+                    <label>Đơn giá</label><span class="text-danger"> *</span>
+                    <input name="price" type="number" min="0" class="form-control"  value="{{ old('price') }}">
                     {{ notifyError($errors,'price') }}
                 </div>
                 <div class="form-group">
                     <label>Khuyến mãi</label>
-                    <input name="promotion" type="number" min="0" class="form-control" placeholder="Nhập giá khuyến mại nếu có">
+                    <input name="promotion" type="number" min="0" class="form-control" placeholder="Nhập giá khuyến mại nếu có"  value="{{ old('promotion') }}">
                 </div>
                 <div class="form-group">
-                    <label>Mô tả</label>
-                    <textarea name="description" class="form-control" rows="3"></textarea>
+                    <label>Mô tả</label><span class="text-danger"> *</span>
+                    <textarea name="description" class="form-control" rows="3">{{ old('description') }}</textarea>
                     {{ notifyError($errors,'description') }}
                 </div>
                 <div class="form-group">
-                    <label>Bài viết</label>
-                    <textarea name="article" class="form-control" id="article" rows="4"></textarea>
+                    <label>Bài viết</label><span class="text-danger"> *</span>
+                    <textarea name="article" class="form-control" id="article" rows="4">{{ old('article') }}</textarea>
                     {{ notifyError($errors,'article') }}
                     <script>
-                        CKEDITOR.replace( 'article' );
+                        CKEDITOR.replace('article', options);
                     </script>
                 </div>
             </div>
@@ -86,12 +86,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Ảnh minh họa</label>
-                    <input type="file" id="input_img" name="img" class="form-control-file">
+                    <label>Ảnh minh họa</label><span class="text-danger"> *</span>
+                    <div class="custom-file">
+                        <input name="img" type="file" class="custom-file-input" id="input_img">
+                        <label class="custom-file-label" for="input_img">Choose file</label>
+                    </div>
                     {{ notifyError($errors,'img') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/product/default.jpg" style="max-width: 260px">
+                    <img id="output_img" src="/img/upload/product/default.jpg" style="width: 330px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">

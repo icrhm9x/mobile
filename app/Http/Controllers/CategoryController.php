@@ -42,7 +42,7 @@ class CategoryController extends Controller
             'slug' => utf8tourl($request->name),
             'status' => $request->status
         ]);
-        return response()->json(['message' => 'Thêm mới thành công', 'category' => $category]);
+        return response()->json(['message' => 'Thêm mới thành công', 'category' => $category], 200);
     }
 
     /**

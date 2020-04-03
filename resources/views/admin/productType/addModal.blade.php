@@ -11,7 +11,7 @@
                             <fieldset class="form-group">
                                 <label class="font-weight-bold">Tên loại sản phẩm</label>
                                 <input class="form-control nameAddPrTypeJS" name="name" placeholder="Nhập tên loại sản phẩm">
-                                <span class="text-danger font-italic errorAddPrTypeJS"></span>
+                                <span class="text-danger font-italic errorAddPrTypeJS d-none"></span>
                             </fieldset>
                             <div class="form-group">
                                 <label class="font-weight-bold">Danh mục</label>

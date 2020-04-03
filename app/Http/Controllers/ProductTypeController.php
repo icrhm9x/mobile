@@ -39,13 +39,11 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
+        $category = Category::whereId($request->idCategory)->select('name')->first();
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);
-        if(ProductType::create($data)){
-            return response()->json(['message' => 'Thêm mới thành công'],200);
-        }else{
-            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
-        }
+        $productType = ProductType::create($data);
+        return response()->json(['message' => 'Thêm mới thành công','productType' => $productType, 'category' => $category],200);
     }
 
     /**
@@ -83,15 +81,12 @@ class ProductTypeController extends Controller
      */
     public function update(StoreProductTypeRequest $request, $id)
     {
-        
+        $category = Category::whereId($request->idCategory)->select('name')->first();
         $productType = ProductType::find($id);
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);
-        if($productType->update($data)){
-            return response()->json(['message' => 'Sửa thành công'],200);
-        }else{
-            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
-        }
+        $productType->update($data);
+        return response()->json(['message' => 'Sửa thành công', 'productType' => $productType, 'category' => $category],200);
     }
 
     /**

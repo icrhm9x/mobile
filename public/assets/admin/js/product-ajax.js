@@ -1,9 +1,9 @@
-$.ajaxSetup({
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-});
 $(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        }
+    });
     // lấy prdtype theo category
     function getPrdType(idCat, idPrdType) {
         idCat.change(function() {
@@ -31,37 +31,27 @@ $(document).ready(function() {
     getPrdType($(".idCatEditJS"), $(".idProTypeEditJS"));
 
     // del prd
-    $(".delPrdJS").click(function() {
-        let id = $(this).data("id");
+    $(this).on("click", ".delPrdJS", function() {
+        $(".titleDelPrdJS").text($(this).data("name"));
+        $(".idDelPrdJS").text($(this).data("id"));
+    });
+    $(".btn-acceptDelPrdJS").click(function() {
+        let id = $(".idDelPrdJS").text();
         $.ajax({
             url: "/admin/product/" + id,
             dataType: "json",
-            type: "get",
+            type: "delete",
             success: function($result) {
-                $(".titleDelPrdJS").text($result);
+                toastr.success($result.message, "Thông báo", {
+                    timeOut: 3000
+                });
+                $(".rowTable" + id).remove();
+                $("#delPrdModal").modal("hide");
             }
-        });
-        let btnAcceptDelPrdJS = $(".btn-acceptDelPrdJS");
-        btnAcceptDelPrdJS.off("click");
-        btnAcceptDelPrdJS.on("click", function() {
-            $.ajax({
-                url: "/admin/product/" + id,
-                dataType: "json",
-                type: "delete",
-                success: function($result) {
-                    toastr.success($result.message, "Thông báo", {
-                        timeOut: 500
-                    });
-                    $("#delPrdModal").modal("hide");
-                    setTimeout(function() {
-                        window.location.reload(1);
-                    }, 500);
-                }
-            });
         });
     });
 
-    // Add the following code if you want the name of the file appear on select
+    // hien thi ten file upload bang bootstrap
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -79,7 +69,6 @@ $(document).ready(function() {
             reader.readAsDataURL(input.files[0]); // convert to base64 string
         }
     }
-
     $("#input_img").change(function() {
         readURL(this);
     });

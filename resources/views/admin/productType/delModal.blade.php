@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Bạn có muốn xóa loại sản phẩm <span class="titleDelPrTypeJS text-danger"></span> ?</h5>
+                <h5 class="modal-title">Bạn có muốn xóa loại sản phẩm <span class="titleDelPrTypeJS text-danger"></span> #<span class="idDelPrTypeJS text-danger"></span> ?</h5>
             </div>
             <div class="modal-body">
                 <p class="text-danger font-italic">Lưu ý: Nếu xóa Loại sản phẩm này hệ thống sẽ xóa toàn bộ Sản phẩm thuộc Loại sản phẩm này.</p>

@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           @foreach ($product as $key => $value)
-            <tr>
+            <tr class="rowTable{{$value->id}}">
               <td>{{ $key + 1 }}</td>
               <td>
                 {{ $value->name }}
@@ -74,7 +74,7 @@
                 <a href="{{ route('product.edit', $value->id) }}" type="button" title="{{ "Sửa" }}" class="btn btn-sm btn-outline-primary">
                   <i class="far fa-edit"></i>
                 </a>
-                <button type="button" title="{{ "Xóa" }}" data-toggle="modal" data-target="#delPrdModal" class="btn btn-sm ml-2 btn-outline-danger delPrdJS" data-id="{{ $value->id }}">
+                <button type="button" title="Xóa" data-toggle="modal" data-target="#delPrdModal" class="btn btn-sm ml-2 btn-outline-danger delPrdJS" data-id="{{ $value->id }}" data-name="{{ $value->name }}">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>

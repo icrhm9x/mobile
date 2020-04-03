@@ -61,8 +61,6 @@ $(document).ready(function() {
     // edit category
     $(this).on("click", ".editCatJS", function() {
         let statusEditCatJS = $(".statusEditCatJS");
-        let nameEditCatJS = $(".nameEditCatJS");
-        let errorEditCatJS = $(".errorEditCatJS");
         let id = $(this).data("id");
         $(".idEditCatJS").text(id);
         $.ajax({
@@ -71,7 +69,7 @@ $(document).ready(function() {
             type: "get",
             success: function(data) {
                 $(".titleEditCatJS").text(data.name);
-                nameEditCatJS.val(data.name);
+                $(".nameEditCatJS").val(data.name);
                 if (data.status == 1) {
                     statusEditCatJS.val("1");
                 } else {
@@ -82,12 +80,13 @@ $(document).ready(function() {
     });
 
     $(".btn-saveEditCatJS").click(function() {
+        let errorEditCatJS = $(".errorEditCatJS");
         let id = $(".idEditCatJS").text();
         $.ajax({
             url: "/admin/category/" + id,
             data: {
-                name: nameEditCatJS.val(),
-                status: statusEditCatJS.val(),
+                name: $(".nameEditCatJS").val(),
+                status: $(".statusEditCatJS").val(),
                 id: id // truyền id sang request để check trùng tên
             },
             type: "put",
@@ -143,8 +142,8 @@ $(document).ready(function() {
             url: "/admin/category/" + id,
             dataType: "json",
             type: "delete",
-            success: function($result) {
-                toastr.success($result.message, "Thông báo", {
+            success: function(data) {
+                toastr.success(data.message, "Thông báo", {
                     timeOut: 3000
                 });
                 $(".rowTable" + id).remove();

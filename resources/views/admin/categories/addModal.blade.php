@@ -7,11 +7,11 @@
             <div class="modal-body px-4">
                 <div class="row">
                     <div class="col-lg-12">
-                        <form role="form">
+                        <form role="form" id="form">
                             <fieldset class="form-group">
                                 <label class="font-weight-bold">Tên danh mục</label>
                                 <input class="form-control nameAddCatJS" name="name" placeholder="Nhập tên danh mục">
-                                <span class="text-danger font-italic errorAddCatJS"></span>
+                                <span class="text-danger font-italic errorAddCatJS d-none"></span>
                             </fieldset>
                             <div class="form-group">
                                 <label class="font-weight-bold">Status</label>

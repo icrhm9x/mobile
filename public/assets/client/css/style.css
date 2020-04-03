@@ -149,9 +149,9 @@ body {
 }
 .mainmenu ul li a:hover, .restrain a:hover {color: #c2a476 !important;}
 .mainmenu ul li .mega-menu {
+    display: flex;
     padding: 30px;
     background: #3f3f3f;
-	width: 900px;
 }
 .mainmenu ul li ul.sub-menu{
 	width: 205px;
@@ -172,8 +172,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 .mainmenu ul li .mega-menu span {
-    float: left;
-    width: 23%;
+    width: 200px;
 	margin-right: 20px;
 	text-align: left;
 }
@@ -223,16 +222,16 @@ body {
 }
 
 .restrain.mega-menu.megamenu1 {
-    left: -125px;
+    left: -235px;
 }
 .restrain.mega-menu.megamenu2 {
-    left: -187px;
+    left: -235px;
 }
 .restrain.mega-menu.megamenu3 {
-    left: -220px;
+    left: -235px;
 }
 .restrain.mega-menu.megamenu4 {
-    left: -220px;
+    left: -235px;
 }
 /* 2.2 mobile menu
 -------------------------*/

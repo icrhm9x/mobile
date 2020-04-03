@@ -1,124 +1,155 @@
-$.ajaxSetup({
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-    }
-});
 $(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        }
+    });
     // add category
-    $(".addCatJS").on("click", function() {
-        $(".errorAddCatJS").hide();
-
-        let btnSaveAddCatJS = $(".btn-saveAddCatJS");
-        btnSaveAddCatJS.off("click");
-        btnSaveAddCatJS.on("click", function() {
-            $.ajax({
-                url: "/admin/category",
-                data: {
-                    name: $(".nameAddCatJS").val(),
-                    status: $(".statusAddCatJS").val()
-                },
-                type: "POST",
-                dataType: "json",
-                success: function($result) {
-                    toastr.success($result.message, "Thông báo", {
-                        timeOut: 1000
-                    });
-                    $("#addCatModal").modal("hide");
-                    setTimeout(function() {
-                        window.location.reload(1);
-                    }, 1000);
-                },
-                error: function(errors) {
-                    let error = errors.responseJSON.errors.name;
-                    $(".errorAddCatJS").show();
-                    $(".errorAddCatJS").text(error);
+    $(".btn-saveAddCatJS").click(function() {
+        let errorAddCatJS = $(".errorAddCatJS");
+        let nameAddCatJS = $(".nameAddCatJS");
+        let statusAddCatJS = $(".statusAddCatJS");
+        $.ajax({
+            url: "/admin/category",
+            data: {
+                name: nameAddCatJS.val(),
+                status: statusAddCatJS.val()
+            },
+            type: "POST",
+            dataType: "json",
+            success: function(data) {
+                errorAddCatJS.addClass("d-none");
+                toastr.success(data.message, "Thông báo", {
+                    timeOut: 3000
+                });
+                let html = "<tr class='rowTable" + data.category.id + "'>";
+                html += "<td>" + data.category.id + "</td>";
+                html += "<td>" + data.category.name + "</td>";
+                html += "<td>" + data.category.slug + "</td>";
+                if (data.category.status == 1) {
+                    html +=
+                        "<td><span class='rounded-0 badge badge-info'>Hiển thị</span></td>";
+                } else {
+                    html +=
+                        "<td><span class='rounded-0 badge badge-secondary'>Không hiển thị</span></td>";
                 }
-            });
+                html += "<td>";
+                html +=
+                    "<button type='button' title='Sửa' data-toggle='modal' data-target='#editCatModal' class='btn btn-sm btn-outline-primary editCatJS' data-id='" +
+                    data.category.id +
+                    "'><i class='far fa-edit'></i></button>";
+                html +=
+                    " <button type='button' title='Xóa' data-toggle='modal' data-target='#delCatModal' class='btn btn-sm ml-2 btn-outline-danger delCatJS' data-id='" +
+                    data.category.id +
+                    "' data-name='" +
+                    data.category.name +
+                    "'><i class='far fa-trash-alt'></i></button>";
+                html += "</td>";
+                html += "</tr>";
+                $("#dataTableJS").append(html);
+                nameAddCatJS.val("");
+                statusAddCatJS.val("1");
+            },
+            error: function(errors) {
+                let error = errors.responseJSON.errors.name;
+                errorAddCatJS.removeClass("d-none");
+                errorAddCatJS.text(error);
+            }
         });
     });
 
     // edit category
-    $(".editCatJS").click(function() {
-        $(".errorEditCatJS").hide();
+    $(this).on("click", ".editCatJS", function() {
+        let statusEditCatJS = $(".statusEditCatJS");
+        let nameEditCatJS = $(".nameEditCatJS");
+        let errorEditCatJS = $(".errorEditCatJS");
         let id = $(this).data("id");
-        let activeEditCatJS = $(".activeEditCatJS");
-        let hiddenEditCatJS = $(".hiddenEditCatJS");
+        $(".idEditCatJS").text(id);
         $.ajax({
             url: "/admin/category/" + id + "/edit",
             dataType: "json",
             type: "get",
-            success: function($result) {
-                $(".titleEditCatJS").text($result.name);
-                $(".nameEditCatJS").val($result.name);
-                if ($result.status == 1) {
-                    hiddenEditCatJS.removeAttr("selected");
-                    activeEditCatJS.attr("selected", "selected");
+            success: function(data) {
+                $(".titleEditCatJS").text(data.name);
+                nameEditCatJS.val(data.name);
+                if (data.status == 1) {
+                    statusEditCatJS.val("1");
                 } else {
-                    activeEditCatJS.removeAttr("selected");
-                    hiddenEditCatJS.attr("selected", "selected");
+                    statusEditCatJS.val("0");
                 }
             }
         });
+    });
 
-        let btnSaveEditCatJS = $(".btn-saveEditCatJS");
-        btnSaveEditCatJS.off("click");
-        btnSaveEditCatJS.on("click", function() {
-            $.ajax({
-                url: "/admin/category/" + id,
-                data: {
-                    name: $(".nameEditCatJS").val(),
-                    status: $(".statusEditCatJS").val(),
-                    id: id // truyền id sang request để check trùng tên
-                },
-                type: "put",
-                dataType: "json",
-                success: function($result) {
-                    toastr.success($result.message, "Thông báo", {
-                        timeOut: 1000
-                    });
-                    $("#editCatModal").modal("hide");
-                    setTimeout(function() {
-                        window.location.reload(1);
-                    }, 1000);
-                },
-                error: function(errors) {
-                    let error = errors.responseJSON.errors.name;
-                    $(".errorEditCatJS").show();
-                    $(".errorEditCatJS").text(error);
-
-                    // console.log(errors);
+    $(".btn-saveEditCatJS").click(function() {
+        let id = $(".idEditCatJS").text();
+        $.ajax({
+            url: "/admin/category/" + id,
+            data: {
+                name: nameEditCatJS.val(),
+                status: statusEditCatJS.val(),
+                id: id // truyền id sang request để check trùng tên
+            },
+            type: "put",
+            dataType: "json",
+            success: function(data) {
+                errorEditCatJS.addClass("d-none");
+                toastr.success(data.message, "Thông báo", {
+                    timeOut: 3000
+                });
+                let html = "<tr class='rowTable" + data.category.id + "'>";
+                html += "<td>" + data.category.id + "</td>";
+                html += "<td>" + data.category.name + "</td>";
+                html += "<td>" + data.category.slug + "</td>";
+                if (data.category.status == 1) {
+                    html +=
+                        "<td><span class='rounded-0 badge badge-info'>Hiển thị</span></td>";
+                } else {
+                    html +=
+                        "<td><span class='rounded-0 badge badge-secondary'>Không hiển thị</span></td>";
                 }
-            });
+                html += "<td>";
+                html +=
+                    "<button type='button' title='Sửa' data-toggle='modal' data-target='#editCatModal' class='btn btn-sm btn-outline-primary editCatJS' data-id='" +
+                    data.category.id +
+                    "'><i class='far fa-edit'></i></button>";
+                html +=
+                    " <button type='button' title='Xóa' data-toggle='modal' data-target='#delCatModal' class='btn btn-sm ml-2 btn-outline-danger delCatJS' data-id='" +
+                    data.category.id +
+                    "' data-name='" +
+                    data.category.name +
+                    "'><i class='far fa-trash-alt'></i></button>";
+                html += "</td>";
+                html += "</tr>";
+
+                $('.rowTable' + data.category.id).replaceWith(html);
+                $("#editCatModal").modal("hide");
+            },
+            error: function(errors) {
+                let error = errors.responseJSON.errors.name;
+                errorEditCatJS.removeClass("d-none");
+                errorEditCatJS.text(error);
+            }
         });
     });
     // delete category
-    $(".delCatJS").click(function() {
-        let id = $(this).data("id");
+    $(this).on("click", ".delCatJS", function() {
+        $(".titleDelCatJS").text($(this).data("name"));
+        $(".idDelCatJS").text($(this).data("id"));
+    });
+    $(".btn-acceptDelCatJS").click(function() {
+        let id = $(".idDelCatJS").text();
         $.ajax({
             url: "/admin/category/" + id,
             dataType: "json",
-            type: "get",
+            type: "delete",
             success: function($result) {
-                $(".titleDelCatJS").text($result.name);
+                toastr.success($result.message, "Thông báo", {
+                    timeOut: 3000
+                });
+                $(".rowTable" + id).remove();
+                $("#delCatModal").modal("hide");
             }
-        });
-        let btnAcceptDelCatJS = $(".btn-acceptDelCatJS");
-        btnAcceptDelCatJS.off("click");
-        btnAcceptDelCatJS.on("click", function() {
-            $.ajax({
-                url: "/admin/category/" + id,
-                dataType: "json",
-                type: "delete",
-                success: function($result) {
-                    toastr.success($result.message, "Thông báo", {
-                        timeOut: 1000
-                    });
-                    $("#delCatModal").modal("hide");
-                    setTimeout(function() {
-                        window.location.reload(1);
-                    }, 1000);
-                }
-            });
         });
     });
 });

@@ -37,12 +37,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create([
+        $category = Category::create([
             'name' => $request->name,
             'slug' => utf8tourl($request->name),
             'status' => $request->status
         ]);
-        return response()->json(['message' => 'Thêm mới thành công']);
+        return response()->json(['message' => 'Thêm mới thành công', 'category' => $category]);
     }
 
     /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
             'slug' => utf8tourl($request->name),
             'status' => $request->status
         ]);
-        return response()->json(['message' => 'Sửa thành công']);
+        return response()->json(['message' => 'Sửa thành công', 'category' => $category]);
     }
 
     /**

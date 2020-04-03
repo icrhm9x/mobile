@@ -43,8 +43,8 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::get('dang-xuat', 'AuthController@getLogout')->name('get.logout');
 
-    Route::get('about', 'HomeController@about');
-    Route::get('contact', 'HomeController@contact');
+    Route::get('gioi-thieu', 'HomeController@about');
+    Route::get('lien-he', 'HomeController@contact');
 
     Route::get('category', 'CategoryController@list');
 

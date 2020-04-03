@@ -26,9 +26,9 @@
             <th>Thao tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="dataTableJS">
           @foreach ($category as $key => $value)
-            <tr>
+            <tr class="rowTable{{$value->id}}">
               <td>{{ $key + 1 }}</td>
               <td>{{ $value->name }}</td>
               <td>{{ $value->slug }}</td>
@@ -36,10 +36,10 @@
                 <span class="rounded-0 badge badge-{{ $value->status == 1 ? 'info' : 'secondary' }}">{{ $value->status == 1 ? 'Hiển thị' : 'Không hiển thị' }}</span>
               </td>
               <td>
-                <button type="button" title="{{ "Sửa" }}" data-toggle="modal" data-target="#editCatModal" class="btn btn-sm btn-outline-primary editCatJS" data-id="{{ $value->id }}">
+                <button type="button" title="Sửa" data-toggle="modal" data-target="#editCatModal" class="btn btn-sm btn-outline-primary editCatJS" data-id="{{ $value->id }}">
                   <i class="far fa-edit"></i>
                 </button>
-                <button type="button" title="{{ "Xóa" }}" data-toggle="modal" data-target="#delCatModal" class="btn btn-sm ml-2 btn-outline-danger delCatJS" data-id="{{ $value->id }}">
+                <button type="button" title="Xóa" data-toggle="modal" data-target="#delCatModal" class="btn btn-sm ml-2 btn-outline-danger delCatJS" data-id="{{ $value->id }}" data-name="{{$value->name}}">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>

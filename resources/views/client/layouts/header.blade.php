@@ -14,15 +14,18 @@
                     <nav>
                         <ul>
                             <li class="expand"><a href="/">Trang chủ</a></li>
-                            <li class="expand"><a href="shop-grid.html">Sản phẩm</a>
+                            <li class="expand"><a href="#">Sản phẩm</a>
                                 <div class="restrain mega-menu megamenu1">
                                     @if (isset($category))
                                         @foreach ($category as $cat)
                                         <span>
-                                            <a class="mega-menu-title" href="shop-grid.html"> {{ $cat->name }} </a>
+                                            <a class="mega-menu-title" href="{{ route('get.category', [$cat->slug]) }}"> {{ $cat->name }} </a>
                                             @if (count($cat->productType) > 0)
-                                                @foreach ($cat->productType as $protype)
-                                                <a href="shop-grid.html">{{ $protype->name }}</a>
+                                                @foreach ($cat->productType as $key => $protype)
+                                                    @if ($key > 4)
+                                                        @break
+                                                    @endif
+                                                    <a href="#">{{ $protype->name }}</a>
                                                 @endforeach
                                             @endif
                                         </span>
@@ -62,8 +65,8 @@
                                     </span>
                                 </div>
                             </li>
-                            <li class="expand"><a href="/about">Giới thiệu</a></li>
-                            <li class="expand"><a href="/contact">Liên hệ</a></li>
+                            <li class="expand"><a href="{{ route('get.about') }}">Giới thiệu</a></li>
+                            <li class="expand"><a href="{{ route('get.contact') }}">Liên hệ</a></li>
                         </ul>
                     </nav>
                 </div>

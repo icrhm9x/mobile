@@ -43,12 +43,12 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::get('dang-xuat', 'AuthController@getLogout')->name('get.logout');
 
-    Route::get('gioi-thieu', 'HomeController@about');
-    Route::get('lien-he', 'HomeController@contact');
+    Route::get('gioi-thieu', 'HomeController@about')->name('get.about');
+    Route::get('lien-he', 'HomeController@contact')->name('get.contact');
 
-    Route::get('category', 'CategoryController@list');
+    Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 
-    Route::get('category/product', 'ProductController@detail');
+    Route::get('{c_slug}/{prd_slug}', 'ProductController@detail')->name('get.detail.product');
 
     Route::group(['prefix' => 'cart'], function () {
         Route::get('', 'CartController@index');

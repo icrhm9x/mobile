@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label>Số lượng</label><span class="text-danger"> *</span>
-                    <input name="quantity" type="number" min="1" class="form-control" value="{{ $product->quantity }}">
+                    <input name="quantity" type="number" min="0" class="form-control" value="{{ $product->quantity }}">
                     {{ notifyError($errors,'quantity') }}
                 </div>
                 <div class="form-group">

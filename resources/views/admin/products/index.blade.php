@@ -6,9 +6,48 @@
     <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
   </ol>
 </nav>
-<a class="btn btn-info mb-3" href="{{ route('product.create') }}">
-  <i class="fas fa-plus"></i> Thêm mới
-</a>
+<div class="row">
+  <div class="col-md-9">
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+    </button>
+    <form action="">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Tên sản phẩm ..." name="name" value="{{ \Request::get('name') }}">
+        </div>
+        <div class="form-group col-md-auto">
+          <select class="form-control" name="cate">
+            <option value="">Danh mục</option>
+            @if (isset($categories))
+                @foreach ($categories as $category)
+                  <option value="{{ $category->id }}" {{ \Request::get('cate') == $category->id ? "selected" : "" }}>{{ $category->name }}</option>
+                @endforeach
+            @endif
+          </select>
+        </div>
+        <div class="form-group col-md-auto">
+          <select class="form-control" name="prdType">
+            <option value="">Loại sản phẩm</option>
+            @if (isset($productTypes))
+                @foreach ($productTypes as $prdType)
+                  <option value="{{ $prdType->id }}" {{ \Request::get('prdType') == $prdType->id ? "selected" : "" }}>{{ $prdType->name }}</option>
+                @endforeach
+            @endif
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-info mb-3 float-right" href="{{ route('product.create') }}">
+      <i class="fas fa-plus"></i> Tạo mới
+    </a>
+  </div>
+</div>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -31,9 +70,9 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($product as $key => $value)
+          @foreach ($products as $key => $value)
             <tr class="rowTable{{$value->id}}">
-              <td>{{ $key + 1 }}</td>
+              <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
               <td>
                 {{ $value->name }}
                 <ul class="product-list">
@@ -71,10 +110,10 @@
                 <span class="rounded-0 badge badge-{{ $value->hot == 1 ? 'danger' : 'secondary' }}">{{ $value->hot == 1 ? 'Hot' : 'Không' }}</span>
               </td>
               <td>
-                <a href="{{ route('product.edit', $value->id) }}" type="button" title="{{ "Sửa" }}" class="btn btn-sm btn-outline-primary">
+                <a href="{{ route('product.edit', $value->id) }}" type="button" title="{{ "Sửa" }}" class="btn btn-sm mr-2 mb-2 btn-outline-primary">
                   <i class="far fa-edit"></i>
                 </a>
-                <button type="button" title="Xóa" data-toggle="modal" data-target="#delPrdModal" class="btn btn-sm ml-2 btn-outline-danger delPrdJS" data-id="{{ $value->id }}" data-name="{{ $value->name }}">
+                <button type="button" title="Xóa" data-toggle="modal" data-target="#delPrdModal" class="btn btn-sm mb-2 btn-outline-danger delPrdJS" data-id="{{ $value->id }}" data-name="{{ $value->name }}">
                   <i class="far fa-trash-alt"></i>
                 </button>
               </td>
@@ -87,7 +126,7 @@
 </div>
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-end">
-    {{ $product->links() }}
+    {{ $products->appends(['name'=>request()->name,'cate'=>request()->cate,'prdType'=>request()->prdType])->links() }}
   </ul>
 </nav>
 <!-- delete Modal-->

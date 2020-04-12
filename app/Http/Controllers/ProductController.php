@@ -16,10 +16,21 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::orderBy('id', 'desc')->paginate(5);
-        return view('admin.products.index', compact('product'));
+        $products = Product::with('Category:id,name','ProductType:id,name');
+        if($request->name != '') $products->where('name', 'like', '%'.$request->name.'%');
+        if($request->cate != '') $products->where('idCategory',$request->cate);
+        if($request->prdType != '') $products->where('idProductType',$request->prdType);
+        $products = $products->orderByDesc('id')->paginate(5);
+        $categories = Category::get();
+        $productTypes  = ProductType::get();
+        $data = [
+            'products' => $products,
+            'categories' => $categories,
+            'productTypes' => $productTypes
+        ];
+        return view('admin.products.index', $data);
     }
 
     /**
@@ -132,8 +143,8 @@ class ProductController extends Controller
 
                     if ($file->move('img/upload/product', $file_name)) {
                         $data['img'] = $file_name;
-                        if (File::exists('img/upload/product' . $product->img)) {
-                            unlink('img/upload/product' . $product->img);
+                        if (File::exists('img/upload/product/' . $product->img)) {
+                            unlink('img/upload/product/' . $product->img);
                         }
                     }
                 } else {

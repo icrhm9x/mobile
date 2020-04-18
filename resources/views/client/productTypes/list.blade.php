@@ -1,7 +1,8 @@
-@extends('client.layouts.master', ['title' => $cate->name])
+@extends('client.layouts.master', ['title' => ''])
 @section('content')
     	<!-- category-banner area start -->
-		<div class="category-banner"></div>
+		<div class="category-banner">
+		</div>
 		<!-- category-banner area end -->
 		<!-- breadcrumbs area start -->
 		<div class="breadcrumbs">
@@ -14,7 +15,13 @@
 									<a href="/">Trang chủ</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
-								<li class="category3"><span>{{ $cate->name }}</span></li>
+								<li class="home">
+									<a href="{{ route('get.category',['c_slug'=>$prdType->Category->slug]) }}">{{ $prdType->Category->name }}</a>
+									<span><i class="fa fa-angle-right"></i></span>
+								</li>
+								<li class="category3">
+									<span>{{ $prdType->name }}</span>
+								</li>
 							</ul>
 						</div>
 					</div>

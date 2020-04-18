@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
@@ -15,9 +16,13 @@ class ProductController extends Controller
         View::share('category',$category);
     }
 
-    public function detail()
+    public function detail($c_slug, $prdType_slug, $prd_slug)
     {
         \Assets::addStyles(['jquery-ui']);
-        return view('client.products.detail');
+        $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->first();
+        $data = [
+            'product' => $product
+        ];
+        return view('client.products.detail', $data);
     }
 }

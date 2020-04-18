@@ -667,7 +667,6 @@ span.amount {
 .product-img{
 	position:relative;
 	display:flex;
-	margin-bottom: 20px;
     height: 310px;
 }
 .product-content{
@@ -778,6 +777,8 @@ span.amount {
 h2.product-name {
     margin: 0 0 5px;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 h2.product-name a{
 	font-size: 14px;
@@ -825,7 +826,7 @@ span.sale-text{
     display: inline-block;
 	margin: 5px 0;
     font-size: 13px;
-    color: #3f3f3f;
+    color: #e10c00;
     font-family: Montserrat;
     font-weight: 700;
 }
@@ -1679,7 +1680,7 @@ span.old-price {
 /*  17. Shop page area
 /*----------------------------------------*/
 .category-banner{
-	background: url(/assets/client/img/banner/cat-banner-1.jpg) right center no-repeat;
+	background: url(/img/upload/cat_banner/1.jpg) right center no-repeat;
     background-size: cover;
     min-height: 270px;
 	position: relative;
@@ -1919,9 +1920,17 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
 .pro-rating a:hover {color: #c2a476;}
 .price-boxes {
     padding: 10px 15px 10px 0;
-    font-size: 24px;
+}
+.price-boxes .new-price {
+    font-size: 22px;
     font-weight: 700;
-    color: #3f3f3f;
+    color: #e10c00;
+    margin-right: 8px;
+}
+.price-boxes .promo-price {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: rgb(41, 41, 41);
 }
 .product-desc p {
     clear: both;
@@ -3205,4 +3214,10 @@ input#rememberme {
     font-size: 12px;
     text-decoration: line-through;
     color: #222;
+}
+.mb-2{
+    margin-bottom: 20px;
+}
+.mb-4{
+    margin-bottom: 40px;
 }

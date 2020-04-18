@@ -64,7 +64,7 @@
                                                 <!-- single-product start -->
                                                 <div class="single-product first-sale">
                                                     <div class="product-img">
-                                                        <a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->slug]) }}">
+                                                        <a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->ProductType->slug,$bestSeller->slug]) }}">
                                                             <img class="primary-image" src="/img/upload/product/{{ $bestSeller->img }}" alt="" />
                                                         </a>
                                                         <div class="actions">
@@ -84,7 +84,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="product-content">
-                                                        <h2 class="product-name"><a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->slug]) }}">{{ $bestSeller->name }}</a></h2>
+                                                        <h2 class="product-name"><a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->ProductType->slug,$bestSeller->slug]) }}">{{ $bestSeller->name }}</a></h2>
                                                         <div class="product-price">
                                                             <strong>{{ number_format($bestSeller->price,0,'','.') }}₫</strong>
                                                             @if ($bestSeller->promotion > 0)
@@ -109,7 +109,7 @@
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="single-product first-sale">
                                                     <div class="product-img">
-                                                        <a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->slug]) }}">
+                                                        <a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->ProductType->slug,$promo->slug]) }}">
                                                             <img class="primary-image" src="/img/upload/product/{{ $promo->img }}" alt="" />
                                                         </a>
                                                         <div class="actions">
@@ -129,7 +129,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="product-content">
-                                                        <h2 class="product-name"><a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->slug]) }}">{{ $promo->name }}</a></h2>
+                                                        <h2 class="product-name"><a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->ProductType->slug,$promo->slug]) }}">{{ $promo->name }}</a></h2>
                                                         <div class="product-price">
                                                             <strong>{{ number_format($promo->price,0,'','.') }}₫</strong>
                                                             @if ($promo->promotion > 0)
@@ -179,7 +179,7 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="single-product first-sale">
                                         <div class="product-img">
-                                            <a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->slug]) }}">
+                                            <a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">
                                                 <img class="primary-image" src="/img/upload/product/{{ $newprd->img }}" alt="" />
                                             </a>
                                             <div class="actions">
@@ -199,7 +199,7 @@
                                             </div>
                                         </div>
                                         <div class="product-content">
-                                            <h2 class="product-name"><a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->slug]) }}">{{ $newprd->name }}</a></h2>
+                                            <h2 class="product-name"><a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">{{ $newprd->name }}</a></h2>
                                             <div class="product-price">
                                                 <strong>{{ number_format($newprd->price,0,'','.') }}₫</strong>
                                                 @if ($newprd->promotion > 0)

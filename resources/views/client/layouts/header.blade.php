@@ -14,7 +14,7 @@
                     <nav>
                         <ul>
                             <li class="expand"><a href="/">Trang chủ</a></li>
-                            <li class="expand"><a href="#">Sản phẩm</a>
+                            <li class="expand"><a href="{{ route('get.category', $category->first()->slug) }}">Sản phẩm</a>
                                 <div class="restrain mega-menu megamenu1">
                                     @if (isset($category))
                                         @foreach ($category as $cat)
@@ -25,7 +25,9 @@
                                                     @if ($key > 4)
                                                         @break
                                                     @endif
-                                                    <a href="#">{{ $protype->name }}</a>
+                                                    @if ($protype->Product->count() > 0)
+                                                        <a href="{{ route('get.list.productType',['c_slug'=>$cat->slug, 'prdType_slug'=>$protype->slug]) }}">{{ $protype->name }}</a>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </span>

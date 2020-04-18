@@ -1,4 +1,4 @@
-@extends('client.layouts.master',['title' => 'Detail'])
+@extends('client.layouts.master',['title' => $product->name])
 @section('content')
     		<!-- breadcrumbs area start -->
 		<div class="breadcrumbs">
@@ -8,10 +8,18 @@
 						<div class="container-inner">
 							<ul>
 								<li class="home">
-									<a href="index.html">Home</a>
+									<a href="/">Trang chủ</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
-								<li class="category3"><span>Shop List</span></li>
+								<li class="home">
+									<a href="{{ route('get.category',[$product->Category->slug]) }}">{{ $product->Category->name }}</a>
+									<span><i class="fa fa-angle-right"></i></span>
+								</li>
+								<li class="home">
+									<a href="{{ route('get.category',[$product->ProductType->slug]) }}">{{ $product->ProductType->name }}</a>
+									<span><i class="fa fa-angle-right"></i></span>
+								</li>
+								<li class="category3"><span>{{ $product->name }}</span></li>
 							</ul>
 						</div>
 					</div>

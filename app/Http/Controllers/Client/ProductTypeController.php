@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Support\Facades\View;
 
-class CategoryController extends Controller
+class ProductTypeController extends Controller
 {
     public function __construct()
     {
         $category = Category::where('status', 1)->get();
         View::share('category',$category);
     }
-    public function list(Request $request, $c_slug)
+    public function list(Request $request,$c_slug, $prdType_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
         $cate = Category::where('slug', $c_slug)->orderByDesc('id')->first();
+        $prdType = ProductType::where('slug', $prdType_slug)->orderByDesc('id')->first();
         $product = Product::with('Category:id,slug','ProductType:id,slug');
 
         if($request->price){
@@ -34,13 +35,14 @@ class CategoryController extends Controller
             }
         }
 
-        $gridPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(9);
-        $listPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(4);
+        $gridPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(9);
+        $listPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(4);
         $data = [
             'cate' => $cate,
+            'prdType' => $prdType,
             'gridPrd' => $gridPrd,
             'listPrd' => $listPrd
         ];
-        return view('client.categories.list', $data);
+        return view('client.productTypes.list', $data);
     }
 }

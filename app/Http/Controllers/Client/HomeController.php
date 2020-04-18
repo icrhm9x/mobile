@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function index()
     {
         \Assets::addStyles(['jquery-ui', 'nivo-slider', 'preview'])->addScripts(['Nivo-slider', 'home']);
-        $product = Product::with('Category:id,slug');
+        $product = Product::with('Category:id,slug','ProductType:id,slug');
         $bestSellers = $product->orderByDesc('purchase_number')->limit('8')->get();
         $promotion = $product->where('promotion', '>', 0)->orderByDesc('promotion')->limit('8')->get();
         $newprds = $product->orderByDesc('id')->limit('8')->get();

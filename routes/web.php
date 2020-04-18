@@ -48,7 +48,9 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 
-    Route::get('{c_slug}/{prd_slug}', 'ProductController@detail')->name('get.detail.product');
+    Route::get('{c_slug}/{prdType_slug}', 'ProductTypeController@list')->name('get.list.productType');
+
+    Route::get('{c_slug}/{prdType_slug}/{prd_slug}', 'ProductController@detail')->name('get.detail.product');
 
     Route::group(['prefix' => 'cart'], function () {
         Route::get('', 'CartController@index');

@@ -8,10 +8,10 @@
 						<div class="container-inner">
 							<ul>
 								<li class="home">
-									<a href="index.html">Home</a>
+									<a href="index.html">Trang chủ</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
-								<li class="category3"><span>Shopping Cart</span></li>
+								<li class="category3"><span>Giỏ hàng</span></li>
 							</ul>
 						</div>
 					</div>
@@ -22,6 +22,9 @@
 		<!-- Shopping Table Container -->
 		<div class="cart-area-start">
 			<div class="container">
+				<div class="area-title">
+					<h2>Giỏ hàng của bạn</h2>
+				</div>
 				<!-- Shopping Cart Table -->
 				<div class="row">
 					<div class="col-md-12">
@@ -29,64 +32,42 @@
 							<table class="cart-table">
 								<thead>
 									<tr>
-										<th>Product</th>
-										<th>Product name</th>
-										<th></th>
-										<th>Unit Price</th>
-										<th>Qty</th>
-										<th>Subtotal</th>
-										<th></th>
+										<th>Hình ảnh</th>
+										<th>Tên sản phẩm</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Thành tiền</th>
+										<th>Chỉnh sửa</th>
 									</tr>
 								</thead>
 								<tbody>
+									@foreach ($cart as $item)
 									<tr>
 										<td>
-											<a href="#"><img src="/assets/client/img/products/cart/cart-1.jpg" class="img-responsive" alt=""/></a>
+											<a href="#"><img src="/img/upload/product/{{ $item->options->img }}" class="img-responsive" alt=""/></a>
 										</td>
 										<td>
-											<h6>PLEASURE RATIO</h6>
+											<h6>{{ $item->name }}</h6>
 										</td>
-										<td><a href="#">Edit</a></td>
 										<td>
-											<div class="cart-price">$250.00</div>
+											<div class="cart-price">{{ number_format($item->price, 0, ',', '.') }}₫</div>
 										</td>
 										<td>
 											<form>
-												<input type="text" placeholder="1">
+												<input type="text" placeholder="{{ $item->qty }}">
 											</form>
 										</td>
 										<td>
-											<div class="cart-subtotal">$50.00</div>
+											<div class="cart-subtotal">{{ number_format($item->price*$item->qty, 0, ',', '.') }}₫</div>
 										</td>
 										<td><a href="#"><i class="fa fa-times"></i></a></td>
 									</tr>
-									<tr>
-										<td>
-											<a href="#"><img src="/assets/client/img/products/cart/cart-2.jpg" class="img-responsive" alt=""/></a>
-										</td>
-										<td>
-											<h6>PRIMIS IN FAUCIBUS</h6>
-										</td>
-										<td><a href="#">Edit</a></td>
-										<td>
-											<div class="cart-price">$150.00</div>
-										</td>
-										<td>
-											<form>
-												<input type="text" placeholder="1">
-											</form>
-										</td>
-										<td>
-											<div class="cart-subtotal">$400.00</div>
-										</td>
-										<td><a href="#"><i class="fa fa-times"></i></a></td>
-									</tr>
+									@endforeach
 									<tr>
 										<td class="actions-crt" colspan="7">
 											<div class="">
-												<div class="col-md-4 col-sm-4 col-xs-4 align-left"><a class="cbtn" href="#">Continue Shopping</a></div>
-												<div class="col-md-4 col-sm-4 col-xs-4 align-center"><a class="cbtn" href="#">UPDATE SHOPPING CART</a></div>
-												<div class="col-md-4 col-sm-4 col-xs-4 align-right"><a class="cbtn" href="#">CLEAR SHOPPING CART</a></div>
+												{{-- <div class="col-md-4 col-sm-4 col-xs-4 align-center"><a class="cbtn" href="#">UPDATE SHOPPING CART</a></div> --}}
+												<div class="col-md-4 col-sm-4 col-xs-4 pull-right"><a class="cbtn" href="#">Tiếp tục mua hàng</a></div>
 											</div>
 										</td>
 									</tr>
@@ -102,13 +83,9 @@
 						<!-- Shopping Totals -->
 						<div class="shipping coupon cart-totals">
 							<ul>
-								<li class="cartSubT">Subtotal:    <span>$50.00</span></li>
-								<li class="cartSubT">Grand total:    <span>$50.00</span></li>
+								<li class="cartSubT">Tổng tiền ({{ Cart::count() }} sản phẩm):    <span>{{ Cart::subtotal(0,',','.') }}₫</span></li>
 							</ul>
-							<a class="proceedbtn" href="#">PROCEED TO CHECK OUT</a>
-							<div class="multiCheckout">
-								<a href="#">Checkout with Multiple Addresses</a>
-							</div>
+							<a class="proceedbtn" href="{{ route('checkout') }}">THANH TOÁN</a>
 						</div>
 						<!-- Shopping Totals -->
 					</div>

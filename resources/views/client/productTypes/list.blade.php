@@ -139,7 +139,7 @@
 																				<a href="#" title="Yêu thích"><i class="fa fa-heart"></i></a>
 																			</div>
 																			<div class="compare-button">
-																				<a href="#" title="Thêm vào giỏ hàng"><i class="icon-bag"></i></a>
+																				<a href="{{ route('add.cart', $item->id) }}" title="Thêm vào giỏ hàng"><i class="icon-bag"></i></a>
 																			</div>									
 																		</div>
 																		<div class="quickviewbtn">
@@ -151,9 +151,11 @@
 															<div class="product-content">
 																<h2 class="product-name"><a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a></h2>
 																<div class="product-price">
-																	<strong>{{ number_format($item->price,0,'','.') }}₫</strong>
 																	@if ($item->promotion > 0)
-																		<span>{{ number_format($item->promotion,0,'','.') }}₫</span>
+																	<strong>{{ number_format($item->price - $item->promotion,0,'','.') }}₫</strong>
+																	<span>{{ number_format($item->price,0,'','.') }}₫</span>
+																	@else
+																	<strong>{{ number_format($item->price,0,'','.') }}₫</strong>
 																	@endif
 																</div>
 																{{--  <p>Nunc facilisis sagittis ullamcorper...</p>  --}}
@@ -204,7 +206,7 @@
 															<div class="actions-e">
 																<div class="action-buttons">
 																	<div class="add-to-cart">
-																		<a href="#">Thêm vào giỏ hàng</a>
+																		<a href="{{ route('add.cart', $item->id) }}">Thêm vào giỏ hàng</a>
 																	</div>
 																	<div class="add-to-links">
 																		<div class="add-to-wishlist">

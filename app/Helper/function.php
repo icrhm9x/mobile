@@ -56,4 +56,10 @@
 			}
 		}
 	}
+
+	if(!function_exists('get_data_user')) {
+		function get_data_user($type, $fiel = 'id') {
+			return Auth::guard($type)->user() ? Auth::guard($type)->user()->$fiel : '';
+		}
+	}
 ?>

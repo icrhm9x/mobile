@@ -74,7 +74,7 @@
                                                                         <a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                                     </div>
                                                                     <div class="compare-button">
-                                                                        <a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+                                                                        <a href="{{ route('add.cart', $bestSeller->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
                                                                     </div>									
                                                                 </div>
                                                                 <div class="quickviewbtn">
@@ -86,9 +86,11 @@
                                                     <div class="product-content">
                                                         <h2 class="product-name"><a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->ProductType->slug,$bestSeller->slug]) }}">{{ $bestSeller->name }}</a></h2>
                                                         <div class="product-price">
-                                                            <strong>{{ number_format($bestSeller->price,0,'','.') }}₫</strong>
                                                             @if ($bestSeller->promotion > 0)
-                                                                <span>{{ number_format($bestSeller->promotion,0,'','.') }}₫</span>
+                                                            <strong>{{ number_format($bestSeller->price - $bestSeller->promotion,0,'','.') }}₫</strong>
+                                                            <span>{{ number_format($bestSeller->price,0,'','.') }}₫</span>
+                                                            @else
+                                                            <strong>{{ number_format($bestSeller->price,0,'','.') }}₫</strong>
                                                             @endif
                                                         </div>
                                                         {{--  <p>Nunc facilisis sagittis ullamcorper...</p>  --}}
@@ -119,7 +121,7 @@
                                                                         <a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                                     </div>
                                                                     <div class="compare-button">
-                                                                        <a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+                                                                        <a href="{{ route('add.cart', $promo->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
                                                                     </div>									
                                                                 </div>
                                                                 <div class="quickviewbtn">
@@ -131,9 +133,11 @@
                                                     <div class="product-content">
                                                         <h2 class="product-name"><a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->ProductType->slug,$promo->slug]) }}">{{ $promo->name }}</a></h2>
                                                         <div class="product-price">
-                                                            <strong>{{ number_format($promo->price,0,'','.') }}₫</strong>
                                                             @if ($promo->promotion > 0)
-                                                                <span>{{ number_format($promo->promotion,0,'','.') }}₫</span>
+                                                            <strong>{{ number_format($promo->price - $promo->promotion,0,'','.') }}₫</strong>
+                                                            <span>{{ number_format($promo->price,0,'','.') }}₫</span>
+                                                            @else
+                                                            <strong>{{ number_format($promo->price,0,'','.') }}₫</strong>
                                                             @endif
                                                         </div>
                                                         {{--  <p>Nunc facilisis sagittis ullamcorper...</p>  --}}
@@ -189,7 +193,7 @@
                                                             <a href="#" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
                                                         </div>
                                                         <div class="compare-button">
-                                                            <a href="#" title="Add to Cart"><i class="icon-bag"></i></a>
+                                                            <a href="{{ route('add.cart', $newprd->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
                                                         </div>									
                                                     </div>
                                                     <div class="quickviewbtn">
@@ -201,9 +205,11 @@
                                         <div class="product-content">
                                             <h2 class="product-name"><a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">{{ $newprd->name }}</a></h2>
                                             <div class="product-price">
-                                                <strong>{{ number_format($newprd->price,0,'','.') }}₫</strong>
                                                 @if ($newprd->promotion > 0)
-                                                    <span>{{ number_format($newprd->promotion,0,'','.') }}₫</span>
+                                                <strong>{{ number_format($newprd->price - $newprd->promotion,0,'','.') }}₫</strong>
+                                                <span>{{ number_format($newprd->price,0,'','.') }}₫</span>
+                                                @else
+                                                <strong>{{ number_format($newprd->price,0,'','.') }}₫</strong>
                                                 @endif
                                             </div>
                                             {{--  <p>Nunc facilisis sagittis ullamcorper...</p>  --}}

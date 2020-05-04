@@ -49,6 +49,11 @@
 			toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 3000});
 		</script>        
 		@endif
+		@if (session('warning'))
+		<script type="text/javascript">
+			toastr.warning('{{ session('warning') }}', "Thông báo", {timeOut: 3000});
+		</script>        
+		@endif
 
     </body>
 </html>

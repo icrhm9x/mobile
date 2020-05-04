@@ -20,7 +20,7 @@ class ProductTypeController extends Controller
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
         $cate = Category::where('slug', $c_slug)->orderByDesc('id')->first();
-        $prdType = ProductType::where('slug', $prdType_slug)->orderByDesc('id')->first();
+        $prdType = ProductType::where('slug', $prdType_slug)->orderByDesc('id')->firstOrFail();
         $product = Product::with('Category:id,slug','ProductType:id,slug');
 
         if($request->price){

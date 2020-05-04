@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function detail($c_slug, $prdType_slug, $prd_slug)
     {
         \Assets::addStyles(['jquery-ui']);
-        $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->first();
+        $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->firstOrFail();
         $data = [
             'product' => $product
         ];

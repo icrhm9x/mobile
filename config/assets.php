@@ -11,7 +11,6 @@ return [
         'owl-carousel',
         'jquery_scrollUp',
         'price_slider',
-        'elevateZoom',
         'jquery_bxslider',
         'mobile_menu',
         'wow',
@@ -75,13 +74,6 @@ return [
                 'location' => 'footer',
                 'src'      => [
                     'local' => '/assets/client/js/price-slider.js',
-                ],
-            ],
-            'elevateZoom'       => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/assets/client/js/jquery.elevateZoom-3.0.8.min.js',
                 ],
             ],
             'jquery_bxslider'       => [

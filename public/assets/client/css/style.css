@@ -395,10 +395,9 @@ ul.cart-list li {
 .small-cart-detail .small-cart-name {
     color: #fff;
     font-family: Montserrat;
-    font-weight: 700;
     line-height: 1;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 11px;
     display: block;
     margin: 5px 20px 10px 0;
     padding-top: 5px;
@@ -409,10 +408,10 @@ ul.cart-list li {
 .small-cart-detail .quantitys strong {
     font-size: 11px;
     margin-right: 5px;
+    font-weight: normal;
 }
 .small-cart-detail .quantitys span {
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 13px;
     margin-left: 5px;
 }
 p.total {
@@ -586,7 +585,7 @@ span.amount {
 	text-align: center;
     padding: 28px 0;
     position: relative;
-    margin-top: 75px;
+    margin: 40px 0 40px;
 }
 .area-title h2{
 	margin: 0;
@@ -819,7 +818,8 @@ span.sale-text{
     bottom: 20px;
     position: absolute;
 }
-.single-product .price-box .new-price{
+.single-product .price-box .new-price,
+.single-product .price-box .price-old{
 	margin: 0;
 	background: #fff;
     padding: 10px 15px;
@@ -1927,6 +1927,11 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
     color: #e10c00;
     margin-right: 8px;
 }
+.price-boxes .price-old {
+    text-decoration: line-through;
+    color: #222;
+    margin-right: 8px;
+}
 .price-boxes .promo-price {
     font-size: 16px;
     text-decoration: line-through;
@@ -2234,6 +2239,9 @@ margin-bottom: 10px;}
 }
 article.blog-post-wrapper.item-post .player {
     margin: 50px 0 0 0;
+}
+.product-tab-content h3 {
+    margin-top: 20px;
 }
 .product-tab-content p {
     clear: both;
@@ -2625,10 +2633,10 @@ h4.cart-title {
 	font-weight: 400;
 }
 .cart-price, .cart-subtotal {
-    color: #3f3f3f;
+    color: #B12704;
     font-family: "Montserrat", sans-serif;
     font-size: 12px;
-    font-weight: 400
+    font-weight: 550
 }
 .cart-table img.img-responsive {
     width: 133px;
@@ -2764,8 +2772,12 @@ input.coupon-input, .selectOption input {
     font-size: 14px;
     margin-bottom: 20px;
 	text-align: left;
+    font-weight: 600;
 }
-.cart-totals li.cartSubT span{float:right}
+.cart-totals li.cartSubT span{
+    float:right;
+    color: #B12704;
+}
 .cart-totals li.cartGrandT {
     border-bottom: 1px solid #535353;
     font-size: 24px;
@@ -2795,8 +2807,9 @@ a.proceedbtn {
     text-decoration: underline
 }
 .cart-area-start .cart-table tbody tr td h6{
-	margin: 0;
-	font-weight: 400;
+    margin: 0;
+    line-height: 20px;
+	font-weight: 550;
 }
 .cart-area-start .cart-table tbody tr td a{
 	font-size: 12px;
@@ -2806,7 +2819,7 @@ a.proceedbtn {
 	font-family: 'Montserrat', sans-serif;
 }
 .cart-area-start .cart-table tbody tr td a:hover{color: #c2a376}
-.cart-area-start {margin: 50px 0 50px;}
+.cart-area-start {margin-bottom: 50px;}
 /* ----------------------------------
 22. About us area
 ------------------------------------*/
@@ -3207,7 +3220,7 @@ input#rememberme {
 /* custom here */
 
 .product-price strong{
-    color: #e10c00;
+    color: #B12704;
     margin-right: 5px;
 }
 .product-price span{
@@ -3220,4 +3233,14 @@ input#rememberme {
 }
 .mb-4{
     margin-bottom: 40px;
+}
+.my-4{
+    margin: 40px auto;
+}
+.checkout-price{
+    color: #B12704;
+}
+.checkout-total{
+    color: #B12704;
+    font-weight: 700;
 }

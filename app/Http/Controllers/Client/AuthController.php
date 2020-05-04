@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Client;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use Hash;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $category = Category::where('status', 1)->get();
+        View::share('category',$category);
+    }
+
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);

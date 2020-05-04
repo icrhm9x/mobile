@@ -19,7 +19,7 @@ class CategoryController extends Controller
     public function list(Request $request, $c_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        $cate = Category::where('slug', $c_slug)->orderByDesc('id')->first();
+        $cate = Category::where('slug', $c_slug)->orderByDesc('id')->firstOrFail();
         $product = Product::with('Category:id,slug','ProductType:id,slug');
 
         if($request->price){

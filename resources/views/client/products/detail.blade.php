@@ -1,7 +1,7 @@
 @extends('client.layouts.master',['title' => $product->name])
 @section('content')
     		<!-- breadcrumbs area start -->
-		<div class="breadcrumbs">
+		<div class="breadcrumbs mb-4">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
@@ -16,7 +16,7 @@
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
 								<li class="home">
-									<a href="{{ route('get.category',[$product->ProductType->slug]) }}">{{ $product->ProductType->name }}</a>
+									<a href="{{ route('get.list.productType',[$product->Category->slug, $product->ProductType->slug]) }}">{{ $product->ProductType->name }}</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
 								<li class="category3"><span>{{ $product->name }}</span></li>
@@ -34,37 +34,7 @@
 					<div class="col-md-5 col-sm-5 col-xs-12">
 						<div class="zoomWrapper">
 							<div id="img-1" class="zoomWrapper single-zoom">
-								<a href="#">
-									<img id="zoom1" src="/assets/client/img/product-details/big-1-1.jpg" data-zoom-image="img/product-details/ex-big-1-1.jpg" alt="big-1">
-								</a>
-							</div>
-							<div class="single-zoom-thumb">
-								<ul class="bxslider" id="gallery_01">
-									<li>
-										<a href="#" class="elevatezoom-gallery active" data-update="" data-image="img/product-details/big-1-1.jpg" data-zoom-image="img/product-details/ex-big-1-1.jpg"><img src="/assets/client/img/product-details/th-1-1.jpg" alt="zo-th-1" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-1-2.jpg" data-zoom-image="img/product-details/ex-big-1-2.jpg"><img src="/assets/client/img/product-details/th-1-2.jpg" alt="zo-th-2"></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-1-3.jpg" data-zoom-image="img/product-details/ex-big-1-3.jpg"><img src="/assets/client/img/product-details/th-1-3.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-4.jpg" data-zoom-image="img/product-details/ex-big-4.jpg"><img src="/assets/client/img/product-details/th-4.jpg" alt="zo-th-4"></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-5.jpg" data-zoom-image="img/product-details/ex-big-5.jpg"><img src="/assets/client/img/product-details/th-5.jpg" alt="zo-th-5" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-6.jpg" data-zoom-image="img/product-details/ex-big-6.jpg"><img src="/assets/client/img/product-details/th-6.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-7.jpg" data-zoom-image="img/product-details/ex-big-7.jpg"><img src="/assets/client/img/product-details/th-7.jpg" alt="ex-big-3" /></a>
-									</li>
-									<li class="">
-										<a href="#" class="elevatezoom-gallery" data-image="img/product-details/big-8.jpg" data-zoom-image="img/product-details/ex-big-8.jpg"><img src="/assets/client/img/product-details/th-8.jpg" alt="ex-big-3" /></a>
-									</li>
-								</ul>
+								<img src="/img/upload/product/{{ $product->img }}" alt="big-1">
 							</div>
 						</div>
 					</div>
@@ -72,7 +42,7 @@
 						<div class="product-list-wrapper">
 							<div class="single-product">
 								<div class="product-content">
-									<h2 class="product-name"><a href="#">Cras neque metus</a></h2>
+									<h2 class="product-name"><a href="#">{{ $product->name }}</a></h2>
 									<div class="rating-price">	
 										<div class="pro-rating">
 											<a href="#"><i class="fa fa-star"></i></a>
@@ -82,28 +52,39 @@
 											<a href="#"><i class="fa fa-star"></i></a>
 										</div>
 										<div class="price-boxes">
-											<span class="new-price">$110.00</span>
+											@if ($product->promotion > 0)
+											<span class="new-price">{{ number_format($product->price - $product->promotion, 0, ',', '.') }}₫</span>
+											<span class="price-old">{{ number_format($product->price,0,',','.') }}₫</span>
+											@else
+											<span class="new-price">{{ number_format($product->price, 0, ',', '.') }}₫</span>
+											@endif
 										</div>
 									</div>
 									<div class="product-desc">
-										<p>Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean eleifend laoreet congue. Viva</p>
+										<p>{{ $product->description }}</p>
 									</div>
-									<p class="availability in-stock">Availability: <span>In stock</span></p>
+									<p class="availability in-stock">Trạng thái: <span>
+										@if ($product->status == 1)
+											{{ 'Còn hàng' }}
+										@elseif ($product->status == 2)
+											{{ 'Sắp ra mắt' }}
+										@else
+											{{ 'Hết hàng' }}
+										@endif
+									</span></p>
 									<div class="actions-e">
 										<div class="action-buttons-single">
-											<div class="inputx-content">
-												<label for="qty">Quantity:</label>
-												<input type="text" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
-											</div>
+											@if ($product->status == 1)
 											<div class="add-to-cart">
-												<a href="#">Add to cart</a>
+												<a href="{{ route('add.cart', $product->id) }}">Thêm vào giỏ hàng</a>
 											</div>
+											@endif
 											<div class="add-to-links">
 												<div class="add-to-wishlist">
-													<a href="#" data-toggle="tooltip" title="" data-original-title="Add to Wishlist"><i class="fa fa-heart"></i></a>
+													<a href="#" data-toggle="tooltip" title="yêu thích" data-original-title="Add to Wishlist"><i class="fa fa-heart"></i></a>
 												</div>
 												<div class="compare-button">
-													<a href="#" data-toggle="tooltip" title="" data-original-title="Compare"><i class="fa fa-refresh"></i></a>
+													<a href="#" data-toggle="tooltip" title="so sánh" data-original-title="Compare"><i class="fa fa-refresh"></i></a>
 												</div>									
 											</div>
 										</div>
@@ -120,21 +101,20 @@
 					<div class="single-product-tab">
 						  <!-- Nav tabs -->
 						<ul class="details-tab">
-							<li class="active"><a href="#home" data-toggle="tab">Description</a></li>
-							<li class=""><a href="#messages" data-toggle="tab"> Review (1)</a></li>
+							<li class="active"><a href="#home" data-toggle="tab">Bài viết</a></li>
+							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá (1)</a></li>
 						</ul>
 						  <!-- Tab panes -->
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="home">
 								<div class="product-tab-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla. Donec a neque libero. Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis fermentum turpis eros eget velit. Donec ac tempus ante. </p>
-									<p>Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi. Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget. Nam erat mi, rutrum at sollicitudin rhoncus, ultricies posuere erat. Duis convallis, arcu nec aliquam consequat, purus felis vehicula felis, a dapibus enim lorem nec augue.</p>	
+									{!! $product->article !!}
 								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="messages">
 								<div class="single-post-comments col-md-6 col-md-offset-3">
 									<div class="comments-area">
-										<h3 class="comment-reply-title">1 REVIEW FOR TURPIS VELIT ALIQUET</h3>
+										<h3 class="comment-reply-title">1 đánh giá cho {{ $product->name }}</h3>
 										<div class="comments-list">
 											<ul>
 												<li>

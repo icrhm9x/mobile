@@ -25,6 +25,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('product', 'ProductController');
 
     Route::get('getprdtype', 'AjaxProductController@getPrdType');
+
+    Route::get('order', 'OrderController@getOrder')->name('order.index');
+
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
@@ -47,11 +50,13 @@ Route::group(['namespace' => 'Client'], function () {
     Route::get('lien-he', 'HomeController@contact')->name('get.contact');
 
     Route::group(['prefix' => 'gio-hang'], function () {
+        Route::get('', 'CartController@getList')->name('list.cart');
         Route::get('add/{id}', 'CartController@addProduct')->name('add.cart');
-        Route::get('danh-sach', 'CartController@getList')->name('list.cart');
+        Route::get('del/{id}', 'CartController@delProduct')->name('del.cart');
         Route::group(['middleware' => 'CheckLoginUser'], function () {
             Route::get('thanh-toan', 'CartController@checkout')->name('checkout');
-            Route::get('complete', 'CartController@complete');
+            Route::post('thanh-toan', 'CartController@saveInfoOrder');
+            Route::get('thanh-cong', 'CartController@complete')->name('complete');
         });
     });
 

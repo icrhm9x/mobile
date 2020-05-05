@@ -75,7 +75,6 @@
                     <select name="status" class="form-control">
                         <option value="1" >Còn hàng</option>
                         <option value="2" >Sắp ra mắt</option>
-                        <option value="3" >Hết hàng</option>
                     </select>
                 </div>
                 <div class="form-group">

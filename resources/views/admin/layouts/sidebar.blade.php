@@ -11,24 +11,29 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ (Request::is('admin') ? 'active' : '') }}">
       <a class="nav-link" href="/admin">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fas fa-home"></i>
       <span>Trang chủ</span></a>
     </li>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item {{ (Request::is('admin/category') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('category.index') }}">
-      <i class="fas fa-fw fa-folder"></i>
+      <i class="fas fa-folder"></i>
       <span>Danh mục</span></a>
     </li>
     <li class="nav-item {{ (Request::is('admin/productType') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('productType.index') }}">
-      <i class="far fa-folder-open"></i>
+      <i class="fas fa-list-alt"></i>
       <span>Loại sản phẩm</span></a>
     </li>
     <li class="nav-item {{ (Request::is('admin/product') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('product.index') }}">
-      <i class="far fa-folder-open"></i>
+      <i class="fab fa-battle-net"></i>
       <span>Sản phẩm</span></a>
+    </li>
+    <li class="nav-item {{ (Request::is('admin/order') ? 'active' : '') }}">
+      <a class="nav-link" href="{{ route('order.index') }}">
+      <i class="fas fa-clipboard-list"></i>
+      <span>Đơn hàng</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">

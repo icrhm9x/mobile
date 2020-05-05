@@ -41,7 +41,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($cart as $item)
+									@foreach ($cart as $key => $item)
 									<tr>
 										<td>
 											<a href="#"><img src="/img/upload/product/{{ $item->options->img }}" class="img-responsive" alt=""/></a>
@@ -60,14 +60,14 @@
 										<td>
 											<div class="cart-subtotal">{{ number_format($item->price*$item->qty, 0, ',', '.') }}₫</div>
 										</td>
-										<td><a href="#"><i class="fa fa-times"></i></a></td>
+										<td><a href="{{ route('del.cart', $key) }}"><i class="fa fa-times"></i></a></td>
 									</tr>
 									@endforeach
 									<tr>
 										<td class="actions-crt" colspan="7">
 											<div class="">
 												{{-- <div class="col-md-4 col-sm-4 col-xs-4 align-center"><a class="cbtn" href="#">UPDATE SHOPPING CART</a></div> --}}
-												<div class="col-md-4 col-sm-4 col-xs-4 pull-right"><a class="cbtn" href="#">Tiếp tục mua hàng</a></div>
+												<div class="col-md-4 col-sm-4 col-xs-4 pull-right"><a class="cbtn" href="{{ route('home') }}">Tiếp tục mua hàng</a></div>
 											</div>
 										</td>
 									</tr>

@@ -25,6 +25,7 @@
 		<div class="container wrapper my-4">    
             <div class="row cart-body">
                 <form class="form-horizontal" method="post" action="">
+                @csrf
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
                     <!--REVIEW ORDER-->
                     <div class="panel panel-info">
@@ -78,19 +79,15 @@
                                 <div class="col-md-12"><strong>Số điện thoại:</strong></div>
                                 <div class="col-md-12"><input type="text" name="phone" class="form-control" value="" /></div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-md-12"><strong>Email:</strong></div>
-                                <div class="col-md-12"><input type="text" name="email" class="form-control" value="{{ get_data_user('web', 'email') }}" /></div>
-							</div>
 							<div class="form-group">
                                 <div class="col-md-12"><strong>Ghi chú:</strong></div>
                                 <div class="col-md-12">
-									<textarea name="note" id="" cols="30" rows="4" class="form-control"></textarea>
+									<textarea name="message" cols="30" rows="4" class="form-control"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
                                 <div class="col-md-12">
-									<button type="button" class="btn btn-success">Xác nhận thông tin</button>
+									<button type="submit" class="btn btn-success">Xác nhận thông tin</button>
 								</div>
                             </div>
                         </div>

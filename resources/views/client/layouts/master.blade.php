@@ -37,6 +37,7 @@
 		{!! Assets::renderFooter() !!}
 
 
+		@stack('clientAjax')
 		<script src="/assets/admin/js/toastr.min.js"></script>
 		
 		@if (session('success'))

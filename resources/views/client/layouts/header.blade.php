@@ -117,13 +117,13 @@
                                 @if (Cart::count() > 0)
                                 <div class="restrain small-cart-content">
                                     <ul class="cart-list">
-                                        @foreach (Cart::content() as $item)
+                                        @foreach (Cart::content() as $key => $item)
                                             <li>
                                                 <a class="sm-cart-product" href="#">
                                                     <img src="/img/upload/product/{{ $item->options->img }}" alt="">
                                                 </a>
                                                 <div class="small-cart-detail">
-                                                    <a class="remove" href="#"><i class="fa fa-times-circle"></i></a>
+                                                    <a class="remove" href="{{ route('del.cart', $key) }}"><i class="fa fa-times-circle"></i></a>
                                                     <a class="small-cart-name" href="#">{{ $item->name }}</a>
                                                     <span class="quantitys"><strong>{{ $item->qty }}</strong>x<span>{{ number_format($item->price, 0, ',', '.') }}₫</span></span>
                                                 </div>

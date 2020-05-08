@@ -773,18 +773,21 @@ span.amount {
     display: inline-block;
     line-height: 22px;
 }
+h1.product-name,
 h2.product-name {
     margin: 0 0 5px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+h1.product-name,
 h2.product-name a{
 	font-size: 14px;
 	font-weight: 700;
 	font-family: Montserrat;
 	color: #3f3f3f;
 }
+h1.product-name a:hover,
 h2.product-name a:hover{color: #c2a476}
 span.old-price{
 	color: #909295;
@@ -1077,7 +1080,6 @@ span.old-price {
 .testimonial-area{
 	text-align: center;
 	padding: 60px 0 50px;
-	background: #f4f4f4
 }
 .crusial-content span{
     padding-top: 10px;
@@ -1895,14 +1897,16 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
 	color: #fff;
 	background-color: #c2a476;
 }
+.product-list-wrapper h1.product-name a,
 .product-list-wrapper h2.product-name a {
     font-size: 18px;
     letter-spacing: 1.5px;
-    font-weight: 400;
 	color: 000000;
 }
+.product-list-wrapper h1.product-name a:hover,
 .product-list-wrapper h2.product-name a:hover {color: #c2a476;}
 .product-list-wrapper .product-content{text-align: left;}
+.product-list-wrapper h1.product-name,
 .product-list-wrapper h2.product-name {
     margin: 20px 0 5px;
     line-height: 15px;
@@ -1913,11 +1917,12 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
     margin-bottom: 15px;
     margin-top: 10px;
 }
-.pro-rating a {
-    color: #3f3f3f;
-	font-size: 12px;
+.pro-rating {margin-bottom: 10px;}
+.pro-rating i {
+    color: #161616;
+    font-size: 16px;
+    cursor: pointer;
 }
-.pro-rating a:hover {color: #c2a476;}
 .price-boxes {
     padding: 10px 15px 10px 0;
 }
@@ -2240,6 +2245,9 @@ margin-bottom: 10px;}
 article.blog-post-wrapper.item-post .player {
     margin: 50px 0 0 0;
 }
+.product-tab-content {
+    overflow: hidden;
+}
 .product-tab-content h3 {
     margin-top: 20px;
 }
@@ -2250,6 +2258,11 @@ article.blog-post-wrapper.item-post .player {
     padding-top: 5px;
     font-size: 14px;
     letter-spacing: inherit;
+}
+.product-tab-content img {
+    margin: 10px auto;
+    text-align: center;
+    display: block;
 }
 /* ------------------------------------------
 19. Checkout Page area
@@ -3243,4 +3256,23 @@ input#rememberme {
 .checkout-total{
     color: #B12704;
     font-weight: 700;
+}
+.text-error p {
+    margin: 6px 0 0 0 ;
+}
+.jumbotron {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    margin: 80px 0;
+}
+.noti-rating{
+    font-size: 18px;
+    color: rgb(83, 83, 83);
+    margin-bottom: 20px;
+}
+.login-rating{
+    color: #E10C00;
 }

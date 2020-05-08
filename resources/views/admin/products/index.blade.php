@@ -71,19 +71,29 @@
         </thead>
         <tbody>
           @foreach ($products as $key => $value)
+            <?php
+              $average = 0;
+              if ($value->star_number){
+                $average = round($value->star_total / $value->star_number, 2);
+              }
+            ?>
             <tr class="rowTable{{$value->id}}">
               <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
               <td>
                 {{ $value->name }}
                 <ul class="product-list">
                   <li>
+                    <span>Đánh giá: </span>
                     <span>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
+                      @for ($i = 1; $i <= 5; $i++)
+                        @if ($i <= $average)
+                          <i class="fa fa-star"></i>
+                        @else
+                          <i class="far fa-star"></i>
+                        @endif
+                      @endfor
                     </span>
+                    <span> {{ $average }}</span>
                   </li>
                   <li>
                     <span>Số lượng: {{ $value->quantity }}</span>

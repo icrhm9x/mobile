@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\View;
 use Cart;
 use Carbon\Carbon;
@@ -75,7 +76,7 @@ class CartController extends Controller
         }
     }
 
-    public function saveInfoOrder(Request $request)
+    public function saveInfoOrder(OrderRequest $request)
     {
         $totalMoney = str_replace('.', '', Cart::subtotal(0,',','.'));
         $orderId = Order::insertGetId([
@@ -92,12 +93,17 @@ class CartController extends Controller
         if($orderId) {
             $products = Cart::content();
             foreach($products as $product) {
+                if($product->options->promotion){
+                    $promotion = $product->options->promotion;
+                }else{
+                    $promotion = 0;
+                }
                 OrderDetail::insert([
                     'idOrder' => $orderId,
                     'idProduct' => $product->id,
                     'quantity' => $product->qty,
                     'price' => $product->options->old_price,
-                    'promotion' => $product->options->promotion,
+                    'promotion' => $promotion,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);

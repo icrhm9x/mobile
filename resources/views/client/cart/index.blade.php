@@ -37,7 +37,7 @@
 										<th>Giá</th>
 										<th>Số lượng</th>
 										<th>Thành tiền</th>
-										<th>Chỉnh sửa</th>
+										<th>Xóa</th>
 									</tr>
 								</thead>
 								<tbody>

@@ -27,6 +27,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('getprdtype', 'AjaxProductController@getPrdType');
 
     Route::get('order', 'OrderController@getOrder')->name('order.index');
+    Route::delete('order/{id}', 'OrderController@destroy');
+
+    Route::get('orderDetail/{id}', 'OrderDetailController@show');
 
 });
 
@@ -53,11 +56,16 @@ Route::group(['namespace' => 'Client'], function () {
         Route::get('', 'CartController@getList')->name('list.cart');
         Route::get('add/{id}', 'CartController@addProduct')->name('add.cart');
         Route::get('del/{id}', 'CartController@delProduct')->name('del.cart');
+
         Route::group(['middleware' => 'CheckLoginUser'], function () {
             Route::get('thanh-toan', 'CartController@checkout')->name('checkout');
             Route::post('thanh-toan', 'CartController@saveInfoOrder');
             Route::get('thanh-cong', 'CartController@complete')->name('complete');
         });
+    });
+    
+    Route::group(['prefix' => 'ajax', 'middleware' => 'CheckLoginUser'], function () {
+        Route::post('danh-gia/{id}', 'RatingController@saveRating')->name('post.rating');
     });
 
     Route::get('{c_slug}', 'CategoryController@list')->name('get.category');

@@ -62,22 +62,27 @@
                     <!--SHIPPING METHOD-->
                     <div class="panel panel-info">
                         <div class="panel-heading">Thông tin thanh toán</div>
-                        <div class="panel-body">
+                        <div class="panel-body text-error">
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Tên người mua:</strong></div>
                                 <div class="col-md-12">
                                     <input type="text" name="name" class="form-control" value="{{ get_data_user('web', 'name') }}" />
+                                    {{ notifyError($errors,'name') }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Địa chỉ:</strong></div>
                                 <div class="col-md-12">
                                     <input type="text" name="address" class="form-control" value="" />
+                                    {{ notifyError($errors,'address') }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12"><strong>Số điện thoại:</strong></div>
-                                <div class="col-md-12"><input type="text" name="phone" class="form-control" value="" /></div>
+                                <div class="col-md-12">
+                                    <input type="text" name="phone" class="form-control" value="" />
+                                    {{ notifyError($errors,'phone') }}
+                            </div>
                             </div>
 							<div class="form-group">
                                 <div class="col-md-12"><strong>Ghi chú:</strong></div>

@@ -20,8 +20,10 @@ class ProductController extends Controller
     {
         \Assets::addStyles(['jquery-ui']);
         $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->firstOrFail();
+        $newPrd = Product::orderByDesc('id')->limit(8)->get();
         $data = [
-            'product' => $product
+            'product' => $product,
+            'newPrd' => $newPrd
         ];
         return view('client.products.detail', $data);
     }

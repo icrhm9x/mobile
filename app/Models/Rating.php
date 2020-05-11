@@ -11,4 +11,12 @@ class Rating extends Model
     protected $fillable =  [
         'idProduct', 'idUser', 'number', 'content',
     ];
+    
+    public function User(){
+        return $this->belongsTo('App\Models\User', 'idUser', 'id');
+    }
+
+    public function Product(){
+        return $this->belongsTo('App\Models\Product', 'idProduct', 'id');
+    }
 }

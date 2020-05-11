@@ -78,12 +78,12 @@
 
     @if (session('success'))
       <script type="text/javascript">
-        toastr.success('{{ session('success') }}', "Thông báo", {timeOut: 1500});
+        toastr.success('{{ session('success') }}', "Thông báo", {timeOut: 3000});
       </script>        
     @endif
     @if (session('error'))
       <script type="text/javascript">
-        toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 1500});
+        toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 3000});
       </script>        
     @endif
   </body>

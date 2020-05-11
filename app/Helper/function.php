@@ -22,30 +22,35 @@
 			return $str;
 	}
 	function utf8tourl($text){
+
+		$text = utf8convert($text);
+		
         // replace non letter or digits by -
-		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
-
-		// transliterate
-		$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-		// remove unwanted characters
-		$text = preg_replace('~[^-\w]+~', '', $text);
+		$text = preg_replace('#[^\\pL\d]+#u', '-', $text);
 
 		// trim
 		$text = trim($text, '-');
 
-		// remove duplicate -
-		$text = preg_replace('~-+~', '-', $text);
+		// transliterate
+		if (function_exists('iconv'))
+		{
+			$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+		}
 
 		// lowercase
 		$text = strtolower($text);
 
-		if (empty($text)) {
+		// remove unwanted characters
+		$text = preg_replace('#[^-\w]+#', '', $text);
+
+		if (empty($text))
+		{
 			return 'n-a';
 		}
 
 		return $text;
 	}
+
 	if (!function_exists('notifyError')) {
 		function notifyError($errors, $name)
 		{

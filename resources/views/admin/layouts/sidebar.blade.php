@@ -30,10 +30,20 @@
       <i class="fab fa-battle-net"></i>
       <span>Sản phẩm</span></a>
     </li>
+    <li class="nav-item {{ (Request::is('admin/rating') ? 'active' : '') }}">
+      <a class="nav-link" href="{{ route('rating.index') }}">
+      <i class="fas fa-star-half-alt"></i>
+      <span>Đánh giá</span></a>
+    </li>
     <li class="nav-item {{ (Request::is('admin/order') ? 'active' : '') }}">
       <a class="nav-link" href="{{ route('order.index') }}">
       <i class="fas fa-clipboard-list"></i>
       <span>Đơn hàng</span></a>
+    </li>
+    <li class="nav-item {{ (Request::is('admin/news') ? 'active' : '') }}">
+      <a class="nav-link" href="{{ route('news.index') }}">
+      <i class="far fa-newspaper"></i>
+      <span>Tin tức</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">

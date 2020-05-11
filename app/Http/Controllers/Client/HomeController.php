@@ -6,17 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
+use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
     public function index()
     {
         \Assets::addStyles(['jquery-ui', 'nivo-slider', 'preview'])->addScripts(['Nivo-slider', 'home']);
@@ -24,10 +18,12 @@ class HomeController extends Controller
         $bestSellers = $product->orderByDesc('purchase_number')->limit('8')->get();
         $promotion = $product->where('promotion', '>', 0)->orderByDesc('promotion')->limit('8')->get();
         $newprds = $product->orderByDesc('id')->limit('8')->get();
+        $news = News::orderByDesc('id')->limit(3)->get();
         $data = [
             'bestSellers' => $bestSellers,
             'promotion' => $promotion,
-            'newprds' => $newprds
+            'newprds' => $newprds,
+            'news' => $news
         ];
         return view('client.home.index', $data);
     }

@@ -7,15 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
-use Illuminate\Support\Facades\View;
 
 class ProductTypeController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
     public function list(Request $request,$c_slug, $prdType_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);

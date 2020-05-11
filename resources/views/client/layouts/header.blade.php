@@ -37,18 +37,7 @@
                             @else
                             <li class="expand"><a href="#">Sản phẩm</a></li>
                             @endif
-                            <li class="expand"><a href="shop-list.html">Tin tức</a>
-                                <div class="restrain mega-menu megamenu2">
-                                    <span>
-                                        <a class="mega-menu-title" href="shop-grid.html">Rings</a>
-                                        <a href="shop-grid.html">Coats & Jackets</a>
-                                    </span>
-                                    <span>
-                                        <a class="mega-menu-title" href="shop-grid.html">Dresses</a>
-                                        <a href="shop-grid.html">Ankle Boots</a>
-                                    </span>
-                                </div>
-                            </li>
+                            <li class="expand"><a href="{{ route('get.list.news') }}">Tin tức</a></li>
                             <li class="expand"><a href="{{ route('get.about') }}">Giới thiệu</a></li>
                             <li class="expand"><a href="{{ route('get.contact') }}">Liên hệ</a></li>
                         </ul>

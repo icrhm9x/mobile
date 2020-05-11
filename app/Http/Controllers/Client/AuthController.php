@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -75,7 +69,7 @@ class AuthController extends Controller
     {
         if(Auth::check()){
             Auth::logout();
-            return redirect()->route('home')->with('success','Đăng xuất thành công');
+            return redirect()->back()->with('success','Đăng xuất thành công');
         }
     }
 }

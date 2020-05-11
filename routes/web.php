@@ -14,22 +14,28 @@
 
 Route::group(['prefix' => 'admin'], function () {
 
-    Route::get('/', function () {
-        return view('admin.index');
-    });
+    Route::get('/', 'HomeController@show');
 
-    Route::resource('category', 'CategoryController');
+    
 
-    Route::resource('productType', 'ProductTypeController');
+    Route::resource('category', 'CategoryController')->except(['create']);
 
-    Route::resource('product', 'ProductController');
+    Route::resources([
+        'productType' => 'ProductTypeController',
+        'product' => 'ProductController',
+        'news' => 'NewsController'
+    ]);
 
     Route::get('getprdtype', 'AjaxProductController@getPrdType');
+
+    Route::get('rating', 'RatingController@show')->name('rating.index');
+    Route::delete('rating/{id}', 'RatingController@destroy');
 
     Route::get('order', 'OrderController@getOrder')->name('order.index');
     Route::delete('order/{id}', 'OrderController@destroy');
 
     Route::get('orderDetail/{id}', 'OrderDetailController@show');
+    
 
 });
 
@@ -67,6 +73,8 @@ Route::group(['namespace' => 'Client'], function () {
     Route::group(['prefix' => 'ajax', 'middleware' => 'CheckLoginUser'], function () {
         Route::post('danh-gia/{id}', 'RatingController@saveRating')->name('post.rating');
     });
+
+    Route::get('tin-tuc', 'NewsController@show')->name('get.list.news');
 
     Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 

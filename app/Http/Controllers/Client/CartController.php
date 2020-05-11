@@ -9,18 +9,11 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Http\Requests\OrderRequest;
-use Illuminate\Support\Facades\View;
 use Cart;
 use Carbon\Carbon;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
     public function getList()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);

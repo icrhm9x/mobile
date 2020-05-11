@@ -975,8 +975,10 @@ span.sale-text{
     height: 100%;
 }
 .post-thumb-info {
+    position: relative;
     background: #fff;
     padding: 15px 20px;
+    height: 200px;
 }
 .post-time span, .post-time a {
     font-size: 10px;
@@ -995,7 +997,8 @@ span.sale-text{
     margin: 0 0 10px;
 }
 .read-more{
-    position: relative;
+    position: absolute;
+    bottom: 0;
     font-size: 11px;
     text-transform: uppercase;
     font-family: Montserrat;

@@ -47,7 +47,7 @@
 										<div class="pro-rating">
 											<?php
 											$average = 0;
-											if ($product->star_number){
+											if ($product->star_number != 0){
 												$average = round($product->star_total / $product->star_number, 2);
 											}
 											?>
@@ -110,7 +110,7 @@
 						  <!-- Nav tabs -->
 						<ul class="details-tab">
 							<li class="active"><a href="#home" data-toggle="tab">Bài viết</a></li>
-							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá (1)</a></li>
+							<li class=""><a href="#messages" data-toggle="tab"> Đánh giá ({{ $product->star_number }})</a></li>
 						</ul>
 						  <!-- Tab panes -->
 						<div class="tab-content">
@@ -122,58 +122,80 @@
 							<div role="tabpanel" class="tab-pane" id="messages">
 								<div class="single-post-comments col-md-6 col-md-offset-3">
 									<div class="comments-area">
-										<h3 class="comment-reply-title">1 đánh giá cho {{ $product->name }}</h3>
+										<h3 class="comment-reply-title">{{ $product->star_number }} đánh giá cho {{ $product->name }} ({{ $average }}<i class="fa fa-star"></i>)</h3>
 										<div class="comments-list">
 											<ul>
+												@forelse ($ratings as $item)
 												<li>
 													<div class="comments-details">
 														<div class="comments-list-img">
-															<img src="/assets/client/img/user-1.jpg" alt="">
+															<img style="width: 50px;" src="/img/upload/user/default-avatar.png" alt="">
 														</div>
 														<div class="comments-content-wrap">
 															<span>
-																<b><a href="#">Admin - </a></b>
-																<span class="post-time">October 6, 2014 at 1:38 am</span>
+																<b><a style="text-transform: capitalize;" href="#">{{ $item->User->name }} - </a></b>
+																<span class="post-time">{{ $item->created_at }}</span>
 															</span>
-															<p>Lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi.</p>
+															<p>
+																@for ($i = 1; $i <= 5; $i++)
+																	@if ($i <= $average)
+																	<i class="fa fa-star"></i>
+																	@else
+																	<i class="fa fa-star-o"></i>
+																	@endif
+																@endfor
+																{{ $item->content }}
+															</p>
 														</div>
 													</div>
-												</li>									
+												</li>
+												@empty
+												<p>chưa có đánh giá</p>
+												@endforelse
 											</ul>
 										</div>
 									</div>
 									<div class="comment-respond">
 										@if (Auth::check())
-										<h3 class="comment-reply-title">Thêm đánh giá</h3>
-										<span class="email-notes">Các trường bắt buộc được đánh dấu *</span>
-										<form action="{{ route('post.rating', $product->id) }}" method="POST">
-											@csrf
-											<div class="row">
-												<div class="col-md-12">
-													<p>Họ tên *</p>
-													<input type="text" name="name" value="{{ Auth::user()->name }}">
-												</div>
-												<div class="col-md-12">
-													<p>Email *</p>
-													<input type="email" name="email" value="{{ Auth::user()->email }}">
-												</div>
-												<div class="col-md-12">
-													<p>Đánh giá của bạn</p>
-													<div class="pro-rating">
-														@for ($i = 1; $i <= 5; $i++)
-															<i class="fa fa-star-o ratingJS" data-key="{{ $i }}"></i>
-														@endfor
+											@if ($count > 0)
+											<h3 class="comment-reply-title">Bạn đã đánh giá sản phẩm này</h3>
+											@else
+											<h3 class="comment-reply-title">Thêm đánh giá của bạn</h3>
+											<span class="email-notes">Các trường bắt buộc được đánh dấu *</span>
+											<form action="{{ route('post.rating', $product->id) }}" method="POST">
+												@csrf
+												<div class="row">
+													<div class="col-md-12">
+														<p>Họ tên *</p>
+														<input type="text" name="name" value="{{ Auth::user()->name }}">
+														{{ notifyError($errors,'name') }}
 													</div>
-													<input type="hidden" value="" class="number_rating" name="number">
+													<div class="col-md-12">
+														<p>Email *</p>
+														<input type="email" name="email" value="{{ Auth::user()->email }}">
+														{{ notifyError($errors,'email') }}
+													</div>
+													<div class="col-md-12">
+														<p>Đánh giá của bạn</p>
+														<div class="pro-rating">
+															@for ($i = 1; $i <= 5; $i++)
+																<i class="fa fa-star-o ratingJS" data-key="{{ $i }}"></i>
+															@endfor
+														</div>
+														<input type="hidden" value="" class="number_rating" name="number">
+														{{ notifyError($errors,'number') }}
+													</div>
+													<div class="col-md-12 comment-form-comment">
+														<textarea id="message" name="content" cols="30" rows="10"></textarea>
+														{{ notifyError($errors,'content') }}
+														<input type="submit" value="Gửi đánh giá">
+													</div>
 												</div>
-												<div class="col-md-12 comment-form-comment">
-													<textarea id="message" name="content" cols="30" rows="10"></textarea>
-													<input type="submit" value="Gửi đánh giá">
-												</div>
-											</div>
-										</form>
+											</form>
+											@endif
 										@else
-										<div class="noti-rating"><a class="login-rating" href="{{ route('get.login') }}">Đăng nhập</a> để đánh giá sản phẩm.</div>
+											<h3 class="comment-reply-title">Thêm đánh giá của bạn</h3>
+											<div class="noti-rating"><a class="login-rating" href="{{ route('get.login') }}">Đăng nhập</a></div>
 										@endif
 									</div>						
 								</div>

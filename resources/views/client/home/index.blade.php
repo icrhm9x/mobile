@@ -234,75 +234,28 @@
            </div>
            <div class="row">
                <div class="all-singlepost">
-                   <!-- single latestpost start -->
+                   @forelse ($news as $item)
                    <div class="col-md-4 col-sm-4 col-xs-12">
-                       <div class="single-post">
-                           <div class="post-thumb">
-                               <a href="#">
-                                   <img src="/img/upload/article/1.jpg" alt="" />
-                               </a>
-                           </div>
-                           <div class="post-thumb-info">
-                               <div class="post-time">
-                                   <a href="#">Beauty</a>
-                                   <span>/</span>
-                                   <span>Post by</span>
-                                   <span>BootExperts</span>
-                               </div>
-                               <div class="postexcerpt">
-                                   <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas...</p>
-                                   <a href="#" class="read-more">Read more</a>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <!-- single latestpost end -->
-                   <!-- single latestpost start -->
-                   <div class="col-md-4 col-sm-4 col-xs-12">
-                       <div class="single-post">
-                           <div class="post-thumb">
-                               <a href="#">
-                                   <img src="/img/upload/article/2.jpg" alt="" />
-                               </a>
-                           </div>
-                           <div class="post-thumb-info">
-                               <div class="post-time">
-                                   <a href="#">Fashion</a>
-                                   <span>/</span>
-                                   <span>Post by</span>
-                                   <span>BootExperts</span>
-                               </div>
-                               <div class="postexcerpt">
-                                   <p>Fusce ac odio odio. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus...</p>
-                                   <a href="#" class="read-more">Read more</a>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <!-- single latestpost end -->
-                   <!-- single latestpost start -->
-                   <div class="col-md-4 col-sm-4 col-xs-12">
-                       <div class="single-post">
-                           <div class="post-thumb">
-                               <a href="#">
-                                   <img src="/img/upload/article/4.jpg" alt="" />
-                               </a>
-                           </div>
-                           <div class="post-thumb-info">
-                               <div class="post-time">
-                                   <a href="#">Brunch Network</a>
-                                   <span>/</span>
-                                   <span>Post by</span>
-                                   <span>BootExperts</span>
-                               </div>
-                               <div class="postexcerpt">
-                                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt...</p>
-                                   <a href="#" class="read-more">Read more</a>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-                   <!-- single latestpost end -->
+                        <div class="single-post">
+                            <div class="post-thumb">
+                                <a href="#">
+                                    <img src="/img/upload/news/{{ $item->avatar }}" alt="" />
+                                </a>
+                            </div>
+                            <div class="post-thumb-info">
+                                <div class="post-time">
+                                    <a href="#">{{ $item->name }}</a>
+                                </div>
+                                <div class="postexcerpt">
+                                    <p>{{ $item->description }}</p>
+                                    <a href="#" class="read-more">Đọc tiếp</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   @empty
+                       <div>chưa có bài biết nào</div>
+                   @endforelse
                </div>
            </div>
        </div>

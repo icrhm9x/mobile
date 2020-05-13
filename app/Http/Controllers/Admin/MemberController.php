@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Http\Requests\MemberRequest;
 use File;
+use Hash;
 
 class MemberController extends Controller
 {
@@ -59,6 +60,7 @@ class MemberController extends Controller
                     if ($file->move('img/upload/member', $file_name)) {
                         $data = $request->all();
                         $data['avatar'] = $file_name;
+                        $data['password'] = Hash::make($request->password);
                         Member::create($data);
                         return redirect()->route('member.index')->with('success', 'Thêm thành viên thành công');
                     }
@@ -107,7 +109,11 @@ class MemberController extends Controller
     {
         $member = Member::find($id);
         $data = $request->all();
-
+        if($request->password){
+            $data['password'] = Hash::make($request->password);
+        }else{
+            $data['password'] = $member->password;
+        }
         if($request->status === NULL) {
             $data['status'] = 0;
         }

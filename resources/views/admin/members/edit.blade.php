@@ -33,12 +33,12 @@
                 </div>
                 <div class="form-group">
                     <label>Mật khẩu</label><span class="text-danger"> *</span>
-                    <input name="password" type="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ $member->password }}">
+                    <input name="password" type="password" class="form-control" placeholder="Nhập mật khẩu" value="">
                     {{ notifyError($errors,'password') }}
                 </div>
                 <div class="form-group">
                     <label>Nhập lại mật khẩu</label><span class="text-danger"> *</span>
-                    <input name="re_password" type="password" class="form-control" placeholder="Nhập mật khẩu" value="{{ $member->password }}">
+                    <input name="re_password" type="password" class="form-control" placeholder="Nhập mật khẩu" value="">
                     {{ notifyError($errors,'re_password') }}
                 </div>
                 <div class="form-group">

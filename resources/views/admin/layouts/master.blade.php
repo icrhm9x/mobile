@@ -61,8 +61,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
     </a>
-    <!-- Logout Modal-->
-    @include('admin.layouts.logout_modal')
     <!-- Bootstrap core JavaScript-->
     <script src="/assets/admin/vendor/jquery/jquery.min.js"></script>
     <script src="/assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -86,5 +84,10 @@
         toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 3000});
       </script>        
     @endif
+		@if (session('warning'))
+		<script type="text/javascript">
+			toastr.warning('{{ session('warning') }}', "Thông báo", {timeOut: 3000});
+		</script>        
+		@endif
   </body>
 </html>

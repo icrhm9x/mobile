@@ -26,7 +26,7 @@ class MemberRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:255',
             'email' => 'required|email|unique:members,email,'.($this->member ?? ''),
-            'password' => 'required|min:6|max:255',
+            'password' => ($this->member ? 'nullable' : 'required').'|min:6|max:255',
             're_password' => 'same:password',
             'avatar' => ($this->member ? 'nullable' : 'required').'|image',
         ];

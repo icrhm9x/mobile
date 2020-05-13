@@ -82,6 +82,8 @@ class AuthController extends Controller
         if(Auth::check()){
             Auth::logout();
             return redirect()->back()->with('success','Đăng xuất thành công');
+        }else{
+            return redirect()->back();
         }
     }
 }

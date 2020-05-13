@@ -21,6 +21,7 @@ class CreateMembersTable extends Migration
             $table->string('avatar');
             $table->tinyInteger('ruler')->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

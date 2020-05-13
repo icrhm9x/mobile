@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\ProductType;
-use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\News;
+use App\Http\Requests\NewsRequest;
 use File;
 
-class ProductController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,19 +17,11 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::with('Category:id,name','ProductType:id,name');
-        if($request->name != '') $products->where('name', 'like', '%'.$request->name.'%');
-        if($request->cate != '') $products->where('idCategory',$request->cate);
-        if($request->prdType != '') $products->where('idProductType',$request->prdType);
-        $products = $products->orderByDesc('id')->paginate(5);
-        $categories = Category::get();
-        $productTypes  = ProductType::get();
-        $data = [
-            'products' => $products,
-            'categories' => $categories,
-            'productTypes' => $productTypes
-        ];
-        return view('admin.products.index', $data);
+        $news = News::orderByDesc('id');
+        if(isset($request->name)) $news->where('name', 'like', '%'.$request->name.'%');
+        $news = $news->paginate(6);
+        
+        return view('admin.news.index', compact('news'));
     }
 
     /**
@@ -40,10 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::get();
-        $firstCat = Category::select('id')->first();
-        $productType  = ProductType::where('idCategory', $firstCat->id)->get();
-        return view('admin.products.create', ['category' => $category, 'productType' => $productType]);
+        return view('admin.news.create');
     }
 
     /**
@@ -52,10 +40,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(NewsRequest $request)
     {
-        if ($request->hasFile('img')) {
-            $file = $request->img;
+        if ($request->hasFile('avatar')) {
+            $file = $request->avatar;
             // lấy đuôi file
             $file_name = $file->getClientOriginalExtension();
             // lấy loại file
@@ -69,12 +57,12 @@ class ProductController extends Controller
 
                     $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
 
-                    if ($file->move('img/upload/product', $file_name)) {
+                    if ($file->move('img/upload/news', $file_name)) {
                         $data = $request->all();
                         $data['slug'] = utf8tourl($request->name);
-                        $data['img'] = $file_name;
-                        Product::create($data);
-                        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công');
+                        $data['avatar'] = $file_name;
+                        News::create($data);
+                        return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
                     }
                 } else {
                     return back()->with('error', 'Bạn không thể upload ảnh quá 5mb');
@@ -90,48 +78,45 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $product = Product::find($id);
-        return response()->json($product->name, 200);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        $categories = Category::get();
-        $productTypes = ProductType::whereIdcategory($product->idCategory)->get();
-        return view('admin.products.edit', ['product' => $product, 'categories' => $categories, 'productTypes' => $productTypes]);
+        $news = News::find($id);
+        return view('admin.news.edit', compact('news'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function update(NewsRequest $request, $id)
     {
-        $product = Product::find($id);
+        
+        $news = News::find($id);
         $data = $request->all();
         $data['slug'] = utf8tourl($request->name);
 
-        if($request->hot === NULL) {
-            $data['hot'] = 0;
+        if($request->status === NULL) {
+            $data['status'] = 0;
         }
-
-        if ($request->hasFile('img')) {
-            $file = $request->img;
+        if($request->hasFile('avatar')) {
+            $file = $request->avatar;
             // lấy đuôi file
             $file_name = $file->getClientOriginalExtension();
             // lấy loại file
@@ -145,10 +130,10 @@ class ProductController extends Controller
 
                     $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
 
-                    if ($file->move('img/upload/product', $file_name)) {
-                        $data['img'] = $file_name;
-                        if (File::exists('img/upload/product/' . $product->img)) {
-                            unlink('img/upload/product/' . $product->img);
+                    if ($file->move('img/upload/news', $file_name)) {
+                        $data['avatar'] = $file_name;
+                        if (File::exists('img/upload/news/' . $news->avatar)) {
+                            unlink('img/upload/news/' . $news->avatar);
                         }
                     }
                 } else {
@@ -158,25 +143,25 @@ class ProductController extends Controller
                 return back()->with('error', 'File bạn chọn không phải là hình ảnh');
             }
         } else {
-            $data['img'] = $product->img;
+            $data['avatar'] = $news->avatar;
         }
-        $product->update($data);
-        return redirect()->route('product.index')->with('success', 'Sửa sản phẩm thành công');
+        $news->update($data);
+        return redirect()->route('news.index')->with('success', 'Sửa bài viết thành công');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        if (File::exists('img/upload/product/' . $product->img)) {
-            unlink('img/upload/product/' . $product->img);
+        $news = News::find($id);
+        if (File::exists('img/upload/news/' . $news->avatar)) {
+            unlink('img/upload/news/' . $news->avatar);
         }
-        $product->delete();
+        $news->delete();
         return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

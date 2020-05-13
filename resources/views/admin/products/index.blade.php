@@ -66,7 +66,7 @@
             <th>Ảnh</th>
             <th>Trạng thái</th>
             <th>Nổi bật</th>
-            <th>Thao tác</th>
+            <th>Tùy chọn</th>
           </tr>
         </thead>
         <tbody>

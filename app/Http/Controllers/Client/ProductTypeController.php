@@ -7,9 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
+use Illuminate\Support\Facades\View;
 
 class ProductTypeController extends Controller
 {
+    public function __construct()
+    {
+        $category = Category::where('status', 1)->get();
+        View::share('category',$category);
+    }
+
     public function list(Request $request,$c_slug, $prdType_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -29,12 +36,21 @@ class ProductTypeController extends Controller
             }
         }
 
-        $gridPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(9);
-        $listPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(4);
+        if($request->orderby){
+            $orderby = $request->orderby;
+            switch($orderby)
+            {
+                case 'id_desc': $product->orderBy('id', 'DESC');break;
+                case 'id_asc': $product->orderBy('id', 'ASC');break;
+                case 'price_desc': $product->orderBy('price', 'DESC');break;
+                case 'price_asc': $product->orderBy('price', 'ASC');break;
+            }
+        }
+
+        $listPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(6);
         $data = [
             'cate' => $cate,
             'prdType' => $prdType,
-            'gridPrd' => $gridPrd,
             'listPrd' => $listPrd
         ];
         return view('client.productTypes.list', $data);

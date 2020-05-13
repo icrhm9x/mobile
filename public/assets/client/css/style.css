@@ -981,7 +981,7 @@ span.sale-text{
     height: 200px;
 }
 .post-time span, .post-time a {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 1.1px;
     color: #3f3f3f;
     text-transform: uppercase;

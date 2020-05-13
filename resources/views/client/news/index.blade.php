@@ -37,14 +37,14 @@
                                 <div class="single-product">								
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="product-img">
-                                            <a href="#">
+                                            <a href="{{ route('get.detail.news', [$item->slug]) }}">
                                                 <img class="primary-image" src="/img/upload/news/{{ $item->avatar }}" alt="">
                                             </a>
                                         </div>								
                                     </div>
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="product-content">
-                                            <h2 class="product-name"><a href="#">{{ $item->name }}</a></h2>
+                                            <h2 class="product-name"><a href="{{ route('get.detail.news', [$item->slug]) }}">{{ $item->name }}</a></h2>
                                             <div class="product-desc">
                                                 <p>{{ $item->description }}</p>
                                             </div>

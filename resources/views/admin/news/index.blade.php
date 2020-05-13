@@ -44,7 +44,7 @@
             <th>Mô tả</th>
             <th style="width:100px">Trạng thái</th>
             <th>Ngày tạo</th>
-            <th style="width:105px">Thao tác</th>
+            <th style="width:105px">Tùy chọn</th>
           </tr>
         </thead>
         <tbody>

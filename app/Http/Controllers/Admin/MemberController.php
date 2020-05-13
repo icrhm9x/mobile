@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\News;
-use App\Http\Requests\NewsRequest;
+use App\Models\Member;
+use App\Http\Requests\MemberRequest;
 use File;
 
-class NewsController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +17,10 @@ class NewsController extends Controller
      */
     public function index(Request $request)
     {
-        $news = News::orderByDesc('id');
-        if(isset($request->name)) $news->where('name', 'like', '%'.$request->name.'%');
-        $news = $news->paginate(6);
-        
-        return view('admin.news.index', compact('news'));
+        $members = Member::orderBy('ruler');
+        if(isset($request->name)) $members->where('name', 'like', '%'.$request->name.'%');
+        $members = $members->paginate(10);
+        return view('admin.members.index', compact('members'));
     }
 
     /**
@@ -30,7 +30,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('admin.members.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NewsRequest $request)
+    public function store(MemberRequest $request)
     {
         if ($request->hasFile('avatar')) {
             $file = $request->avatar;
@@ -56,12 +56,11 @@ class NewsController extends Controller
 
                     $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
 
-                    if ($file->move('img/upload/news', $file_name)) {
+                    if ($file->move('img/upload/member', $file_name)) {
                         $data = $request->all();
-                        $data['slug'] = utf8tourl($request->name);
                         $data['avatar'] = $file_name;
-                        News::create($data);
-                        return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
+                        Member::create($data);
+                        return redirect()->route('member.index')->with('success', 'Thêm thành viên thành công');
                     }
                 } else {
                     return back()->with('error', 'Bạn không thể upload ảnh quá 5mb');
@@ -70,7 +69,7 @@ class NewsController extends Controller
                 return back()->with('error', 'File bạn chọn không phải là hình ảnh');
             }
         } else {
-            return back()->with('error', 'Bạn chưa thêm ảnh minh họa cho sản phẩm');
+            return back()->with('error', 'Bạn chưa thêm ảnh đại diện');
         }
     }
 
@@ -93,8 +92,8 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $news = News::find($id);
-        return view('admin.news.edit', compact('news'));
+        $member = Member::find($id);
+        return view('admin.members.edit', compact('member'));
     }
 
     /**
@@ -104,12 +103,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(NewsRequest $request, $id)
+    public function update(MemberRequest $request, $id)
     {
-        
-        $news = News::find($id);
+        $member = Member::find($id);
         $data = $request->all();
-        $data['slug'] = utf8tourl($request->name);
 
         if($request->status === NULL) {
             $data['status'] = 0;
@@ -129,10 +126,10 @@ class NewsController extends Controller
 
                     $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
 
-                    if ($file->move('img/upload/news', $file_name)) {
+                    if ($file->move('img/upload/member', $file_name)) {
                         $data['avatar'] = $file_name;
-                        if (File::exists('img/upload/news/' . $news->avatar)) {
-                            unlink('img/upload/news/' . $news->avatar);
+                        if (File::exists('img/upload/member/' . $member->avatar)) {
+                            unlink('img/upload/member/' . $member->avatar);
                         }
                     }
                 } else {
@@ -142,10 +139,10 @@ class NewsController extends Controller
                 return back()->with('error', 'File bạn chọn không phải là hình ảnh');
             }
         } else {
-            $data['avatar'] = $news->avatar;
+            $data['avatar'] = $member->avatar;
         }
-        $news->update($data);
-        return redirect()->route('news.index')->with('success', 'Sửa bài viết thành công');
+        $member->update($data);
+        return redirect()->route('member.index')->with('success', 'Sửa thông tin thành công');
     }
 
     /**
@@ -156,11 +153,11 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        $news = News::find($id);
-        if (File::exists('img/upload/news/' . $news->avatar)) {
-            unlink('img/upload/news/' . $news->avatar);
+        $member = Member::find($id);
+        if (File::exists('img/upload/member/' . $member->avatar)) {
+            unlink('img/upload/member/' . $member->avatar);
         }
-        $news->delete();
+        $member->delete();
         return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

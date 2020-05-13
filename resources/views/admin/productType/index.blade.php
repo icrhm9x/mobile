@@ -24,7 +24,7 @@
             <th>slug</th>
             <th>Danh mục</th>
             <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th>Tùy chọn</th>
           </tr>
         </thead>
         <tbody id="dataTableJS">

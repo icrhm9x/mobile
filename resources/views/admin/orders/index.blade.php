@@ -22,7 +22,7 @@
             <th>Số điện thoại</th>
             <th>Tổng tiền</th>
             <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th>Tùy chọn</th>
           </tr>
         </thead>
         <tbody id="dataTableJS">

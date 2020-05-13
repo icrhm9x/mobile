@@ -23,7 +23,7 @@
             <th>Tên danh mục</th>
             <th>slug</th>
             <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th>Tùy chọn</th>
           </tr>
         </thead>
         <tbody id="dataTableJS">

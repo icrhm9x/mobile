@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Rating;
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $category = Category::where('status', 1)->get();
+        View::share('category',$category);
+    }
+
     public function detail($c_slug, $prdType_slug, $prd_slug)
     {
         \Assets::addStyles(['jquery-ui']);

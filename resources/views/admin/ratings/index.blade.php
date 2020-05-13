@@ -21,7 +21,7 @@
               <th>Sản phẩm</th>
               <th>Nội dung</th>
               <th>Rating</th>
-              <th>Thao tác</th>
+              <th>Tùy chọn</th>
             </tr>
           </thead>
           <tbody id="dataTableJS">

@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
+use Illuminate\Support\Facades\View;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $category = Category::where('status', 1)->get();
+        View::share('category',$category);
+    }
+
     public function list(Request $request, $c_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -28,11 +35,20 @@ class CategoryController extends Controller
             }
         }
 
-        $gridPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(9);
-        $listPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(4);
+        if($request->orderby){
+            $orderby = $request->orderby;
+            switch($orderby)
+            {
+                case 'id_desc': $product->orderBy('id', 'DESC');break;
+                case 'id_asc': $product->orderBy('id', 'ASC');break;
+                case 'price_desc': $product->orderBy('price', 'DESC');break;
+                case 'price_asc': $product->orderBy('price', 'ASC');break;
+            }
+        }
+
+        $listPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(6);
         $data = [
             'cate' => $cate,
-            'gridPrd' => $gridPrd,
             'listPrd' => $listPrd
         ];
         return view('client.categories.list', $data);

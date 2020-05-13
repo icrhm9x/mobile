@@ -12,9 +12,18 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $category = Category::where('status', 1)->get();
+        View::share('category',$category);
+    }
+    
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
+        if(Auth::check()){
+            return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
+        }
         return view('client.auth.register');
     }
     public function postRegister(Request $request)
@@ -52,6 +61,9 @@ class AuthController extends Controller
     public function getLogin()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
+        if(Auth::check()){
+            return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
+        }
         return view('client.auth.login');
     }
 

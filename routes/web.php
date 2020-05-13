@@ -12,7 +12,7 @@
 */
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
     Route::get('/', 'HomeController@show');
 
@@ -23,7 +23,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resources([
         'productType' => 'ProductTypeController',
         'product' => 'ProductController',
-        'news' => 'NewsController'
+        'news' => 'NewsController',
+        'member' => 'MemberController'
     ]);
 
     Route::get('getprdtype', 'AjaxProductController@getPrdType');
@@ -75,6 +76,7 @@ Route::group(['namespace' => 'Client'], function () {
     });
 
     Route::get('tin-tuc', 'NewsController@show')->name('get.list.news');
+    Route::get('tin-tuc/{n_slug}', 'NewsController@detail')->name('get.detail.news');
 
     Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 

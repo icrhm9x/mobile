@@ -40,7 +40,7 @@ class CategoryController extends Controller
     {
         $category = Category::create([
             'name' => $request->name,
-            'slug' => utf8tourl($request->name),
+            'slug' => str_slug($request->name),
             'status' => $request->status
         ]);
         return response()->json(['message' => 'Thêm mới thành công', 'category' => $category], 200);

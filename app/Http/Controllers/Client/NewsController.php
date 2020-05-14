@@ -19,7 +19,7 @@ class NewsController extends Controller
     public function show()
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        $news = News::orderByDesc('id')->paginate(6);
+        $news = News::orderByDesc('id')->paginate(5);
         return view('client.news.index', compact('news'));
     }
 

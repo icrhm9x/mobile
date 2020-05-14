@@ -8,10 +8,10 @@
     Version: 1.0
 
 -----------------------------------------------------------------------------------
-    
+
     CSS INDEX
     ===================
-	
+
 	1.  Theme Default CSS (body, link color, section etc)
 	2. header area
 		2.1  mainmenu area
@@ -216,7 +216,7 @@ body {
 .mainmenu ul li .mega-menu.megamenu3, .mainmenu ul li .mega-menu.megamenu4 {
     width: 500px;
 }
-.mainmenu ul li .megamenu3 span, 
+.mainmenu ul li .megamenu3 span,
 .mainmenu ul li .megamenu4 span{
 	width: 47%
 }
@@ -270,7 +270,7 @@ body {
 	padding:0 10px;
 }
 .mean-container .mean-nav ul li a:hover {
-	
+
 }
 .mean-container .mean-nav ul li a.mean-expand:hover {
 	background:none;
@@ -506,7 +506,7 @@ span.amount {
     border-color: #c2a476;
 	transition: .3s;
 }
-/*  2.6  dropdown menu 
+/*  2.6  dropdown menu
 /*----------------------------------------*/
 .dropps-menu {
     padding-left: 15px;
@@ -571,9 +571,9 @@ span.amount {
 .hm-1 .lft-pr {
     margin-left: 20%;
 }
-.clr .slider-content h2, 
-.clr .slider-content h3, 
-.clr .slider-content h4, 
+.clr .slider-content h2,
+.clr .slider-content h3,
+.clr .slider-content h4,
 .clr .slider-content a.btn-title{
 	color: #ffffff;
 	border-color: #ffffff;
@@ -751,7 +751,7 @@ span.amount {
 	color: #fff;
 }
 .single-product:hover .product-img a img.secondary-image{opacity:1}
-.product-img>a:before{ 
+.product-img>a:before{
 	background-color: #000;
 	content: "";
 	height: 100%;
@@ -867,7 +867,7 @@ span.sale-text{
 	opacity: 1;
 }
 .our-product-area .owl-theme .owl-controls .owl-buttons .owl-prev{ font-size: 0; color: transparent; background: none;  width: 26px;  float: left; position: relative;}
-.our-product-area .owl-theme .owl-controls .owl-buttons .owl-next{ font-size: 0; color: transparent; background: none; width: 26px; float: right;} 
+.our-product-area .owl-theme .owl-controls .owl-buttons .owl-next{ font-size: 0; color: transparent; background: none; width: 26px; float: right;}
 .our-product-area .owl-theme .owl-controls .owl-buttons div{
     margin: 0;
     padding: 0;
@@ -878,7 +878,7 @@ span.sale-text{
     filter: Alpha(Opacity=50);
     opacity: 1;
 }
-.our-product-area .owl-theme .owl-controls .owl-buttons >div:before{ 
+.our-product-area .owl-theme .owl-controls .owl-buttons >div:before{
 	content: "\f104";
 	display: inline-block;
 	font: normal normal normal 14px/1 FontAwesome;
@@ -890,7 +890,7 @@ span.sale-text{
 	float: left;
 	width: 100%;
 }
-.our-product-area .owl-theme .owl-controls .owl-buttons .owl-next:before{ 
+.our-product-area .owl-theme .owl-controls .owl-buttons .owl-next:before{
 	content: "\f105";
 }
 .our-product-area .owl-theme .owl-controls .owl-buttons .owl-prev:after{
@@ -898,7 +898,7 @@ span.sale-text{
 	height: 15px;
 	border-left: 1px solid #c2c2c2;
 	position: absolute;
-	top: 2px; 
+	top: 2px;
 	right: -1px;
 }
 .our-product-area .owl-theme .owl-controls .owl-buttons .owl-prev:hover:before,
@@ -1367,7 +1367,7 @@ span.old-price {
 .shopping-carts{position: relative;}
 .header-four .product-search.restrain{background: #ccc}
 .header-four .product-search input.form-control{
-	background: #ccc; 
+	background: #ccc;
 	color: #3f3f3f
 }
 .header-four .search-icon.fa.fa-search{padding-top: 37px;}
@@ -2066,7 +2066,7 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
     border: 0px;
     background: inherit;
 }
-.single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-prev, 
+.single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-prev,
 .single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-next {
 	text-align: center;
 	height: 28px;
@@ -2076,11 +2076,11 @@ aside.sidebar-content ul li a:hover{color: #c2a476;}
 	display: block;
     left: 30%;
 }
-.single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-prev:hover, 
+.single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-prev:hover,
 .single-zoom-thumb .bx-wrapper .bx-controls-direction a.bx-next:hover {
 	color: #c2a476;
 }
-.bx-controls-direction a.bx-next:before, 
+.bx-controls-direction a.bx-next:before,
 .bx-controls-direction a.bx-prev:before{
 	content: "\f104";
     font-family: 'FontAwesome';
@@ -3151,7 +3151,7 @@ padding:5px 25px 3px;
     outline: 0;
     line-height: 1;
 }
-.customer-register .form-action, 
+.customer-register .form-action,
 .customer-login .form-action{
 	background: #e0e0e0;
     border-bottom: 1px solid #d3d3d3;
@@ -3253,6 +3253,7 @@ input#rememberme {
 .my-4{
     margin: 40px auto;
 }
+
 .checkout-price{
     color: #B12704;
 }
@@ -3278,4 +3279,21 @@ input#rememberme {
 }
 .login-rating{
     color: #E10C00;
+}
+.area-title_search{
+    text-align: center;
+    padding: 28px 0;
+    position: relative;
+}
+.title_search{
+    margin: 0;
+    font-weight: 700;
+    font-size: 18px;
+    color: #3f3f3f;
+    background: #fff;
+    padding: 0 20px;
+    display: inline-block;
+    letter-spacing: 4px;
+    position: relative;
+    z-index: 1;
 }

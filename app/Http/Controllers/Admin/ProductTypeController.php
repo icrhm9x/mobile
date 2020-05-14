@@ -42,7 +42,7 @@ class ProductTypeController extends Controller
     {
         $category = Category::whereId($request->idCategory)->select('name')->first();
         $data = $request->all();
-        $data['slug'] = utf8tourl($request->name);
+        $data['slug'] = str_slug($request->name);
         $productType = ProductType::create($data);
         return response()->json(['message' => 'Thêm mới thành công','productType' => $productType, 'category' => $category],200);
     }
@@ -85,7 +85,7 @@ class ProductTypeController extends Controller
         $category = Category::whereId($request->idCategory)->select('name')->first();
         $productType = ProductType::find($id);
         $data = $request->all();
-        $data['slug'] = utf8tourl($request->name);
+        $data['slug'] = str_slug($request->name);
         $productType->update($data);
         return response()->json(['message' => 'Sửa thành công', 'productType' => $productType, 'category' => $category],200);
     }

@@ -20,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->integer('status')->default(0);
+            $table->string('code_active')->nullable()->index();
+            $table->string('code_reset')->nullable()->index();
+            $table->timestamp('time_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

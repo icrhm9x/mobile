@@ -2,30 +2,33 @@
 
 namespace App\Http\Controllers\Client;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\User;
-use Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RequestResetPassword;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
         $category = Category::where('status', 1)->get();
-        View::share('category',$category);
+        View::share('category', $category);
     }
-    
+
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
         }
         return view('client.auth.register');
     }
+
     public function postRegister(Request $request)
     {
         $this->validate(
@@ -50,7 +53,7 @@ class AuthController extends Controller
             ]
         );
         $data = $request->all();
-        $data['password'] = Hash::make($request->password);
+        $data['password'] = bcrypt($request->password);
         $user = User::create($data);
         if ($user->id) {
             return redirect()->route('post.login')->with('success', 'Đăng ký thành công');
@@ -61,7 +64,7 @@ class AuthController extends Controller
     public function getLogin()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
         }
         return view('client.auth.login');
@@ -77,12 +80,78 @@ class AuthController extends Controller
         }
     }
 
+    public function getForgotPassword()
+    {
+        \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
+        if (Auth::check()) {
+            return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
+        }
+        return view('client.auth.forgot');
+    }
+
+    public function codeForgotPassword(Request $request)
+    {
+        $email = $request->email;
+        $checkUser = User::whereEmail($email)->first();
+        if (!$checkUser) {
+            return redirect()->back()->with('error', 'Email không tồn tại');
+        }
+        $code = bcrypt(md5(time() . $email));
+        $checkUser->code_reset = $code;
+        $checkUser->time_code = Carbon::now();
+        $checkUser->save();
+
+        $url = route('get.reset.password', ['code' => $code, 'email' => $email]);
+        $data = [
+            'route' => $url
+        ];
+        Mail::send('client.email.index', $data, function ($message) use ($email) {
+            $message->to($email, 'Reset Password')->subject('Lấy lại mật khẩu');
+        });
+        return redirect()->back()->with('success',
+            'Link lấy lại mật khẩu đã được gửi vào email của bạn, vui lòng kiểm tra.');
+    }
+
+    public function getResetPassword(Request $request)
+    {
+        $code = $request->code;
+        $email = $request->email;
+        $checkUser = User::where([
+            'code_reset' => $code,
+            'email' => $email
+        ])->first();
+        if (!$checkUser) {
+            return redirect('/')->with('error', 'Đường dẫn lấy lại mật khẩu không đúng, vui lòng thử lại sau');
+        }
+        return view('client.auth.reset');
+    }
+
+    public function postResetPassword(RequestResetPassword $request)
+    {
+        if ($request->password) {
+            $code = $request->code;
+            $email = $request->email;
+            $checkUser = User::where([
+                'code_reset' => $code,
+                'email' => $email
+            ])->first();
+            if(!$checkUser) {
+                return redirect('/')->with('error', 'Đường dẫn lấy lại mật khẩu không đúng, vui lòng thử lại sau');
+            }
+            $checkUser->password = bcrypt($request->password);
+            $checkUser->code_reset = Null;
+            $checkUser->time_code = Null;
+            $checkUser->save();
+            return redirect()->route('get.login')->with('success', 'Đổi mật khẩu thành công');
+        }
+    }
+
     public function getLogout()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             Auth::logout();
-            return redirect()->back()->with('success','Đăng xuất thành công');
-        }else{
+            return redirect()->back()->with('success', 'Đăng xuất thành công');
+        } else {
             return redirect()->back();
         }
     }

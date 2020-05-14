@@ -11,6 +11,8 @@
 |
 */
 
+use UniSharp\LaravelFilemanager\Lfm;
+
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('login', 'AuthController@getLogin')->name('get.admin.login');
     Route::post('login', 'AuthController@postLogin')->name('post.admin.login');
@@ -21,8 +23,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'CheckLoginAdmin'], function () {
 
     Route::get('/', 'HomeController@show')->name('admin.home');
-
-    
 
     Route::resource('category', 'CategoryController')->except(['create']);
 
@@ -42,12 +42,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'Chec
     Route::delete('order/{id}', 'OrderController@destroy');
 
     Route::get('orderDetail/{id}', 'OrderDetailController@show');
-    
+
 
 });
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+    Lfm::routes();
 });
 
 
@@ -59,6 +59,12 @@ Route::group(['namespace' => 'Client'], function () {
 
     Route::get('dang-nhap', 'AuthController@getLogin')->name('get.login');
     Route::post('dang-nhap', 'AuthController@postLogin')->name('post.login');
+
+    Route::get('quen-mat-khau', 'AuthController@getForgotPassword')->name('get.forgot.password');
+    Route::post('quen-mat-khau', 'AuthController@codeForgotPassword')->name('code.forgot.password');
+
+    Route::get('doi-mat-khau', 'AuthController@getResetPassword')->name('get.reset.password');
+    Route::post('doi-mat-khau', 'AuthController@postResetPassword');
 
     Route::get('dang-xuat', 'AuthController@getLogout')->name('get.logout');
 
@@ -76,13 +82,15 @@ Route::group(['namespace' => 'Client'], function () {
             Route::get('thanh-cong', 'CartController@complete')->name('complete');
         });
     });
-    
+
     Route::group(['prefix' => 'ajax', 'middleware' => 'CheckLoginUser'], function () {
         Route::post('danh-gia/{id}', 'RatingController@saveRating')->name('post.rating');
     });
 
     Route::get('tin-tuc', 'NewsController@show')->name('get.list.news');
     Route::get('tin-tuc/{n_slug}', 'NewsController@detail')->name('get.detail.news');
+
+    Route::get('tim-kiem', 'SearchController@list')->name('get.list.search');
 
     Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 

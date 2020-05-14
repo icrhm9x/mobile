@@ -92,7 +92,7 @@ class CartController extends Controller
 
         if($orderId) {
             $products = Cart::content();
-            foreach($products as $product) {
+            foreach ($products as $product) {
                 if($product->options->promotion){
                     $promotion = $product->options->promotion;
                 }else{

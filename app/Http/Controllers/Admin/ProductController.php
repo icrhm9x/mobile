@@ -19,13 +19,19 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::with('Category:id,name','ProductType:id,name');
-        if($request->name != '') $products->where('name', 'like', '%'.$request->name.'%');
-        if($request->cate != '') $products->where('idCategory',$request->cate);
-        if($request->prdType != '') $products->where('idProductType',$request->prdType);
+        $products = Product::with('Category:id,name', 'ProductType:id,name');
+        if ($request->name != '') {
+            $products->where('name', 'like', '%' . $request->name . '%');
+        }
+        if ($request->cate != '') {
+            $products->where('idCategory', $request->cate);
+        }
+        if ($request->prdType != '') {
+            $products->where('idProductType', $request->prdType);
+        }
         $products = $products->orderByDesc('id')->paginate(5);
         $categories = Category::get();
-        $productTypes  = ProductType::get();
+        $productTypes = ProductType::get();
         $data = [
             'products' => $products,
             'categories' => $categories,
@@ -43,14 +49,14 @@ class ProductController extends Controller
     {
         $category = Category::get();
         $firstCat = Category::select('id')->first();
-        $productType  = ProductType::where('idCategory', $firstCat->id)->get();
+        $productType = ProductType::where('idCategory', $firstCat->id)->get();
         return view('admin.products.create', ['category' => $category, 'productType' => $productType]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProductRequest $request)
@@ -72,7 +78,7 @@ class ProductController extends Controller
 
                     if ($file->move('img/upload/product', $file_name)) {
                         $data = $request->all();
-                        $data['slug'] = utf8tourl($request->name);
+                        $data['slug'] = str_slug($request->name);
                         $data['img'] = $file_name;
                         Product::create($data);
                         return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công');
@@ -91,7 +97,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -103,7 +109,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -111,23 +117,24 @@ class ProductController extends Controller
         $product = Product::find($id);
         $categories = Category::get();
         $productTypes = ProductType::whereIdcategory($product->idCategory)->get();
-        return view('admin.products.edit', ['product' => $product, 'categories' => $categories, 'productTypes' => $productTypes]);
+        return view('admin.products.edit',
+            ['product' => $product, 'categories' => $categories, 'productTypes' => $productTypes]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Product $product
      * @return \Illuminate\Http\Response
      */
     public function update(StoreProductRequest $request, $id)
     {
         $product = Product::find($id);
         $data = $request->all();
-        $data['slug'] = utf8tourl($request->name);
+        $data['slug'] = str_slug($request->name);
 
-        if($request->hot === NULL) {
+        if ($request->hot === null) {
             $data['hot'] = 0;
         }
 
@@ -168,7 +175,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

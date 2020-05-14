@@ -49,7 +49,7 @@
                         <div class="article-content">
                             {!! $news->article !!}
                         </div>
-                        <span class="btv">Biên tập bởi Nguyễn Khắc Ngọc</span>
+                        <span class="btv">Biên tập bởi {{ $news->Member->name }}</span>
                         <div class="slidePS"></div>
                 </article>
             </div>

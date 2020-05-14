@@ -80,13 +80,13 @@
                                             <li><a href="shop-grid.html">Shop Grid</a></li>
                                             <li><a href="shop-list.html">Shop List</a></li>
                                             <li><a href="#">Product Details</a></li>
-                                        </ul>													
+                                        </ul>
                                     </li>
                                     <li><a href="{{ route('get.about') }}">Giới thiệu</a></li>
                                     <li><a href="{{ route('get.contact') }}">Liên hệ</a></li>
                                 </ul>
                             </nav>
-                        </div>						
+                        </div>
                     </div>
                 </div>
                 <!-- mobile menu end -->
@@ -135,9 +135,9 @@
                             <div class="search-icon fa fa-search"></div>
                             <div class="product-search restrain">
                                 <div class="container nopadding-right">
-                                    <form action="index.html" id="searchform" method="get">
+                                    <form action="{{ route('get.list.search') }}" id="searchform" method="get">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" maxlength="128" placeholder="Search product...">
+                                            <input type="text" name="key" class="form-control" maxlength="128" placeholder="Search product...">
                                             <span class="input-group-btn">
                                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                             </span>

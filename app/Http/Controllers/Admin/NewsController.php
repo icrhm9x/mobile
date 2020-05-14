@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Http\Requests\NewsRequest;
 use File;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -18,9 +19,11 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $news = News::orderByDesc('id');
-        if(isset($request->name)) $news->where('name', 'like', '%'.$request->name.'%');
+        if (isset($request->name)) {
+            $news->where('name', 'like', '%' . $request->name . '%');
+        }
         $news = $news->paginate(6);
-        
+
         return view('admin.news.index', compact('news'));
     }
 
@@ -37,7 +40,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(NewsRequest $request)
@@ -59,8 +62,9 @@ class NewsController extends Controller
 
                     if ($file->move('img/upload/news', $file_name)) {
                         $data = $request->all();
-                        $data['slug'] = utf8tourl($request->name);
+                        $data['slug'] = str_slug($request->name);
                         $data['avatar'] = $file_name;
+                        $data['idAuthor'] = Auth::guard('members')->user()->id;
                         News::create($data);
                         return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
                     }
@@ -78,7 +82,7 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -89,7 +93,7 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -101,21 +105,21 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(NewsRequest $request, $id)
     {
-        
+
         $news = News::find($id);
         $data = $request->all();
-        $data['slug'] = utf8tourl($request->name);
+        $data['slug'] = str_slug($request->name);
 
-        if($request->status === NULL) {
+        if ($request->status === null) {
             $data['status'] = 0;
         }
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $file = $request->avatar;
             // lấy đuôi file
             $file_name = $file->getClientOriginalExtension();
@@ -152,7 +156,7 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

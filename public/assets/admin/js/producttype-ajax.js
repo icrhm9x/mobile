@@ -11,13 +11,19 @@ $(document).ready(function() {
             dataType: "json",
             type: "get",
             success: function(data) {
-                let html = "";
-                $.each(data.category, function($key, $value) {
-                    html += "<option value=" + $value["id"] + ">";
-                    html += $value["name"];
-                    html += "</option>";
-                });
-                $(".idCatAddPrTypeJS").html(html);
+                if(data.check === 1) {
+                    let html = "";
+                    $.each(data.category, function($key, $value) {
+                        html += "<option value=" + $value["id"] + ">";
+                        html += $value["name"];
+                        html += "</option>";
+                    });
+                    $(".idCatAddPrTypeJS").html(html);
+                }else{
+                    alert('Bạn phải tạo Danh mục trước');
+                    window.location.href = '/admin/category';
+                }
+
             }
         });
     });

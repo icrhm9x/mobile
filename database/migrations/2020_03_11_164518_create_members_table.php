@@ -18,7 +18,7 @@ class CreateMembersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->tinyInteger('ruler')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->rememberToken();

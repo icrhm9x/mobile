@@ -28,8 +28,14 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
-        return response()->json(['category' => $category],200);
+        if(Category::count() > 0) {
+            $check = 1;
+            $category = Category::all();
+            return response()->json(['category' => $category, 'check' => $check],200);
+        }else{
+            $check = 0;
+            return response()->json(['check' => $check],200);
+        }
     }
 
     /**

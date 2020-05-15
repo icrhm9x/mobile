@@ -54,7 +54,7 @@
                 <td>{{ $value->id }}</td>
                 <td>{{ $value->name }}</td>
                 <td>{{ $value->email }}</td>
-                <td><img src="/img/upload/member/{{ $value->avatar }}" class="img-fluid" style="width:100px"></td>
+                <td><img src="/img/upload/member/{{ $value->avatar ? $value->avatar : 'default-avatar.png' }}" class="img-fluid" style="width:100px"></td>
                 <td>
                     @if ($value->ruler == 1)
                         {!! '<span class="rounded-0 badge badge-danger">Boss</span>' !!}

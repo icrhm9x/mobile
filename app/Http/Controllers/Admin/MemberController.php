@@ -134,7 +134,7 @@ class MemberController extends Controller
 
                     if ($file->move('img/upload/member', $file_name)) {
                         $data['avatar'] = $file_name;
-                        if (File::exists('img/upload/member/' . $member->avatar)) {
+                        if (File::exists('img/upload/member/' . $member->avatar && $member->avatar != Null)) {
                             unlink('img/upload/member/' . $member->avatar);
                         }
                     }

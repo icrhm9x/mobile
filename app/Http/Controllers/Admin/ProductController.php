@@ -47,10 +47,18 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Category::get();
-        $firstCat = Category::select('id')->first();
-        $productType = ProductType::where('idCategory', $firstCat->id)->get();
-        return view('admin.products.create', ['category' => $category, 'productType' => $productType]);
+        if (Category::count() > 0) {
+            if (ProductType::count() > 0) {
+                $category = Category::get();
+                $firstCat = Category::select('id')->first();
+                $productType = ProductType::where('idCategory', $firstCat->id)->get();
+                return view('admin.products.create', ['category' => $category, 'productType' => $productType]);
+            } else {
+                return redirect()->route('productType.index')->with('warning', 'Bạn cần tạo Loại sản phẩm trước');
+            }
+        } else {
+            return redirect()->route('category.index')->with('warning', 'Bạn cần tạo Danh mục trước');
+        }
     }
 
     /**

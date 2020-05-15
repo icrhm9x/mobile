@@ -19,13 +19,13 @@ class CreateProductsTable extends Migration
             $table->string('slug')->index();
             $table->text('description');
             $table->integer('quantity')->default(0);
-            $table->float('price');
-            $table->float('promotion')->default(0)->nullable();
+            $table->integer('price');
+            $table->integer('promotion')->default(0)->nullable();
             $table->string('img');
             $table->tinyInteger('hot')->default(0);
-            $table->integer('idProductType')->unsigned();        
+            $table->integer('idProductType')->unsigned();
             $table->foreign('idProductType')->references('id')->on('product_types')->onDelete('cascade');
-            $table->integer('idCategory')->unsigned();        
+            $table->integer('idCategory')->unsigned();
             $table->foreign('idCategory')->references('id')->on('categories')->onDelete('cascade');
             $table->integer('status')->default(0);
             $table->timestamps();

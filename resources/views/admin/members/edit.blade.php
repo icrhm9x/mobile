@@ -76,7 +76,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/member/{{ $member->avatar }}" style="width: 250px">
+                    <img id="output_img" src="/img/upload/member/{{ $member->avatar ? $member->avatar : 'default-avatar.png' }}" style="width: 250px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">

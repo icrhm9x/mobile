@@ -18,48 +18,71 @@ class CartController extends Controller
     public function __construct()
     {
         $category = Category::where('status', 1)->get();
-        View::share('category',$category);
+        View::share('category', $category);
     }
 
     public function getList()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if(Cart::count() > 0) {
+        if (Cart::count() > 0) {
             $cart = Cart::content();
             return view('client.cart.index', compact('cart'));
-        }else{
+        } else {
             return redirect()->route('home')->with('warning', 'Giỏ hàng của bạn chưa có sản phẩm nào');
         }
     }
 
-    public function addProduct($id, Request $request)
+    public function addCart($id, Request $request)
     {
         $product = Product::findOrFail($id);
 
-        if($product->status == 3) {
+        if ($product->status == 3) {
             return redirect()->back()->with('warning', 'Sản phẩm đang tạm thời hết hàng');
-        } elseif($product->status == 2) {
+        } elseif ($product->status == 2) {
             return redirect()->back()->with('warning', 'Sản phẩm sắp ra mắt');
         }
 
-        if($request->qty) {
+        if ($request->qty) {
             $qty = $request->qty;
-        }else{
+        } else {
             $qty = 1;
         }
 
-        if($product->promotion > 0){
+        if ($product->promotion > 0) {
             $price = $product->price - $product->promotion;
-        }else{
+        } else {
             $price = $product->price;
         }
 
-        $cart = ['id'=>$id, 'name'=>$product->name, 'qty'=>$qty, 'price'=>$price, 'options'=>['img'=>$product->img, 'old_price'=>$product->price, 'promotion'=>$product->promotion]];
+        $cart = [
+            'id' => $id,
+            'name' => $product->name,
+            'qty' => $qty,
+            'price' => $price,
+            'options' => ['img' => $product->img, 'old_price' => $product->price, 'promotion' => $product->promotion]
+        ];
         Cart::add($cart);
-        return redirect()->back()->with('success', 'Sản phẩm '.$product->name.' đã được thêm vào giỏ hàng');
+        return redirect()->back()->with('success', 'Sản phẩm ' . $product->name . ' đã được thêm vào giỏ hàng');
     }
 
-    public function delProduct($key)
+    public function updateCart(Request $request)
+    {
+        if($request->key && $request->quantity) {
+            $id = $request->id;
+            $key = $request->key;
+            $quantity = $request->quantity;
+            $product = Product::whereId($id)->first();
+            if($quantity > $product->quantity){
+                return response()->json(['code' => 400], 200);
+            }
+            Cart::update($key, $quantity);
+            $cart = Cart::content();
+            $cartComponent = view('client.cart.components.cart_component', compact('cart'))->render();
+            return response()->json(['cartComponent' => $cartComponent, 'code' => 200], 200);
+        }
+    }
+
+    public function delCart($key)
     {
         Cart::remove($key);
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng');
@@ -68,17 +91,17 @@ class CartController extends Controller
     public function checkout()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if(Cart::count() > 0) {
+        if (Cart::count() > 0) {
             $cart = Cart::content();
             return view('client.cart.checkout', compact('cart'));
-        }else{
+        } else {
             return redirect()->back()->with('warning', 'Giỏ hàng của bạn chưa có sản phẩm nào');
         }
     }
 
     public function saveInfoOrder(OrderRequest $request)
     {
-        $totalMoney = str_replace('.', '', Cart::subtotal(0,',','.'));
+        $totalMoney = str_replace('.', '', Cart::subtotal(0, ',', '.'));
         $orderId = Order::insertGetId([
             'idUser' => get_data_user('web'),
             'name' => $request->name,
@@ -90,12 +113,12 @@ class CartController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        if($orderId) {
+        if ($orderId) {
             $products = Cart::content();
             foreach ($products as $product) {
-                if($product->options->promotion){
+                if ($product->options->promotion) {
                     $promotion = $product->options->promotion;
-                }else{
+                } else {
                     $promotion = 0;
                 }
                 OrderDetail::insert([
@@ -109,7 +132,7 @@ class CartController extends Controller
                 ]);
                 // trừ số sản phẩm đã mua
                 $prd = Product::find($product->id);
-                if($prd->quantity - $product->qty == 0) {
+                if ($prd->quantity - $product->qty == 0) {
                     $prd->status = 3;
                 }
                 $prd->quantity -= $product->qty;

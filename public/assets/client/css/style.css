@@ -2830,8 +2830,6 @@ a.proceedbtn {
 .cart-area-start .cart-table tbody tr td a{
 	font-size: 12px;
 	font-weight: 400;
-	text-transform: uppercase;
-	color: #3f3f3f;
 	font-family: 'Montserrat', sans-serif;
 }
 .cart-area-start .cart-table tbody tr td a:hover{color: #c2a376}

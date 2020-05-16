@@ -1,11 +1,11 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
     // add category
-    $(".btn-saveAddCatJS").click(function() {
+    $(".btn-saveAddCatJS").click(function () {
         let errorAddCatJS = $(".errorAddCatJS");
         let nameAddCatJS = $(".nameAddCatJS");
         let statusAddCatJS = $(".statusAddCatJS");
@@ -17,7 +17,7 @@ $(document).ready(function() {
             },
             type: "POST",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 errorAddCatJS.addClass("d-none");
                 toastr.success(data.message, "Thông báo", {
                     timeOut: 3000
@@ -50,7 +50,7 @@ $(document).ready(function() {
                 nameAddCatJS.val("");
                 statusAddCatJS.val("1");
             },
-            error: function(errors) {
+            error: function (errors) {
                 let error = errors.responseJSON.errors.name;
                 errorAddCatJS.removeClass("d-none");
                 errorAddCatJS.text(error);
@@ -59,7 +59,7 @@ $(document).ready(function() {
     });
 
     // edit category
-    $(this).on("click", ".editCatJS", function() {
+    $(this).on("click", ".editCatJS", function () {
         let statusEditCatJS = $(".statusEditCatJS");
         let id = $(this).data("id");
         $(".idEditCatJS").text(id);
@@ -67,7 +67,7 @@ $(document).ready(function() {
             url: "/admin/category/" + id + "/edit",
             dataType: "json",
             type: "get",
-            success: function(data) {
+            success: function (data) {
                 $(".titleEditCatJS").text(data.name);
                 $(".nameEditCatJS").val(data.name);
                 if (data.status == 1) {
@@ -79,7 +79,7 @@ $(document).ready(function() {
         });
     });
 
-    $(".btn-saveEditCatJS").click(function() {
+    $(".btn-saveEditCatJS").click(function () {
         let errorEditCatJS = $(".errorEditCatJS");
         let id = $(".idEditCatJS").text();
         $.ajax({
@@ -91,7 +91,7 @@ $(document).ready(function() {
             },
             type: "put",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 errorEditCatJS.addClass("d-none");
                 toastr.success(data.message, "Thông báo", {
                     timeOut: 3000
@@ -124,7 +124,7 @@ $(document).ready(function() {
                 $('.rowTable' + data.category.id).replaceWith(html);
                 $("#editCatModal").modal("hide");
             },
-            error: function(errors) {
+            error: function (errors) {
                 let error = errors.responseJSON.errors.name;
                 errorEditCatJS.removeClass("d-none");
                 errorEditCatJS.text(error);
@@ -132,17 +132,17 @@ $(document).ready(function() {
         });
     });
     // delete category
-    $(this).on("click", ".delCatJS", function() {
+    $(this).on("click", ".delCatJS", function () {
         $(".titleDelCatJS").text($(this).data("name"));
         $(".idDelCatJS").text($(this).data("id"));
     });
-    $(".btn-acceptDelCatJS").click(function() {
+    $(".btn-acceptDelCatJS").click(function () {
         let id = $(".idDelCatJS").text();
         $.ajax({
             url: "/admin/category/" + id,
             dataType: "json",
             type: "delete",
-            success: function(data) {
+            success: function (data) {
                 toastr.success(data.message, "Thông báo", {
                     timeOut: 3000
                 });

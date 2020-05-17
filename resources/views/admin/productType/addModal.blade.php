@@ -16,12 +16,15 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Danh mục</label>
                                 <select class="form-control idCatAddPrTypeJS" name="idCategory">
+                                    @foreach($category as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="font-weight-bold">Status</label>
+                                <label class="font-weight-bold">Trạng thái</label>
                                 <select class="form-control statusAddPrTypeJS" name="status">
-                                    <option value="1">Hiển Thị</option>
+                                    <option value="1" selected="selected">Hiển Thị</option>
                                     <option value="0">Không Hiển Thị</option>
                                 </select>
                             </div>
@@ -30,7 +33,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-saveAddPrTypeJS">Lưu</button>
+                <button type="button" class="btn btn-success btn-addPrTypeJS" data-url="{{ route('productType.store') }}">Lưu</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
             </div>
         </div>

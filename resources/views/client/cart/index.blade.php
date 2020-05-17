@@ -52,9 +52,13 @@
                     success: function (data) {
                         if (data.code === 200) {
                             $('.cart_wrapper').html(data.cartComponent);
-                            alert('Cập nhật thành công');
+                            toastr.success(data.message, "Thông báo", {
+                                timeOut: 3000
+                            });
                         } else if (data.code === 400) {
-                            alert('Số lượng sản phẩm không đủ, vui lòng liên hệ shop qua số điện thoại chăm sóc khách hàng');
+                            toastr.warning(data.message, "Thông báo", {
+                                timeOut: 3000
+                            });
                         }
                     }
                 });

@@ -5,12 +5,14 @@ $(document).ready(function () {
         }
     });
     // add category
-    $(".btn-saveAddCatJS").click(function () {
+    function addCategory(event) {
+        event.preventDefault();
+        let url = $(this).data('url');
         let errorAddCatJS = $(".errorAddCatJS");
         let nameAddCatJS = $(".nameAddCatJS");
         let statusAddCatJS = $(".statusAddCatJS");
         $.ajax({
-            url: "/admin/category",
+            url: url,
             data: {
                 name: nameAddCatJS.val(),
                 status: statusAddCatJS.val()
@@ -18,37 +20,15 @@ $(document).ready(function () {
             type: "POST",
             dataType: "json",
             success: function (data) {
-                errorAddCatJS.addClass("d-none");
-                toastr.success(data.message, "Thông báo", {
-                    timeOut: 3000
-                });
-                let html = "<tr class='rowTable" + data.category.id + "'>";
-                html += "<td>" + data.category.id + "</td>";
-                html += "<td>" + data.category.name + "</td>";
-                html += "<td>" + data.category.slug + "</td>";
-                if (data.category.status == 1) {
-                    html +=
-                        "<td><span class='rounded-0 badge badge-info'>Hiển thị</span></td>";
-                } else {
-                    html +=
-                        "<td><span class='rounded-0 badge badge-secondary'>Không hiển thị</span></td>";
+                if (data.code === 200) {
+                    $('.card-body').html(data.tableComponent);
+                    toastr.success(data.message, "Thông báo", {
+                        timeOut: 3000
+                    });
+                    nameAddCatJS.val('');
+                    statusAddCatJS.val(1);
+                    $("#addCatModal").modal("hide");
                 }
-                html += "<td>";
-                html +=
-                    "<button type='button' title='Sửa' data-toggle='modal' data-target='#editCatModal' class='btn btn-sm btn-outline-primary editCatJS' data-id='" +
-                    data.category.id +
-                    "'><i class='far fa-edit'></i></button>";
-                html +=
-                    " <button type='button' title='Xóa' data-toggle='modal' data-target='#delCatModal' class='btn btn-sm ml-2 btn-outline-danger delCatJS' data-id='" +
-                    data.category.id +
-                    "' data-name='" +
-                    data.category.name +
-                    "'><i class='far fa-trash-alt'></i></button>";
-                html += "</td>";
-                html += "</tr>";
-                $("#dataTableJS").append(html);
-                nameAddCatJS.val("");
-                statusAddCatJS.val("1");
             },
             error: function (errors) {
                 let error = errors.responseJSON.errors.name;
@@ -56,15 +36,18 @@ $(document).ready(function () {
                 errorAddCatJS.text(error);
             }
         });
-    });
+    }
+    $(this).on('click', '.btn-saveAddCatJS', addCategory);
 
     // edit category
-    $(this).on("click", ".editCatJS", function () {
+    function editCategory(event) {
+        event.preventDefault();
+        let url = $(this).data('url');
+        let id = $(this).data('id');
+        $('.idEditCatJS').val(id);
         let statusEditCatJS = $(".statusEditCatJS");
-        let id = $(this).data("id");
-        $(".idEditCatJS").text(id);
         $.ajax({
-            url: "/admin/category/" + id + "/edit",
+            url: url,
             dataType: "json",
             type: "get",
             success: function (data) {
@@ -77,13 +60,17 @@ $(document).ready(function () {
                 }
             }
         });
-    });
+    }
+    $(this).on('click', '.editCatJS', editCategory);
 
-    $(".btn-saveEditCatJS").click(function () {
+    //update category
+    function updateCategory(event) {
+        event.preventDefault();
+        let id =  $('.idEditCatJS').val();
+        let url = '/admin/category/' + id;
         let errorEditCatJS = $(".errorEditCatJS");
-        let id = $(".idEditCatJS").text();
         $.ajax({
-            url: "/admin/category/" + id,
+            url: url,
             data: {
                 name: $(".nameEditCatJS").val(),
                 status: $(".statusEditCatJS").val(),
@@ -92,37 +79,13 @@ $(document).ready(function () {
             type: "put",
             dataType: "json",
             success: function (data) {
-                errorEditCatJS.addClass("d-none");
-                toastr.success(data.message, "Thông báo", {
-                    timeOut: 3000
-                });
-                let html = "<tr class='rowTable" + data.category.id + "'>";
-                html += "<td>" + data.category.id + "</td>";
-                html += "<td>" + data.category.name + "</td>";
-                html += "<td>" + data.category.slug + "</td>";
-                if (data.category.status == 1) {
-                    html +=
-                        "<td><span class='rounded-0 badge badge-info'>Hiển thị</span></td>";
-                } else {
-                    html +=
-                        "<td><span class='rounded-0 badge badge-secondary'>Không hiển thị</span></td>";
-                }
-                html += "<td>";
-                html +=
-                    "<button type='button' title='Sửa' data-toggle='modal' data-target='#editCatModal' class='btn btn-sm btn-outline-primary editCatJS' data-id='" +
-                    data.category.id +
-                    "'><i class='far fa-edit'></i></button>";
-                html +=
-                    " <button type='button' title='Xóa' data-toggle='modal' data-target='#delCatModal' class='btn btn-sm ml-2 btn-outline-danger delCatJS' data-id='" +
-                    data.category.id +
-                    "' data-name='" +
-                    data.category.name +
-                    "'><i class='far fa-trash-alt'></i></button>";
-                html += "</td>";
-                html += "</tr>";
-
-                $('.rowTable' + data.category.id).replaceWith(html);
-                $("#editCatModal").modal("hide");
+                if(data.code === 200) {
+                    $('.card-body').html(data.tableComponent);
+                    toastr.success(data.message, "Thông báo", {
+                        timeOut: 3000
+                    });
+                    $("#editCatModal").modal("hide");
+                };
             },
             error: function (errors) {
                 let error = errors.responseJSON.errors.name;
@@ -130,25 +93,32 @@ $(document).ready(function () {
                 errorEditCatJS.text(error);
             }
         });
-    });
+    }
+    $(this).on('click', '.btn-updateCatJS', updateCategory);
+
     // delete category
     $(this).on("click", ".delCatJS", function () {
         $(".titleDelCatJS").text($(this).data("name"));
-        $(".idDelCatJS").text($(this).data("id"));
+        $(".idDelCatJS").val($(this).data("id"));
     });
-    $(".btn-acceptDelCatJS").click(function () {
-        let id = $(".idDelCatJS").text();
+    function delCategory(event) {
+        event.preventDefault();
+        let id = $(".idDelCatJS").val();
+        let url = "/admin/category/" + id;
         $.ajax({
-            url: "/admin/category/" + id,
+            url: url,
             dataType: "json",
             type: "delete",
             success: function (data) {
-                toastr.success(data.message, "Thông báo", {
-                    timeOut: 3000
-                });
-                $(".rowTable" + id).remove();
-                $("#delCatModal").modal("hide");
+                if(data.code === 200) {
+                    $('.card-body').html(data.tableComponent);
+                    toastr.success(data.message, "Thông báo", {
+                        timeOut: 3000
+                    });
+                    $("#delCatModal").modal("hide");
+                };
             }
         });
-    });
+    };
+    $(this).on('click', '.btn-acceptDelCatJS', delCategory);
 });

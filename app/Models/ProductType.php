@@ -13,10 +13,10 @@ class ProductType extends Model
     ];
 
     public function Category(){
-        return $this->belongsTo('App\Models\Category', 'idCategory', 'id');
+        return $this->belongsTo(Category::class, 'idCategory', 'id');
     }
 
     public function Product(){
-        return $this->hasMany('App\Models\Product', 'idProductType', 'id');
+        return $this->hasMany(Product::class, 'idProductType', 'id');
     }
 }

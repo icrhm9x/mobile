@@ -32,7 +32,7 @@
                                 <div class="cart-price">{{ number_format($item->price, 0, ',', '.') }}₫</div>
                             </td>
                             <td>
-                                <input class="quantity" type="number" value="{{ $item->qty }}" min="1" max="5">
+                                <input class="quantity" type="number" value="{{ $item->qty }}" min="1" max="10">
                             </td>
                             <td>
                                 <div class="cart-subtotal">{{ number_format($item->price*$item->qty, 0, ',', '.') }}₫
@@ -45,7 +45,6 @@
                     <tr>
                         <td class="actions-crt" colspan="7">
                             <div class="">
-                                {{-- <div class="col-md-4 col-sm-4 col-xs-4 align-center"><a class="cbtn" href="#">UPDATE SHOPPING CART</a></div> --}}
                                 <div class="col-md-4 col-sm-4 col-xs-4 pull-right"><a class="cbtn"
                                                                                       href="{{ route('home') }}">Tiếp
                                         tục mua hàng</a></div>

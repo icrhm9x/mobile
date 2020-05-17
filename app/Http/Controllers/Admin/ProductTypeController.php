@@ -17,8 +17,17 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productType = ProductType::with('Category:id,name')->orderBy('id', 'desc')->paginate(10);
-        return view('admin.productType.index', compact('productType'));
+        if(Category::count() > 0) {
+            $category = Category::all();
+            $productType = ProductType::with('Category:id,name')->orderBy('id', 'desc')->paginate(10);
+            $data = [
+                'category' => $category,
+                'productType' => $productType
+            ];
+            return view('admin.productType.index', $data);
+        }else{
+            return redirect()->route('category.index')->with('warning', 'Bạn phải tạo Danh mục trước');
+        }
     }
 
     /**
@@ -28,14 +37,7 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-        if(Category::count() > 0) {
-            $check = 1;
-            $category = Category::all();
-            return response()->json(['category' => $category, 'check' => $check],200);
-        }else{
-            $check = 0;
-            return response()->json(['check' => $check],200);
-        }
+        //
     }
 
     /**
@@ -46,11 +48,12 @@ class ProductTypeController extends Controller
      */
     public function store(StoreProductTypeRequest $request)
     {
-        $category = Category::whereId($request->idCategory)->select('name')->first();
         $data = $request->all();
         $data['slug'] = str_slug($request->name);
-        $productType = ProductType::create($data);
-        return response()->json(['message' => 'Thêm mới thành công','productType' => $productType, 'category' => $category],200);
+        ProductType::create($data);
+        $productType = ProductType::with('Category:id,name')->orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        return response()->json(['message' => 'Thêm mới thành công','tableComponent' => $tableComponent, 'code' => 200],200);
     }
 
     /**
@@ -68,47 +71,47 @@ class ProductTypeController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $productType = ProductType::find($id);
         $category = Category::where('status',1)->get();
-        return response()->json(['category' => $category, 'productType' => $productType],200);
+        $html = '';
+        foreach ($category as $value) {
+            if ($value->id == $productType->idCategory) {
+                $html .="<option value=".$value->id." selected='selected'>";
+            } else {
+                $html .="<option value=".$value->id.">";
+            }
+            $html .= $value->name;
+            $html .= "</option>";
+        }
+        return response()->json(['productType' => $productType, 'listCat' => $html],200);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(StoreProductTypeRequest $request, $id)
     {
-        $category = Category::whereId($request->idCategory)->select('name')->first();
         $productType = ProductType::find($id);
         $data = $request->all();
         $data['slug'] = str_slug($request->name);
         $productType->update($data);
-        return response()->json(['message' => 'Sửa thành công', 'productType' => $productType, 'category' => $category],200);
+        $productType = ProductType::with('Category:id,name')->orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        return response()->json(['message' => 'Sửa thành công', 'tableComponent' => $tableComponent, 'code' => 200],200);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $productType = ProductType::find($id);
-        if($productType->delete()){
-            return response()->json(['message' => 'Xóa thành công'],200);
-        }else{
-            return response()->json(['message' => 'Đã có lỗi xảy ra, vui lòng thử lại'],200);
-        }
+        $productType->delete();
+        $productType = ProductType::orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        return response()->json(['message' => 'Xóa thành công', 'tableComponent' => $tableComponent, 'code' => 200], 200);
     }
 }

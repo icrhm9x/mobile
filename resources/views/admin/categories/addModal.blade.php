@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-saveAddCatJS">Lưu</button>
+                <button type="button" class="btn btn-success btn-saveAddCatJS" data-url="{{ route('category.store') }}">Lưu</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
             </div>
         </div>

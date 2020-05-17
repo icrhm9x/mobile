@@ -73,12 +73,12 @@ class CartController extends Controller
             $quantity = $request->quantity;
             $product = Product::whereId($id)->first();
             if($quantity > $product->quantity){
-                return response()->json(['code' => 400], 200);
+                return response()->json(['message' => 'Số lượng sản phẩm không đủ, vui lòng liên hệ shop qua số điện thoại chăm sóc khách hàng', 'code' => 400], 200);
             }
             Cart::update($key, $quantity);
             $cart = Cart::content();
             $cartComponent = view('client.cart.components.cart_component', compact('cart'))->render();
-            return response()->json(['cartComponent' => $cartComponent, 'code' => 200], 200);
+            return response()->json(['message' => 'Cập nhật số lượng sản phẩm thành công', 'cartComponent' => $cartComponent, 'code' => 200], 200);
         }
     }
 

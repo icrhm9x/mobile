@@ -2,7 +2,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sửa loại sản phẩm: <span class="titleEditPrTypeJS"></span> #<span class="idEditPrTypeJS text-info"></h5>
+                <h5 class="modal-title">Sửa loại sản phẩm: <span class="titleEditPrTypeJS"></span></h5>
+                <input class="idEditPrTypeJS" type="hidden">
             </div>
             <div class="modal-body px-4">
                 <div class="row">
@@ -30,7 +31,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-saveEditPrTypeJS">Lưu</button>
+                <button type="button" class="btn btn-success btn-updatePrTypeJS">Lưu</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
             </div>
         </div>

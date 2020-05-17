@@ -2,7 +2,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Sửa danh mục <span class="titleEditCatJS text-info"></span> #<span class="idEditCatJS text-info"></span></h5>
+                <h5 class="modal-title">Sửa danh mục <span class="titleEditCatJS text-info"></span></h5>
+                <input class="idEditCatJS" type="hidden">
             </div>
             <div class="modal-body px-4">
                 <div class="row">
@@ -25,7 +26,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-saveEditCatJS">Lưu</button>
+                <button type="button" class="btn btn-success btn-updateCatJS">Lưu</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>

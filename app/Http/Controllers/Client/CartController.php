@@ -65,27 +65,39 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Sản phẩm ' . $product->name . ' đã được thêm vào giỏ hàng');
     }
 
-    public function updateCart(Request $request)
+    public function updateCart(Request $request, $key)
     {
-        if($request->key && $request->quantity) {
+        if ($request->id && $request->quantity) {
             $id = $request->id;
-            $key = $request->key;
             $quantity = $request->quantity;
             $product = Product::whereId($id)->first();
-            if($quantity > $product->quantity){
-                return response()->json(['message' => 'Số lượng sản phẩm không đủ, vui lòng liên hệ shop qua số điện thoại chăm sóc khách hàng', 'code' => 400], 200);
+            if ($quantity > $product->quantity) {
+                return response()->json([
+                    'message' => 'Số lượng sản phẩm không đủ, vui lòng liên hệ shop qua số điện thoại chăm sóc khách hàng',
+                    'code' => 400
+                ], 200);
             }
             Cart::update($key, $quantity);
             $cart = Cart::content();
             $cartComponent = view('client.cart.components.cart_component', compact('cart'))->render();
-            return response()->json(['message' => 'Cập nhật số lượng sản phẩm thành công', 'cartComponent' => $cartComponent, 'code' => 200], 200);
+            return response()->json([
+                'message' => 'Cập nhật số lượng sản phẩm thành công',
+                'cartComponent' => $cartComponent,
+                'code' => 200
+            ], 200);
         }
     }
 
     public function delCart($key)
     {
         Cart::remove($key);
-        return redirect()->back()->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng');
+        $cart = Cart::content();
+        $cartComponent = view('client.cart.components.cart_component', compact('cart'))->render();
+        return response()->json([
+            'message' => 'Sản phẩm đã được xóa khỏi giỏ hàng',
+            'cartComponent' => $cartComponent,
+            'code' => 200
+        ], 200);
     }
 
     public function checkout()

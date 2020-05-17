@@ -1,4 +1,4 @@
-<div class="container updateCartUrlJs" data-url="{{ route('update.cart') }}">
+<div class="container">
     <div class="area-title">
         <h2>Giỏ hàng của bạn</h2>
     </div>
@@ -38,8 +38,9 @@
                                 <div class="cart-subtotal">{{ number_format($item->price*$item->qty, 0, ',', '.') }}₫
                                 </div>
                             </td>
-                            <td><a href="" data-key="{{ $key }}" data-id="{{ $item->id }}" class="btn btn-primary cartUpdateJs">Cập nhật</a></td>
-                            <td><a href="{{ route('del.cart', $key) }}"><i class="fa fa-times"></i></a></td>
+                            <td><a href="{{ route('update.cart', $key) }}" data-id="{{ $item->id }}"
+                                   class="btn btn-primary cartUpdateJs">Cập nhật</a></td>
+                            <td><a href="{{ route('del.cart', $key) }}" class="btn btn-danger cartDelJs">Xóa</a></td>
                         </tr>
                     @endforeach
                     <tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\News;
@@ -11,10 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
+    use StorageImageTrait;
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
@@ -29,8 +29,6 @@ class NewsController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -39,51 +37,22 @@ class NewsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
     public function store(NewsRequest $request)
     {
-        if ($request->hasFile('avatar')) {
-            $file = $request->avatar;
-            // lấy đuôi file
-            $file_name = $file->getClientOriginalExtension();
-            // lấy loại file
-            $file_type = $file->getMimeType();
-            // kích thước file đơn vị byte
-            $file_size = $file->getSize();
-
-            if ($file_type == 'image/png' || $file_type == 'image/jpg' || $file_type == 'image/jpeg') {
-
-                if ($file_size <= 5242880) {
-
-                    $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
-
-                    if ($file->move('img/upload/news', $file_name)) {
-                        $data = $request->all();
-                        $data['slug'] = str_slug($request->name);
-                        $data['avatar'] = $file_name;
-                        $data['idAuthor'] = Auth::guard('members')->user()->id;
-                        News::create($data);
-                        return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
-                    }
-                } else {
-                    return back()->with('error', 'Bạn không thể upload ảnh quá 5mb');
-                }
-            } else {
-                return back()->with('error', 'File bạn chọn không phải là hình ảnh');
-            }
-        } else {
-            return back()->with('error', 'Bạn chưa thêm ảnh minh họa cho sản phẩm');
+        $dataUploadImg = $this->storageTraitUpload($request, 'avatar', 'news');
+        if(!empty($dataUploadImg)) {
+            $data = $request->all();
+            $data['slug'] = str_slug($request->name);
+            $data['idAuthor'] = Auth::guard('members')->user()->id;
+            $data['avatar'] = $dataUploadImg['file_path'];
+            News::create($data);
+            return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
         }
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -92,9 +61,6 @@ class NewsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -104,10 +70,6 @@ class NewsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function update(NewsRequest $request, $id)
     {
@@ -119,32 +81,12 @@ class NewsController extends Controller
         if ($request->status === null) {
             $data['status'] = 0;
         }
-        if ($request->hasFile('avatar')) {
-            $file = $request->avatar;
-            // lấy đuôi file
-            $file_name = $file->getClientOriginalExtension();
-            // lấy loại file
-            $file_type = $file->getMimeType();
-            // kích thước file đơn vị byte
-            $file_size = $file->getSize();
-
-            if ($file_type == 'image/png' || $file_type == 'image/jpg' || $file_type == 'image/jpeg') {
-
-                if ($file_size <= 5242880) {
-
-                    $file_name = date('D-m-yyyy') . '-' . rand() . '.' . $file_name;
-
-                    if ($file->move('img/upload/news', $file_name)) {
-                        $data['avatar'] = $file_name;
-                        if (File::exists('img/upload/news/' . $news->avatar)) {
-                            unlink('img/upload/news/' . $news->avatar);
-                        }
-                    }
-                } else {
-                    return back()->with('error', 'Bạn không thể upload ảnh quá 5mb');
-                }
-            } else {
-                return back()->with('error', 'File bạn chọn không phải là hình ảnh');
+        $dataUploadImg = $this->storageTraitUpload($request, 'avatar', 'news');
+        if(!empty($dataUploadImg)) {
+            $data['avatar'] = $dataUploadImg['file_path'];
+            $url_file = substr($news->avatar, 1); // xoa dau / trong url
+            if (File::exists($url_file)) {
+                unlink($url_file);
             }
         } else {
             $data['avatar'] = $news->avatar;
@@ -155,15 +97,13 @@ class NewsController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $news = News::find($id);
-        if (File::exists('img/upload/news/' . $news->avatar)) {
-            unlink('img/upload/news/' . $news->avatar);
+        $url_file = substr($news->avatar, 1); // xoa dau / trong url
+        if (File::exists($url_file)) {
+            unlink($url_file);
         }
         $news->delete();
         return response()->json(['message' => 'Xóa thành công'], 200);

@@ -54,7 +54,7 @@
                         <tr class="rowTable{{$value->id}}">
                             <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
                             <td>{{ $value->name }}</td>
-                            <td><img src="/img/upload/news/{{ $value->avatar }}" class="img-fluid" style="width:170px">
+                            <td><img src="{{ asset($value->avatar) }}" class="img-fluid" style="width:170px">
                             </td>
                             <td>{{ $value->description }}</td>
                             <td>{{ $value->Member->name }}</td>
@@ -108,34 +108,5 @@
     </div>
 @endsection
 @push('adminAjax')
-    <script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
-                }
-            });
-            // del prd
-            $(this).on("click", ".delNewsJS", function () {
-                $(".titleDelJS").text($(this).data("name"));
-                $(".idDelJS").text($(this).data("id"));
-            });
-            $(".btn-acceptDelJS").click(function () {
-                let id = $(".idDelJS").text();
-                $.ajax({
-                    url: "/admin/news/" + id,
-                    dataType: "json",
-                    type: "delete",
-                    success: function ($result) {
-                        toastr.success($result.message, "Thông báo", {
-                            timeOut: 3000
-                        });
-                        $(".rowTable" + id).remove();
-                        $("#delModal").modal("hide");
-                    }
-                });
-            });
-        });
-
-    </script>
+    <script src="{{ asset('assets/admin/js/news-ajax.js') }}"></script>
 @endpush

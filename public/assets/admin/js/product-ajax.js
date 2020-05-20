@@ -1,12 +1,13 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
+
     // lấy prdtype theo category
     function getPrdType(idCat, idPrdType) {
-        idCat.change(function() {
+        idCat.change(function () {
             let idCat = $(this).val();
             $.ajax({
                 url: "/admin/getprdtype",
@@ -15,9 +16,9 @@ $(document).ready(function() {
                 },
                 dataType: "json",
                 type: "get",
-                success: function($data) {
+                success: function ($data) {
                     let html = "";
-                    $.each($data, function($key, $value) {
+                    $.each($data, function ($key, $value) {
                         html += "<option value=" + $value["id"] + ">";
                         html += $value["name"];
                         html += "</option>";
@@ -27,21 +28,23 @@ $(document).ready(function() {
             });
         });
     }
+
     getPrdType($(".idCatCreateJS"), $(".idProTypeCreateJS"));
     getPrdType($(".idCatEditJS"), $(".idProTypeEditJS"));
 
     // del prd
-    $(this).on("click", ".delPrdJS", function() {
+    $(this).on("click", ".delPrdJS", function () {
         $(".titleDelPrdJS").text($(this).data("name"));
         $(".idDelPrdJS").text($(this).data("id"));
     });
-    $(".btn-acceptDelPrdJS").click(function() {
+    $(this).on("click", ".btn-acceptDelPrdJS", function () {
         let id = $(".idDelPrdJS").text();
+        let url = "/admin/product/" + id;
         $.ajax({
-            url: "/admin/product/" + id,
+            url: url,
             dataType: "json",
             type: "delete",
-            success: function($result) {
+            success: function ($result) {
                 toastr.success($result.message, "Thông báo", {
                     timeOut: 3000
                 });
@@ -49,27 +52,5 @@ $(document).ready(function() {
                 $("#delPrdModal").modal("hide");
             }
         });
-    });
-
-    // hien thi ten file upload bang bootstrap
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-      });
-
-    // Preview an image before it is uploaded
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $("#output_img").attr("src", e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        }
-    }
-    $("#input_img").change(function() {
-        readURL(this);
     });
 });

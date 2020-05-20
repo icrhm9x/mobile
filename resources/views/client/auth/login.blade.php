@@ -42,7 +42,7 @@
                             <div class="form-action">
                                 <p class="lost_password"><a href="{{ route('get.forgot.password') }}">Quên mật khẩu?</a></p>
                                 <div class="actions-log">
-                                    <input type="submit" class="button" name="login" value="Login">
+                                    <input type="submit" class="button" name="login" value="Đăng nhập">
                                 </div>
                                 <label for="rememberme" class="inline">
                                     <input name="rememberme" type="checkbox" id="rememberme" value="forever"> Remember

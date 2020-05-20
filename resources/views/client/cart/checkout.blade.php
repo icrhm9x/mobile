@@ -22,7 +22,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container wrapper my-4">    
+		<div class="container wrapper my-4">
             <div class="row cart-body">
                 <form class="form-horizontal" method="post" action="">
                 @csrf
@@ -36,7 +36,7 @@
 							@foreach ($cart as $item)
 							<div class="form-group">
                                 <div class="col-sm-3 col-xs-3">
-                                    <img class="img-responsive" src="/img/upload/product/{{ $item->options->img }}" />
+                                    <img class="img-responsive" src="{{ asset($item->options->img_path) }}" />
                                 </div>
                                 <div class="col-sm-6 col-xs-6">
                                     <div class="col-xs-12">{{ $item->name }}</div>
@@ -99,11 +99,11 @@
                     </div>
                     <!--SHIPPING METHOD END-->
                 </div>
-                
+
                 </form>
             </div>
             <div class="row cart-footer">
-        
+
             </div>
     </div>
 		<div class="clearfix"></div>

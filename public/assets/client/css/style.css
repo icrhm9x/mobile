@@ -950,6 +950,7 @@ span.sale-text{
 }
 .post-thumb a img{
     width: 100%;
+    height: 100%;
 }
 .post-thumb:after {
 	content: "";
@@ -1685,7 +1686,7 @@ span.old-price {
 /*  17. Shop page area
 /*----------------------------------------*/
 .category-banner{
-	background: url(/img/upload/cat_banner/1.jpg) right center no-repeat;
+	background: url(/assets/client/img/banner/1.jpg) right center no-repeat;
     background-size: cover;
     min-height: 270px;
 	position: relative;

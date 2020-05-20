@@ -59,7 +59,7 @@ class CartController extends Controller
             'name' => $product->name,
             'qty' => $qty,
             'price' => $price,
-            'options' => ['img' => $product->img, 'old_price' => $product->price, 'promotion' => $product->promotion]
+            'options' => ['img_path' => $product->img_path, 'old_price' => $product->price, 'promotion' => $product->promotion]
         ];
         Cart::add($cart);
         return redirect()->back()->with('success', 'Sản phẩm ' . $product->name . ' đã được thêm vào giỏ hàng');
@@ -114,7 +114,7 @@ class CartController extends Controller
     public function saveInfoOrder(OrderRequest $request)
     {
         $totalMoney = str_replace('.', '', Cart::subtotal(0, ',', '.'));
-        $orderId = Order::insertGetId([
+        $order = Order::create([
             'idUser' => get_data_user('web'),
             'name' => $request->name,
             'address' => $request->address,
@@ -125,7 +125,7 @@ class CartController extends Controller
             'updated_at' => Carbon::now()
         ]);
 
-        if ($orderId) {
+        if ($order) {
             $products = Cart::content();
             foreach ($products as $product) {
                 if ($product->options->promotion) {
@@ -133,8 +133,7 @@ class CartController extends Controller
                 } else {
                     $promotion = 0;
                 }
-                OrderDetail::insert([
-                    'idOrder' => $orderId,
+                $order->Order_details()->create([
                     'idProduct' => $product->id,
                     'quantity' => $product->qty,
                     'price' => $product->options->old_price,

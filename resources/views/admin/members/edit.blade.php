@@ -1,10 +1,9 @@
 @extends('admin.layouts.master', ['title' => 'Sửa thông tin thành viên'])
+@push('styleAdmin')
+    <link href="{{ asset('assets/admin/css/select2.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/admin/member/add-member.css') }}" rel="stylesheet"/>
+@endpush
 @section('content')
-<style>
-    label {
-        font-weight: bold;
-    }
-</style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a class="text-black" href="/admin">Trang chủ</a></li>
@@ -42,27 +41,14 @@
                     {{ notifyError($errors,'re_password') }}
                 </div>
                 <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6 mr-5">
-                            <div class="form-group">
-                                <label>Ruler</label>
-                                <select name="ruler" class="form-control">
-                                    <option value="1" {{ $member->ruler == 1 ? "selected='selected'" : '' }}>Boss</option>
-                                    <option value="2" {{ $member->ruler == 2 ? "selected='selected'" : '' }}>Super Admin</option>
-                                    <option value="3" {{ $member->ruler == 3 ? "selected='selected'" : '' }}>Admin</option>
-                                    <option value="4" {{ $member->ruler == 4 ? "selected='selected'" : '' }}>Mod</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Status</label>
-                                <div class="custom-control custom-switch">
-                                    <input name="status" value="1" type="checkbox" class="custom-control-input" id="status" {{ $member->status != 0 ? 'checked' : '' }}>
-                                    <label class="custom-control-label font-weight-normal" for="status" style="user-select: none">Active</label>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label>Chọn vai trò</label>
+                        <select name="role_id[]" class="form-control select2_init" multiple="multiple">
+                            <option value=""></option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -76,7 +62,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/member/{{ $member->avatar ? $member->avatar : 'default-avatar.png' }}" style="width: 250px">
+                    <img id="output_img" src="{{ asset($member->avatar) }}" style="width: 250px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">
@@ -89,27 +75,7 @@
 </div>
 @endsection
 @push('adminAjax')
-<script>
-    // hien thi ten file upload bang bootstrap
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-      });
-
-    // Preview an image before it is uploaded
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $("#output_img").attr("src", e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        }
-    }
-    $("#input_img").change(function() {
-        readURL(this);
-    });
-</script>
+    <script src="{{ asset('assets/admin/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/uploadFile.js') }}"></script>
+    <script src="{{ asset('assets/admin/member/add-member.js') }}"></script>
 @endpush

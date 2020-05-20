@@ -18,7 +18,7 @@
                                         <div class="single-product first-sale">
                                             <div class="product-img">
                                                 <a href="{{ route('get.detail.product', [$bestSeller->Category->slug,$bestSeller->ProductType->slug,$bestSeller->slug]) }}">
-                                                    <img class="primary-image" src="/img/upload/product/{{ $bestSeller->img }}" alt="" />
+                                                    <img class="primary-image" src="{{ asset($bestSeller->img_path) }}" alt="" />
                                                 </a>
                                                 <div class="actions">
                                                     <div class="action-buttons">
@@ -65,7 +65,7 @@
                                         <div class="single-product first-sale">
                                             <div class="product-img">
                                                 <a href="{{ route('get.detail.product', [$promo->Category->slug,$promo->ProductType->slug,$promo->slug]) }}">
-                                                    <img class="primary-image" src="/img/upload/product/{{ $promo->img }}" alt="" />
+                                                    <img class="primary-image" src="{{ asset($promo->img_path) }}" alt="" />
                                                 </a>
                                                 <div class="actions">
                                                     <div class="action-buttons">

@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->integer('quantity')->default(0);
             $table->integer('price');
             $table->integer('promotion')->default(0)->nullable();
-            $table->string('img');
+            $table->string('img_name');
+            $table->string('img_path');
             $table->tinyInteger('hot')->default(0);
             $table->integer('idProductType')->unsigned();
             $table->foreign('idProductType')->references('id')->on('product_types')->onDelete('cascade');

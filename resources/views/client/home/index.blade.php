@@ -5,8 +5,10 @@
         <!-- slider -->
        <div class="bend niceties preview-2">
            <div id="ensign-nivoslider" class="slides">
-               <img src="/assets/client/img/slider/home-1/slider1-1.jpg" alt="" title="#slider-direction-1"  />
-               <img src="/assets/client/img/slider/home-1/slider1-2.jpg" alt="" title="#slider-direction-2"  />
+               <img src="{{ asset('assets/client/img/slider/home-1/slider1-1.jpg') }}" alt="" title="#slider-direction-1"  />
+               <img src="{{ asset('assets/client/img/slider/home-1/slider1-2.jpg') }}" alt="" title="#slider-direction-2"  />
+               <img src="{{ asset('assets/client/img/slider/home-1/slider1-3.jpg') }}" alt="" title="#slider-direction-3"  />
+               <img src="{{ asset('assets/client/img/slider/home-1/slider1-4.jpg') }}" alt="" title="#slider-direction-4"  />
            </div>
            <!-- direction 1 -->
            <div id="slider-direction-1" class="t-cn slider-direction">
@@ -54,7 +56,7 @@
    <div class="banner-area">
        <div class="container-fluid">
            <div class="row">
-               <a href=""><img src="/assets/client/img/banner/banner-1.jpg" alt="" /></a>
+               <a href=""><img src="{{ asset('assets/client/img/banner/banner-1.jpg') }}" alt="" /></a>
            </div>
        </div>
    </div>

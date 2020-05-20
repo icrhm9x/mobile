@@ -57,7 +57,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/news/{{ $news->avatar }}" style="width: 330px">
+                    <img id="output_img" src="{{ asset($value->avatar) }}" style="width: 330px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">
@@ -70,27 +70,5 @@
 </div>
 @endsection
 @push('adminAjax')
-<script>
-    // hien thi ten file upload bang bootstrap
-    $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-      });
-
-    // Preview an image before it is uploaded
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $("#output_img").attr("src", e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        }
-    }
-    $("#input_img").change(function() {
-        readURL(this);
-    });
-</script>
+    <script src="{{ asset('assets/admin/js/uploadFile.js') }}"></script>
 @endpush

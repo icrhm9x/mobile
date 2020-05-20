@@ -34,7 +34,7 @@
 					<div class="col-md-5 col-sm-5 col-xs-12">
 						<div class="zoomWrapper">
 							<div id="img-1" class="zoomWrapper single-zoom">
-								<img src="/img/upload/product/{{ $product->img }}" alt="big-1">
+								<img src="{{ asset($product->img_path) }}" alt="big-1">
 							</div>
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 							<div class="single-product">
 								<div class="product-content">
 									<h1 class="product-name"><a href="#">{{ $product->name }}</a></h1>
-									<div class="rating-price">	
+									<div class="rating-price">
 										<div class="pro-rating">
 											<?php
 											$average = 0;
@@ -93,7 +93,7 @@
 												</div>
 												<div class="compare-button">
 													<a href="#" data-toggle="tooltip" title="so sánh" data-original-title="Compare"><i class="fa fa-refresh"></i></a>
-												</div>									
+												</div>
 											</div>
 										</div>
 									</div>
@@ -197,10 +197,10 @@
 											<h3 class="comment-reply-title">Thêm đánh giá của bạn</h3>
 											<div class="noti-rating"><a class="login-rating" href="{{ route('get.login') }}">Đăng nhập</a></div>
 										@endif
-									</div>						
+									</div>
 								</div>
 							</div>
-						</div>					
+						</div>
 					</div>
 				</div>
 			</div>
@@ -224,7 +224,7 @@
 										<div class="single-product first-sale">
 											<div class="product-img">
 												<a href="#">
-													<img class="primary-image" src="/img/upload/product/{{ $item->img }}" alt="" />
+													<img class="primary-image" src="{{ asset($item->img_path) }}" alt="" />
 												</a>
 												<div class="actions">
 													<div class="action-buttons">
@@ -234,7 +234,7 @@
 															</div>
 															<div class="compare-button">
 																<a href="{{ route('add.cart', $item->id) }}" title="Add to Cart"><i class="icon-bag"></i></a>
-															</div>									
+															</div>
 														</div>
 														<div class="quickviewbtn">
 															<a href="#" title="Add to Compare"><i class="fa fa-retweet"></i></a>
@@ -260,10 +260,10 @@
 									@endforeach
 								@endif
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
-				<!-- our-product area end -->	
+				<!-- our-product area end -->
 			</div>
 		</div>
 		<!-- product section end -->
@@ -300,5 +300,5 @@
 		});
 
 	});
-</script>	
+</script>
 @endpush

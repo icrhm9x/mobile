@@ -1,0 +1,7 @@
+label {
+    font-weight: bold;
+}
+.select2-selection__choice {
+    background-color: #00a9e0 !important;
+    color: #e4e4e4;
+}

@@ -40,7 +40,7 @@
                                                 <div class="product-img">
                                                     <a href="{{ route('get.detail.news', [$item->slug]) }}">
                                                         <img class="primary-image"
-                                                             src="/img/upload/news/{{ $item->avatar }}" alt="">
+                                                             src="{{ asset($item->avatar) }}" alt="">
                                                     </a>
                                                 </div>
                                             </div>

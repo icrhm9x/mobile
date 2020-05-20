@@ -95,7 +95,7 @@
                     {{ notifyError($errors,'img') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/product/{{ $product->img }}" style="max-width: 260px">
+                    <img id="output_img" src="{{ asset($product->img_path) }}" style="max-width: 260px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">
@@ -108,5 +108,6 @@
 </div>
 @endsection
 @push('adminAjax')
-    <script src="/assets/admin/js/product-ajax.js"></script>
+    <script src="{{ asset('assets/admin/js/product-ajax.js') }}></script>
+    <script src="{{ asset('assets/admin/js/uploadFile.js') }}"></script>
 @endpush

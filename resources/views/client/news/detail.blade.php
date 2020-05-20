@@ -1,45 +1,8 @@
 @extends('client.layouts.master', ['title' => $news->name])
+@push('clientStyle')
+    <link rel="stylesheet" href="{{ asset('assets/client/news/add-detail.css') }}">
+@endpush
 @section('content')
-<style>
-    article{
-        display: block;
-        overflow: hidden;
-        width: 800px;
-        margin: auto;
-    }
-    .titledetail{
-        line-height: 38px;
-        color: black;
-    }
-    .article-content h2,
-    .article-content h3{
-        margin: 20px auto;
-        font-size: 16px;
-        color: #333;
-        line-height: 28px;
-        font-weight: normal;
-        text-transform: none;
-        font-family: 'Roboto', sans-serif;
-    }
-    .article-content p{
-        margin: 20px auto;
-        font-size: 16px;
-        color: #333;
-        line-height: 28px;
-    }
-    .article-content ul li{
-        font-size: 16px;
-        color: #333;
-        line-height: 30px;
-    }
-    .btv{
-        display: block;
-        margin-top: 10px;
-    }
-    .area-title{
-        margin-bottom: 10px;
-    }
-</style>
 <div class="shop-with-sidebar">
     <div class="container">
         <div class="row">
@@ -68,7 +31,7 @@
                      <div class="single-post">
                          <div class="post-thumb">
                              <a href="{{ route('get.detail.news', [$item->slug]) }}">
-                                 <img src="/img/upload/news/{{ $item->avatar }}" alt="" />
+                                 <img src="{{ asset($item->avatar) }}" alt="" />
                              </a>
                          </div>
                          <div class="post-thumb-info">

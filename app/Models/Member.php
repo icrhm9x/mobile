@@ -9,15 +9,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Member extends Authenticatable
 {
     use Notifiable;
-    
+
     protected $table = 'members';
 
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'ruler', 'status',
+        'name', 'email', 'password', 'avatar',
     ];
 
     protected $hidden = [
         'password',
     ];
 
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'member_role', 'member_id', 'role_id')->withTimestamps();
+    }
 }

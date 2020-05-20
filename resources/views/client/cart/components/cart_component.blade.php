@@ -22,7 +22,7 @@
                     @foreach ($cart as $key => $item)
                         <tr>
                             <td>
-                                <a href="#"><img src="/img/upload/product/{{ $item->options->img }}"
+                                <a href="#"><img src="{{ asset($item->options->img_path) }}"
                                                  class="img-responsive" alt=""/></a>
                             </td>
                             <td>

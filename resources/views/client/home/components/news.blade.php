@@ -10,7 +10,7 @@
                         <div class="single-post">
                             <div class="post-thumb">
                                 <a href="{{ route('get.detail.news', [$item->slug]) }}">
-                                    <img src="/img/upload/news/{{ $item->avatar }}" alt="" />
+                                    <img src="{{ asset($item->avatar) }}" alt="" />
                                 </a>
                             </div>
                             <div class="post-thumb-info">

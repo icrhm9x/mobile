@@ -43,7 +43,7 @@
                     <div class="topbar-left">
                         <aside class="widge-topbar">
                             <div class="bar-title">
-                                <div class="bar-ping"><img src="/assets/client/img/bar-ping.png" alt=""></div>
+                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
                                 <h2>Lọc sản phẩm</h2>
                             </div>
                         </aside>
@@ -87,7 +87,7 @@
                         </aside>
                         <aside class="widge-topbar">
                             <div class="bar-title">
-                                <div class="bar-ping"><img src="/assets/client/img/bar-ping.png" alt=""></div>
+                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
                                 <h2>Tags</h2>
                             </div>
                             <div class="exp-tags">
@@ -160,7 +160,7 @@
                                                         <div class="product-img">
                                                             <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
                                                                 <img class="primary-image"
-                                                                     src="/img/upload/product/{{ $item->img }}" alt=""/>
+                                                                     src="{{ asset($item->img_path) }}" alt=""/>
                                                             </a>
                                                             <div class="actions">
                                                                 <div class="action-buttons">
@@ -217,7 +217,7 @@
                                                     <div class="product-img">
                                                         <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
                                                             <img class="primary-image"
-                                                                 src="/img/upload/product/{{ $item->img }}" alt=""/>
+                                                                 src="{{ asset($item->img_path) }}" alt=""/>
                                                         </a>
                                                     </div>
                                                 </div>

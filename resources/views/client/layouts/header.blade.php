@@ -109,7 +109,7 @@
                                         @foreach (Cart::content() as $key => $item)
                                             <li>
                                                 <a class="sm-cart-product" href="#">
-                                                    <img src="/img/upload/product/{{ $item->options->img }}" alt="">
+                                                    <img src="{{ $item->options->img_path }}" alt="">
                                                 </a>
                                                 <div class="small-cart-detail">
                                                     <a class="remove" href="{{ route('del.cart', $key) }}"><i class="fa fa-times-circle"></i></a>

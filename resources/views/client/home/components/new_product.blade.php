@@ -14,7 +14,7 @@
                                     <div class="single-product first-sale">
                                         <div class="product-img">
                                             <a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">
-                                                <img class="primary-image" src="/img/upload/product/{{ $newprd->img }}" alt="" />
+                                                <img class="primary-image" src="{{ asset($newprd->img_path) }}" alt="" />
                                             </a>
                                             <div class="actions">
                                                 <div class="action-buttons">

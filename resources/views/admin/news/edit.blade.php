@@ -57,7 +57,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="{{ asset($value->avatar) }}" style="width: 330px">
+                    <img id="output_img" src="{{ asset($news->avatar) }}" style="width: 330px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">

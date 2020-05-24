@@ -46,7 +46,9 @@
                         <select name="role_id[]" class="form-control select2_init" multiple="multiple">
                             <option value=""></option>
                             @foreach($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                <option
+                                    {{ $rolesOfMember->contains('id', $role->id) ? 'selected' : '' }}
+                                    value="{{ $role->id }}">{{ $role->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -62,7 +64,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="{{ asset($member->avatar) }}" style="width: 250px">
+                    <img id="output_img" src="{{ asset(isset($member->avatar) ? $member->avatar : 'assets/admin/img/default-avatar.png') }}" style="width: 250px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">

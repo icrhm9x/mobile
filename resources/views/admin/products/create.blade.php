@@ -69,6 +69,7 @@
                             <option value="{{ $prd->id }}" >{{ $prd->name }}</option>
                         @endforeach
                     </select>
+                    {{ notifyError($errors,'idProductType') }}
                 </div>
                 <div class="form-group">
                     <label>Trạng thái</label>

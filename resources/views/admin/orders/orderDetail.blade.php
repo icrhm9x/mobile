@@ -7,7 +7,6 @@
         <th scope="col">Giá</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Thành tiền</th>
-        <th scope="col">Thao tác</th>
       </tr>
     </thead>
     <tbody>
@@ -15,16 +14,11 @@
           @foreach ($orders as $item)
           <tr>
             <th scope="row">{{ $item->id }}</th>
-            <td><a href="" target="_blank">{{ $item->Product->name }}</a></td>
-            <td><img src="/img/upload/product/{{ $item->Product->img }}" class="img-fluid" style="width:80px"></td>
+            <td><a href="" target="_blank">{{ isset($item->Product->name) ? $item->Product->name : 'sản phẩm đã bị xóa'}}</a></td>
+            <td><img src="{{ asset(isset($item->Product->img_path) ? $item->Product->img_path : 'assets/admin/img/product.jpg') }}" class="img-fluid" style="width:80px"></td>
             <td>{{ number_format($item->price,0,',','.') }}₫</td>
             <td>{{ $item->quantity }}</td>
             <td>{{ number_format($item->price - $item->promotion,0,',','.') }}₫</td>
-            <td>
-              <button type="button" title="Xóa" class="btn btn-sm mb-2 btn-outline-danger">
-                <i class="far fa-trash-alt"></i>
-              </button>
-            </td>
           </tr>
           @endforeach
       @endif

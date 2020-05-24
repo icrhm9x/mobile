@@ -8,7 +8,7 @@ use App\Models\Rating;
 
 class RatingController extends Controller
 {
-    public function show()
+    public function index()
     {
         $ratings = Rating::orderBy('id')->paginate(10);
         return view('admin.ratings.index', compact('ratings'));

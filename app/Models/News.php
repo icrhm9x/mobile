@@ -9,7 +9,7 @@ class News extends Model
     protected $table = 'news';
 
     protected $fillable = [
-        'name', 'slug', 'description', 'article', 'status', 'idAuthor', 'avatar', 'view',
+        'name', 'slug', 'description', 'article', 'status', 'idAuthor', 'author_name', 'avatar', 'view',
     ];
 
     public function Member(){

@@ -53,7 +53,7 @@
                                                         <p>{{ $item->description }}</p>
                                                     </div>
                                                     <div class="actions-e">
-                                                        <span style="margin-right: 7px;">Biên tập bởi {{ $item->Member->name }}</span>
+                                                        <span style="margin-right: 7px;">Biên tập bởi {{ $item->author_name }}</span>
                                                         <span>{{ $item->created_at }}</span>
                                                     </div>
                                                 </div>

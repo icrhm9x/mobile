@@ -38,6 +38,23 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        //admin
+        $this->mapAdminCategoryRoutes();
+        $this->mapAdminProductTypeRoutes();
+        $this->mapAdminProductRoutes();
+        $this->mapAdminRatingRoutes();
+        $this->mapAdminOrderRoutes();
+        $this->mapAdminNewsRoutes();
+        $this->mapAdminMemberRoutes();
+        $this->mapAdminRoleRoutes();
+
+
+        //client
+        $this->mapClientHomeRoutes();
+        $this->mapClientLoginLogoutRoutes();
+        $this->mapClientCartRoutes();
+        $this->mapClientNewsRoutes();
+        $this->mapClientProductRoutes();
 
         //
     }
@@ -54,6 +71,111 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Admin
+     */
+    protected function mapAdminCategoryRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/category.php'));
+    }
+
+    protected function mapAdminProductTypeRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/productType.php'));
+    }
+
+    protected function mapAdminProductRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/product.php'));
+    }
+
+    protected function mapAdminRatingRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/rating.php'));
+    }
+
+    protected function mapAdminOrderRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/order.php'));
+    }
+
+    protected function mapAdminNewsRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/news.php'));
+    }
+
+    protected function mapAdminMemberRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/member.php'));
+    }
+
+    protected function mapAdminRoleRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/role.php'));
+    }
+
+    /**
+     * Client
+     */
+    protected function mapClientHomeRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/home.php'));
+    }
+
+    protected function mapClientLoginLogoutRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/login-logout.php'));
+    }
+
+    protected function mapClientCartRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/cart.php'));
+    }
+
+    protected function mapClientNewsRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/news.php'));
+    }
+
+    protected function mapClientProductRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/product.php'));
     }
 
     /**

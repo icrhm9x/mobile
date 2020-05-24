@@ -32,7 +32,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.create');
+        return view('admin.news.add');
     }
 
     /**
@@ -45,18 +45,11 @@ class NewsController extends Controller
             $data = $request->all();
             $data['slug'] = str_slug($request->name);
             $data['idAuthor'] = Auth::guard('members')->user()->id;
+            $data['author_name'] = Auth::guard('members')->user()->name;
             $data['avatar'] = $dataUploadImg['file_path'];
             News::create($data);
             return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

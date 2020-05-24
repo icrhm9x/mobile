@@ -25,6 +25,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255|unique:products,name,'.($this->product ?? ''),
+            'idProductType' => 'required',
             'description' => 'required|min:2',
             'article' => 'required|min:2',
             'quantity' => 'required|numeric',
@@ -47,6 +48,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'Tên sản phẩm',
+            'idProductType' => 'Loại sản phẩm',
             'description' => 'Mô tả sản phẩm',
             'article' => 'Bài viết',
             'quantity' => 'Số lượng sản phẩm',

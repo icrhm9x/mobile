@@ -24,7 +24,7 @@ class HomeController extends Controller
         $bestSellers = Product::orderByDesc('purchase_number')->limit('8')->get();
         $promotion = Product::where('promotion', '>', 0)->orderByDesc('promotion')->limit('8')->get();
         $newprds = Product::orderByDesc('id')->limit('8')->get();
-        $news = News::orderByDesc('id')->limit(3)->get();
+        $news = News::whereStatus(1)->orderByDesc('id')->limit(3)->get();
         $data = [
             'bestSellers' => $bestSellers,
             'promotion' => $promotion,

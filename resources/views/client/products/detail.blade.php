@@ -129,7 +129,7 @@
 												<li>
 													<div class="comments-details">
 														<div class="comments-list-img">
-															<img style="width: 50px;" src="/img/upload/user/default-avatar.png" alt="">
+															<img style="width: 50px;" src="{{ asset('assets/admin/img/default-avatar.png') }}" alt="">
 														</div>
 														<div class="comments-content-wrap">
 															<span>

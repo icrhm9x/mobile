@@ -55,10 +55,13 @@
                             <td>{{ $value->name }}</td>
                             <td>{{ $value->email }}</td>
                             <td>
-                                <img src="{{ asset($value->avatar) }}" class="img-fluid" style="width:100px">
+                                <img src="{{ asset(isset($value->avatar) ? $value->avatar : 'assets/admin/img/default-avatar.png') }}" class="img-fluid" style="width:100px">
                             </td>
                             <td>
-                                <span class="rounded-0 badge badge-danger">Boss</span>
+                                @foreach($value->roles as $role)
+                                    <span >{{ $role->name }}</span>
+                                    <br>
+                                @endforeach
                             </td>
                             <td>{{ $value->created_at }}</td>
                             <td>

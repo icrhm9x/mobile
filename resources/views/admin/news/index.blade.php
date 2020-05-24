@@ -43,7 +43,7 @@
                         <th>Tên bài viết</th>
                         <th>Ảnh</th>
                         <th>Mô tả</th>
-                        <th>Tác giả</th>
+                        <th style="width:100px">Tác giả</th>
                         <th style="width:100px">Trạng thái</th>
                         <th>Ngày tạo</th>
                         <th style="width:105px">Tùy chọn</th>
@@ -57,7 +57,7 @@
                             <td><img src="{{ asset($value->avatar) }}" class="img-fluid" style="width:170px">
                             </td>
                             <td>{{ $value->description }}</td>
-                            <td>{{ $value->Member->name }}</td>
+                            <td>{{ $value->author_name }}</td>
                             <td>
                                 @if ($value->status == 1)
                                     {!! '<span class="rounded-0 badge badge-success">Hiển thị</span>' !!}

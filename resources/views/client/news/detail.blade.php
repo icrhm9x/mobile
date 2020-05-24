@@ -12,7 +12,7 @@
                         <div class="article-content">
                             {!! $news->article !!}
                         </div>
-                        <span class="btv">Biên tập bởi {{ $news->Member->name }}</span>
+                        <span class="btv">Biên tập bởi {{ $news->author_name }}</span>
                         <div class="slidePS"></div>
                 </article>
             </div>

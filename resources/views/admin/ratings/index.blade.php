@@ -21,22 +21,16 @@
               <th>Sản phẩm</th>
               <th>Nội dung</th>
               <th>Rating</th>
-              <th>Tùy chọn</th>
             </tr>
           </thead>
           <tbody id="dataTableJS">
             @foreach ($ratings as $value)
-              <tr class="rowTable{{$value->id}}">
+              <tr>
                 <td>{{ $value->id }}</td>
-                <td>{{ $value->user->name }}</td>
+                <td>{{ isset($value->user->name) ? $value->user->name : 'chưa rõ' }}</td>
                 <td>{{ $value->product->name }}</td>
                 <td>{{ $value->content }}</td>
                 <td>{{ $value->number }}<i class="fa fa-star"></i></td>
-                <td>
-                  <button type="button" title="Xóa" data-toggle="modal" data-target="#delCatModal" class="btn btn-sm ml-2 btn-outline-danger">
-                    <i class="far fa-trash-alt"></i>
-                  </button>
-                </td>
               </tr>
             @endforeach
           </tbody>

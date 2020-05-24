@@ -108,6 +108,6 @@
 </div>
 @endsection
 @push('adminAjax')
-    <script src="{{ asset('assets/admin/js/product-ajax.js') }}></script>
+    <script src="{{ asset('assets/admin/js/product-ajax.js') }}"></script>
     <script src="{{ asset('assets/admin/js/uploadFile.js') }}"></script>
 @endpush

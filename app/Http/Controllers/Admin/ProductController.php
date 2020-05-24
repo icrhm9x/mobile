@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Rating;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 use File;
@@ -76,15 +77,6 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $product = Product::find($id);
-        return response()->json($product->name, 200);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
@@ -135,6 +127,7 @@ class ProductController extends Controller
             unlink($url_file);
         }
         $product->delete();
+        Rating::where('idProduct', $id)->delete();
         return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

@@ -20,7 +20,8 @@ class CreateNewsTable extends Migration
             $table->string('description');
             $table->longText('article');
             $table->tinyInteger('status')->nullablle()->default(0);
-            $table->integer('idAuthor')->nullablle()->index();
+            $table->integer('idAuthor')->index();
+            $table->string('author_name');
             $table->string('avatar');
             $table->integer('view')->nullablle()->default(0);
             $table->timestamps();

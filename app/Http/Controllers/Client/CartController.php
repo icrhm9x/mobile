@@ -9,9 +9,11 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Cart;
 use Carbon\Carbon;
+use DB;
 
 class CartController extends Controller
 {
@@ -113,46 +115,52 @@ class CartController extends Controller
 
     public function saveInfoOrder(OrderRequest $request)
     {
-        $totalMoney = str_replace('.', '', Cart::subtotal(0, ',', '.'));
-        $order = Order::create([
-            'idUser' => get_data_user('web'),
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'message' => $request->message,
-            'totalMoney' => $totalMoney,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        if ($order) {
-            $products = Cart::content();
-            foreach ($products as $product) {
-                if ($product->options->promotion) {
-                    $promotion = $product->options->promotion;
-                } else {
-                    $promotion = 0;
+        try {
+            DB::beginTransaction();
+            $totalMoney = str_replace('.', '', Cart::subtotal(0, ',', '.'));
+            $order = Order::create([
+                'idUser' => get_data_user('web'),
+                'name' => $request->name,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'message' => $request->message,
+                'totalMoney' => $totalMoney,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+            if ($order) {
+                $products = Cart::content();
+                foreach ($products as $product) {
+                    if ($product->options->promotion) {
+                        $promotion = $product->options->promotion;
+                    } else {
+                        $promotion = 0;
+                    }
+                    $order->Order_details()->create([
+                        'idProduct' => $product->id,
+                        'quantity' => $product->qty,
+                        'price' => $product->options->old_price,
+                        'promotion' => $promotion,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ]);
+                    // trừ số sản phẩm đã mua
+                    $prd = Product::find($product->id);
+                    if ($prd->quantity - $product->qty == 0) {
+                        $prd->status = 3;
+                    }
+                    $prd->quantity -= $product->qty;
+                    $prd->purchase_number += $product->qty;
+                    $prd->save();
                 }
-                $order->Order_details()->create([
-                    'idProduct' => $product->id,
-                    'quantity' => $product->qty,
-                    'price' => $product->options->old_price,
-                    'promotion' => $promotion,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ]);
-                // trừ số sản phẩm đã mua
-                $prd = Product::find($product->id);
-                if ($prd->quantity - $product->qty == 0) {
-                    $prd->status = 3;
-                }
-                $prd->quantity -= $product->qty;
-                $prd->purchase_number += $product->qty;
-                $prd->save();
+                Cart::destroy();
             }
-            Cart::destroy();
+            DB::commit();
+            return redirect()->route('complete');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());
         }
-        return redirect()->route('complete');
     }
 
     public function complete()

@@ -56,7 +56,7 @@
                     {{ notifyError($errors,'avatar') }}
                 </div>
                 <div class="form-group">
-                    <img id="output_img" src="/img/upload/product/default.jpg" style="width: 330px">
+                    <img id="output_img" src="{{ asset('assets/admin/img/product.jpg') }}" style="width: 330px">
                 </div>
             </div>
             <div class="col-md-12 mb-5">

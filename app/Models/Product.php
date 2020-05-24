@@ -20,4 +20,8 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category', 'idCategory', 'id');
     }
 
+    public function Rating(){
+        return $this->hasMany(Role::class, 'idProduct', 'id');
+    }
+
 }

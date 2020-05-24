@@ -53,6 +53,11 @@
       <i class="fas fa-users"></i>
       <span>Thành viên</span></a>
     </li>
+    <li class="nav-item {{ (Request::is('admin/roles') ? 'active' : '') }}">
+        <a class="nav-link" href="{{ route('role.index') }}">
+            <i class="fas fa-user-tag"></i>
+            <span>Danh sách vai trò</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->

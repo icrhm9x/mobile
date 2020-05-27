@@ -53,10 +53,15 @@
       <i class="fas fa-users"></i>
       <span>Thành viên</span></a>
     </li>
-    <li class="nav-item {{ (Request::is('admin/roles') ? 'active' : '') }}">
+    <li class="nav-item {{ (Request::is('admin/role') ? 'active' : '') }}">
         <a class="nav-link" href="{{ route('role.index') }}">
             <i class="fas fa-user-tag"></i>
             <span>Danh sách vai trò</span></a>
+    </li>
+    <li class="nav-item {{ (Request::is('admin/permission') ? 'active' : '') }}">
+        <a class="nav-link" href="{{ route('permission.index') }}">
+            <i class="fas fa-user-lock"></i>
+            <span>Danh sách quyền</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

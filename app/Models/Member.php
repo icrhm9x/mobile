@@ -23,4 +23,9 @@ class Member extends Authenticatable
     public function roles() {
         return $this->belongsToMany(Role::class, 'member_role', 'member_id', 'role_id')->withTimestamps();
     }
+
+    public function checkPermissionAccess()
+    {
+        return true;
+    }
 }

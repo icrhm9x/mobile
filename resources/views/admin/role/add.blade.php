@@ -31,34 +31,37 @@
                     </div>
                 </div>
                 @foreach($permissionsParent as $permissionsParentItem)
-                    <div class="col-md-12 card_wrapper">
-                        <div class="form-group">
-                            <div class="card">
-                                <h5 class="card-header">
-                                    <label for="parent-{{ $permissionsParentItem->id }}">
-                                        <input type="checkbox" value="{{ $permissionsParentItem->id }}"
-                                               id="parent-{{ $permissionsParentItem->id }}" class="checkbox_wrapper">
-                                        Module {{ $permissionsParentItem->name }}
-                                    </label>
-                                </h5>
-                                <div class="row">
-                                    @foreach($permissionsParentItem->permissionsChildrent as $permissionsChildrentItem)
-                                        <div class="card-body col-md-3">
-                                            <p class="card-text pl-2">
-                                                <label for="childrent-{{ $permissionsChildrentItem->id }}">
-                                                    <input type="checkbox" name="permission_id[]"
-                                                           value="{{ $permissionsChildrentItem->id }}"
-                                                           id="childrent-{{ $permissionsChildrentItem->id }}"
-                                                           class="checkbox_childrent">
-                                                    {{ $permissionsChildrentItem->name }}
-                                                </label>
-                                            </p>
-                                        </div>
-                                    @endforeach
+                    @if(count($permissionsParentItem->permissionsChildrent) > 0)
+                        <div class="col-md-12 card_wrapper">
+                            <div class="form-group">
+                                <div class="card">
+                                    <h5 class="card-header">
+                                        <label for="parent-{{ $permissionsParentItem->id }}">
+                                            <input type="checkbox" value="{{ $permissionsParentItem->id }}"
+                                                   id="parent-{{ $permissionsParentItem->id }}"
+                                                   class="checkbox_wrapper">
+                                            Module {{ $permissionsParentItem->name }}
+                                        </label>
+                                    </h5>
+                                    <div class="row">
+                                        @foreach($permissionsParentItem->permissionsChildrent as $permissionsChildrentItem)
+                                            <div class="card-body col-md-3">
+                                                <p class="card-text pl-2">
+                                                    <label for="childrent-{{ $permissionsChildrentItem->id }}">
+                                                        <input type="checkbox" name="permission_id[]"
+                                                               value="{{ $permissionsChildrentItem->id }}"
+                                                               id="childrent-{{ $permissionsChildrentItem->id }}"
+                                                               class="checkbox_childrent">
+                                                        {{ $permissionsChildrentItem->name }}
+                                                    </label>
+                                                </p>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
                 <div class="col-md-12 my-3">
                     <div class="form-group">

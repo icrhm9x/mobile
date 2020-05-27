@@ -223,7 +223,7 @@
 									<div class="col-lg-12 col-md-12">
 										<div class="single-product first-sale">
 											<div class="product-img">
-												<a href="#">
+												<a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
 													<img class="primary-image" src="{{ asset($item->img_path) }}" alt="" />
 												</a>
 												<div class="actions">
@@ -243,7 +243,7 @@
 												</div>
 											</div>
 											<div class="product-content">
-												<h2 class="product-name"><a href="">{{ $item->name }}</a></h2>
+												<h2 class="product-name"><a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a></h2>
 												<div class="product-price">
 													@if ($item->promotion > 0)
 													<strong>{{ number_format($item->price - $item->promotion,0,'','.') }}₫</strong>

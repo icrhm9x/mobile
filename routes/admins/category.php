@@ -2,7 +2,8 @@
 Route::prefix('category')->group(function () {
     Route::get('', [
         'as' => 'category.index',
-        'uses' => 'CategoryController@index'
+        'uses' => 'CategoryController@index',
+        'middleware' => 'can:category'
     ]);
     Route::post('', [
         'as' => 'category.store',

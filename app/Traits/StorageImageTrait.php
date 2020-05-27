@@ -1,5 +1,6 @@
 <?php
 namespace App\Traits;
+
 use Storage;
 
 trait StorageImageTrait
@@ -10,7 +11,7 @@ trait StorageImageTrait
             $file = $request->$fieldName;
             $fileNameOrigin = $file->getClientOriginalName();
             $fileNameHash = date('D-m-yyyy') . '-' . str_random(10) . '.' . $file->getClientOriginalExtension();
-            $filePath = $request->file($fieldName)->storeAs('public/' . $folderName . '/' . auth()->id(),
+            $filePath = $request->file($fieldName)->storeAs('public/' . $folderName . '/' . auth('members')->id(),
                 $fileNameHash);
             $dataUploadTrait = [
                 'file_name' => $fileNameOrigin,

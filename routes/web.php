@@ -13,13 +13,6 @@
 
 use UniSharp\LaravelFilemanager\Lfm;
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::get('login', 'AuthController@getLogin')->name('get.admin.login');
-    Route::post('login', 'AuthController@postLogin')->name('post.admin.login');
-
-    Route::get('logout', 'AuthController@getLogout')->name('get.admin.logout');
-});
-
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'CheckLoginAdmin'], function () {
 
     Route::get('/', 'HomeController@show')->name('admin.home');

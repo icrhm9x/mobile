@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Member;
+use App\Policies\CategoryPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('category', function ($user) {
+            return true;
+        });
+
     }
 }

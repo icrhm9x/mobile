@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         //admin
+        $this->mapAdminLoginLogoutRoutes();
         $this->mapAdminCategoryRoutes();
         $this->mapAdminProductTypeRoutes();
         $this->mapAdminProductRoutes();
@@ -47,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapAdminNewsRoutes();
         $this->mapAdminMemberRoutes();
         $this->mapAdminRoleRoutes();
+        $this->mapAdminPermissionRoutes();
 
 
         //client
@@ -69,13 +71,20 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
      * Admin
      */
+    protected function mapAdminLoginLogoutRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/login-logout.php'));
+    }
+
     protected function mapAdminCategoryRoutes()
     {
         Route::prefix('admin')
@@ -140,6 +149,14 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/admins/role.php'));
     }
 
+    protected function mapAdminPermissionRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/permission.php'));
+    }
+
     /**
      * Client
      */
@@ -188,8 +205,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 }

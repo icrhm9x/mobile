@@ -117,6 +117,7 @@ class MemberController extends Controller
             unlink($url_file);
         }
         $member->delete();
+        $member->roles()->detach();
         return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

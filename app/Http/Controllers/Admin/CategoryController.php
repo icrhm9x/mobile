@@ -14,6 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+//        dd(auth('members')->id());
         $category = Category::all();
         return view('admin.categories.index', compact("category"));
     }
@@ -59,7 +60,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->update([
             'name' => $request->name,
-            'slug' => utf8tourl($request->name),
+            'slug' => str_slug($request->name),
             'status' => $request->status
         ]);
         $category = Category::all();

@@ -29,6 +29,7 @@
                                 <option value="{{ $item }}" {{ $permission->key_code == $item ? 'selected' : '' }}>{{ $item }}</option>
                             @endforeach
                         </select>
+                        {{ notifyError($errors,'key_code') }}
                     </div>
                     <div class="form-group">
                         <label for="permission">Chọn quyền cha</label>

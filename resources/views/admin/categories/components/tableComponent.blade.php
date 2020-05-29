@@ -20,16 +20,20 @@
                         class="rounded-0 badge badge-{{ $value->status == 1 ? 'info' : 'secondary' }}">{{ $value->status == 1 ? 'Hiển thị' : 'Không hiển thị' }}</span>
                 </td>
                 <td>
-                    <button type="button" title="Sửa" data-toggle="modal" data-target="#editCatModal"
-                            class="btn btn-sm btn-outline-primary editCatJS" data-id="{{ $value->id }}"
-                            data-url="{{ route('category.edit',['category' => $value->id]) }}">
-                        <i class="far fa-edit"></i>
-                    </button>
-                    <button type="button" title="Xóa" data-toggle="modal" data-target="#delCatModal"
-                            class="btn btn-sm ml-2 btn-outline-danger delCatJS" data-id="{{ $value->id }}"
-                            data-name="{{$value->name}}">
-                        <i class="far fa-trash-alt"></i>
-                    </button>
+                    @can('category_edit')
+                        <button type="button" title="Sửa" data-toggle="modal" data-target="#editCatModal"
+                                class="btn btn-sm btn-outline-primary editCatJS" data-id="{{ $value->id }}"
+                                data-url="{{ route('category.edit',['category' => $value->id]) }}">
+                            <i class="far fa-edit"></i>
+                        </button>
+                    @endcan
+                    @can('category_delete')
+                        <button type="button" title="Xóa" data-toggle="modal" data-target="#delCatModal"
+                                class="btn btn-sm ml-2 btn-outline-danger delCatJS" data-id="{{ $value->id }}"
+                                data-name="{{$value->name}}">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    @endcan
                 </td>
             </tr>
         @endforeach

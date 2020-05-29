@@ -23,11 +23,13 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3">
-            <a class="btn btn-info mb-3 float-right" href="{{ route('news.create') }}">
-                <i class="fas fa-plus"></i> Tạo mới
-            </a>
-        </div>
+        @can('news_add')
+            <div class="col-md-3">
+                <a class="btn btn-info mb-3 float-right" href="{{ route('news.create') }}">
+                    <i class="fas fa-plus"></i> Tạo mới
+                </a>
+            </div>
+        @endcan
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -67,15 +69,20 @@
                             </td>
                             <td>{{ $value->created_at }}</td>
                             <td>
-                                <a href="{{ route('news.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
-                                   class="btn btn-sm mr-2 mb-2 btn-outline-primary">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <button type="button" title="Xóa" data-toggle="modal" data-target="#delModal"
-                                        class="btn btn-sm mb-2 btn-outline-danger delNewsJS" data-id="{{ $value->id }}"
-                                        data-name="{{ $value->name }}">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
+                                @can('news_edit')
+                                    <a href="{{ route('news.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
+                                       class="btn btn-sm mr-2 mb-2 btn-outline-primary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                @endcan
+                                @can('news_delete')
+                                    <button type="button" title="Xóa" data-toggle="modal" data-target="#delModal"
+                                            class="btn btn-sm mb-2 btn-outline-danger delNewsJS"
+                                            data-id="{{ $value->id }}"
+                                            data-name="{{ $value->name }}">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -90,22 +97,25 @@
         </ul>
     </nav>
     {{-- del modal --}}
-    <div class="modal fade" id="delModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Bạn có muốn xóa sản phẩm <span class="titleDelJS text-danger"></span> #<span
-                            class="idDelJS text-danger"></span> ?</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="float-right">
-                        <button type="button" class="btn btn-success btn-acceptDelJS">Có</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+    @can('news_delete')
+        <div class="modal fade" id="delModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bạn có muốn xóa sản phẩm <span class="titleDelJS text-danger"></span>
+                            #<span
+                                class="idDelJS text-danger"></span> ?</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="float-right">
+                            <button type="button" class="btn btn-success btn-acceptDelJS">Có</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endcan
 @endsection
 @push('adminAjax')
     <script src="{{ asset('assets/admin/js/news-ajax.js') }}"></script>

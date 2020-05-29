@@ -22,11 +22,11 @@ class RatingController extends Controller
             'idProduct' => $id,
             'idUser' => $idUser,
             'number' => $request->number,
-            'content' => $request->content,
+            'comment' => $request->comment,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
-        
+
         $product = Product::find($id);
         $product->star_total += $request->number;
         $product->star_number += 1;

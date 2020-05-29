@@ -13,54 +13,43 @@ class CategoryPolicy
     /**
      * Determine whether the user can view the category.
      */
-    public function view(Member $members)
+    public function view(Member $member)
     {
-        return $members->checkPermissionAccess();
+        return $member->checkPermissionAccess('category_list');
     }
 
     /**
      * Determine whether the user can create categories.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
      */
-    public function create(User $user)
+    public function create(Member $member)
     {
-        //
+        return $member->checkPermissionAccess('category_add');
     }
 
     /**
      * Determine whether the user can update the category.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Category  $category
-     * @return mixed
      */
-    public function update(User $user, Category $category)
+    public function update(Member $member)
     {
-        //
+        return $member->checkPermissionAccess('category_edit');
     }
 
     /**
      * Determine whether the user can delete the category.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Category  $category
-     * @return mixed
      */
-    public function delete(User $user, Category $category)
+    public function delete(Member $member)
     {
-        //
+        return $member->checkPermissionAccess('category_delete');
     }
 
     /**
      * Determine whether the user can restore the category.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Member  $member
      * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function restore(User $user, Category $category)
+    public function restore(Member $member, Category $category)
     {
         //
     }
@@ -68,11 +57,11 @@ class CategoryPolicy
     /**
      * Determine whether the user can permanently delete the category.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Member  $member
      * @param  \App\Models\Category  $category
      * @return mixed
      */
-    public function forceDelete(User $user, Category $category)
+    public function forceDelete(Member $member, Category $category)
     {
         //
     }

@@ -1,9 +1,6 @@
 <?php
 
 return [
-    'access' => [
-        'list-category' => 'list_category'
-    ],
     'key_code' => [
         'category',
         'category_list',

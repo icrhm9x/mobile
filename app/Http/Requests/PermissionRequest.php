@@ -25,7 +25,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255|unique:permissions,name,'.($this->permission ?? ''),
-            'key_code' => 'required|min:2|max:255',
+            'key_code' => 'required|min:2|max:255|unique:permissions,key_code,'.($this->permission ?? ''),
             'parent_id' => 'required'
         ];
     }

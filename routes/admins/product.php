@@ -2,11 +2,13 @@
 Route::prefix('product')->group(function () {
     Route::get('', [
         'as' => 'product.index',
-        'uses' => 'ProductController@index'
+        'uses' => 'ProductController@index',
+        'middleware' => 'can:product_list'
     ]);
     Route::get('create', [
         'as' => 'product.create',
-        'uses' => 'ProductController@create'
+        'uses' => 'ProductController@create',
+        'middleware' => 'can:product_add'
     ]);
     Route::post('', [
         'as' => 'product.store',
@@ -14,7 +16,8 @@ Route::prefix('product')->group(function () {
     ]);
     Route::get('{product}/edit', [
         'as' => 'product.edit',
-        'uses' => 'ProductController@edit'
+        'uses' => 'ProductController@edit',
+        'middleware' => 'can:product_edit'
     ]);
     Route::put('{product}', [
         'as' => 'product.update',
@@ -22,6 +25,7 @@ Route::prefix('product')->group(function () {
     ]);
     Route::delete('{product}', [
         'as' => 'product.destroy ',
-        'uses' => 'ProductController@destroy'
+        'uses' => 'ProductController@destroy',
+        'middleware' => 'can:product_delete'
     ]);
 });

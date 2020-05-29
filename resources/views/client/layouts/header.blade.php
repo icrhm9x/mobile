@@ -152,8 +152,8 @@
                         <div class="expand dropps-menu">
                             <a href="#"><i class="fa fa-align-right"></i></a>
                             <ul class="restrain language">
-                                @if (Auth::check())
-                                    <li><a href="#">{{ Auth::user()->name }}</a></li>
+                                @if (Auth::guard('web')->check())
+                                    <li><a href="#">{{ Auth::guard('web')->user()->name }}</a></li>
                                     <li><a href="#">Yêu thích</a></li>
                                     <li><a href="{{ route('list.cart') }}">Giỏ hàng</a></li>
                                     <li><a href="{{ route('get.logout') }}">Thoát</a></li>

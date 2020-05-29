@@ -45,11 +45,13 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-3">
-            <a class="btn btn-info mb-3 float-right" href="{{ route('product.create') }}">
-                <i class="fas fa-plus"></i> Tạo mới
-            </a>
-        </div>
+        @can('product_add')
+            <div class="col-md-3">
+                <a class="btn btn-info mb-3 float-right" href="{{ route('product.create') }}">
+                    <i class="fas fa-plus"></i> Tạo mới
+                </a>
+            </div>
+        @endcan
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -88,14 +90,14 @@
                                     <li>
                                         <span>Đánh giá: </span>
                                         <span>
-                      @for ($i = 1; $i <= 5; $i++)
+                                            @for ($i = 1; $i <= 5; $i++)
                                                 @if ($i <= $average)
                                                     <i class="fa fa-star"></i>
                                                 @else
                                                     <i class="far fa-star"></i>
                                                 @endif
                                             @endfor
-                    </span>
+                                        </span>
                                         <span> {{ $average }}</span>
                                     </li>
                                     <li>
@@ -124,15 +126,20 @@
                                     class="rounded-0 badge badge-{{ $value->hot == 1 ? 'danger' : 'secondary' }}">{{ $value->hot == 1 ? 'Hot' : 'Không' }}</span>
                             </td>
                             <td>
-                                <a href="{{ route('product.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
-                                   class="btn btn-sm mr-2 mb-2 btn-outline-primary">
-                                    <i class="far fa-edit"></i>
-                                </a>
-                                <button type="button" title="Xóa" data-toggle="modal" data-target="#delPrdModal"
-                                        class="btn btn-sm mb-2 btn-outline-danger delPrdJS" data-id="{{ $value->id }}"
-                                        data-name="{{ $value->name }}">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
+                                @can('product_edit')
+                                    <a href="{{ route('product.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
+                                       class="btn btn-sm mr-2 mb-2 btn-outline-primary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                @endcan
+                                @can('product_delete')
+                                    <button type="button" title="Xóa" data-toggle="modal" data-target="#delPrdModal"
+                                            class="btn btn-sm mb-2 btn-outline-danger delPrdJS"
+                                            data-id="{{ $value->id }}"
+                                            data-name="{{ $value->name }}">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -146,8 +153,10 @@
             {{ $products->appends(['name'=>request()->name,'cate'=>request()->cate,'prdType'=>request()->prdType])->links() }}
         </ul>
     </nav>
+    @can('product_delete')
     <!-- delete Modal-->
     @include('admin.products.delModal')
+    @endcan
 
 @endsection
 @push('adminAjax')

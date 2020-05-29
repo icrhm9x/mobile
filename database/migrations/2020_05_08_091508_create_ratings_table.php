@@ -18,7 +18,7 @@ class CreateRatingsTable extends Migration
             $table->integer('idProduct')->index();
             $table->integer('idUser')->index();
             $table->tinyInteger('number')->default(0);
-            $table->string('content')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

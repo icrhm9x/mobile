@@ -24,8 +24,18 @@ class Member extends Authenticatable
         return $this->belongsToMany(Role::class, 'member_role', 'member_id', 'role_id')->withTimestamps();
     }
 
-    public function checkPermissionAccess()
+    public function checkPermissionAccess($permissionCheck)
     {
-        return true;
+        $roles = auth()->user()->roles;
+        if(auth()->id() == 1) {
+            return true;
+        }
+        foreach ($roles as $role) {
+            $permissions = $role->permissions;
+            if ($permissions->contains('key_code', $permissionCheck)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

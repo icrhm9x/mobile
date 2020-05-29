@@ -29,7 +29,7 @@
                 <td>{{ $value->id }}</td>
                 <td>{{ isset($value->user->name) ? $value->user->name : 'chưa rõ' }}</td>
                 <td>{{ $value->product->name }}</td>
-                <td>{{ $value->content }}</td>
+                <td>{{ $value->comment }}</td>
                 <td>{{ $value->number }}<i class="fa fa-star"></i></td>
               </tr>
             @endforeach

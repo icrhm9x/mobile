@@ -35,29 +35,37 @@
                             <td>{{ $value->phone }}</td>
                             <td>{{ number_format($value->totalMoney,0,',','.') }}₫</td>
                             <td id="handleJS">
-                                @if($value->status == 0)
-                                    <button type="button" data-toggle="modal" data-target="#handleOrder"
-                                            class="btn btn-secondary btn-sm handleOrderJS" data-id="{{ $value->id }}">
-                                        Chờ xử lý
-                                    </button>
-                                @else
-                                    <button type="button" class="btn btn-success btn-sm">Đã xử lý</button>
-                                @endif
+                                @can('order_status')
+                                    @if($value->status == 0)
+                                        <button type="button" data-toggle="modal" data-target="#handleOrder"
+                                                class="btn btn-secondary btn-sm handleOrderJS"
+                                                data-id="{{ $value->id }}">
+                                            Chờ xử lý
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-success btn-sm">Đã xử lý</button>
+                                    @endif
+                                @endcan
                             </td>
                             <td>{{ $value->created_at }}</td>
                             <td>
-                                <button type="button" title="Chi tiết đơn hàng" data-toggle="modal"
-                                        data-target="#orderDetail"
-                                        class="btn btn-sm btn-outline-primary showOrderDetailJS"
-                                        data-id="{{ $value->id }}"
-                                        data-url="{{ route('order.show', ['id' => $value->id]) }}">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button type="button" title="Xóa" data-toggle="modal" data-target="#delOrderDetailModal"
-                                        class="btn btn-sm ml-2 btn-outline-danger delOrderDetailJS"
-                                        data-id="{{ $value->id }}">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
+                                @can('order_detail')
+                                    <button type="button" title="Chi tiết đơn hàng" data-toggle="modal"
+                                            data-target="#orderDetail"
+                                            class="btn btn-sm btn-outline-primary showOrderDetailJS"
+                                            data-id="{{ $value->id }}"
+                                            data-url="{{ route('order.show', ['id' => $value->id]) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                @endcan
+                                @can('order_delete')
+                                    <button type="button" title="Xóa" data-toggle="modal"
+                                            data-target="#delOrderDetailModal"
+                                            class="btn btn-sm ml-2 btn-outline-danger delOrderDetailJS"
+                                            data-id="{{ $value->id }}">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -67,24 +75,30 @@
         </div>
     </div>
 
-    <!-- order detail Modal-->
-    <div class="modal fade" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Chi tiết đơn hàng #<span class="idOrderDetail"></span></h5>
-                </div>
-                <div class="modal-body" id="mdContent"></div>
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Đóng</button>
+    @can('order_detail')
+        <!-- order detail Modal-->
+        <div class="modal fade" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết đơn hàng #<span class="idOrderDetail"></span></h5>
+                    </div>
+                    <div class="modal-body" id="mdContent"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" type="button" data-dismiss="modal">Đóng</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal-->
-    @include('admin.orders.handleOrder')
-    @include('admin.orders.delModal')
+    @endcan
+
+    @can('order_status')
+        @include('admin.orders.handleOrder')
+    @endcan
+    @can('order_delete')
+        @include('admin.orders.delModal')
+    @endcan
 
 @endsection
 @push('adminAjax')

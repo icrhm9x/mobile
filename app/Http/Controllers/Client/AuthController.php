@@ -23,7 +23,7 @@ class AuthController extends Controller
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if (Auth::check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
         }
         return view('client.auth.register');
@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function getLogin()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if (Auth::check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
         }
         return view('client.auth.login');
@@ -73,7 +73,7 @@ class AuthController extends Controller
     public function postLogin(Request $request)
     {
         $data = $request->only('email', 'password');
-        if (Auth::attempt($data)) {
+        if (Auth::guard('web')->attempt($data)) {
             return redirect()->route('home')->with('success', 'Đăng nhập thành công');
         } else {
             return back()->with('error', 'Đăng nhập thất bại. Xin vui lòng kiểm tra lại tài khoản');
@@ -83,7 +83,7 @@ class AuthController extends Controller
     public function getForgotPassword()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if (Auth::check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route('home')->with('warning', 'Bạn đã đăng nhập');
         }
         return view('client.auth.forgot');
@@ -148,8 +148,8 @@ class AuthController extends Controller
 
     public function getLogout()
     {
-        if (Auth::check()) {
-            Auth::logout();
+        if (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();
             return redirect()->back()->with('success', 'Đăng xuất thành công');
         } else {
             return redirect()->back();

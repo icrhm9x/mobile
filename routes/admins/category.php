@@ -3,11 +3,12 @@ Route::prefix('category')->group(function () {
     Route::get('', [
         'as' => 'category.index',
         'uses' => 'CategoryController@index',
-        'middleware' => 'can:category'
+        'middleware' => 'can:category_list'
     ]);
     Route::post('', [
         'as' => 'category.store',
-        'uses' => 'CategoryController@store'
+        'uses' => 'CategoryController@store',
+        'middleware' => 'can:category_add'
     ]);
     Route::get('{category}', [
         'as' => 'category.show',
@@ -15,7 +16,8 @@ Route::prefix('category')->group(function () {
     ]);
     Route::get('{category}/edit', [
         'as' => 'category.edit',
-        'uses' => 'CategoryController@edit'
+        'uses' => 'CategoryController@edit',
+        'middleware' => 'can:category_edit'
     ]);
     Route::put('{category}', [
         'as' => 'category.update',
@@ -23,6 +25,7 @@ Route::prefix('category')->group(function () {
     ]);
     Route::delete('{category}', [
         'as' => 'category.destroy ',
-        'uses' => 'CategoryController@destroy'
+        'uses' => 'CategoryController@destroy',
+        'middleware' => 'can:category_delete'
     ]);
 });

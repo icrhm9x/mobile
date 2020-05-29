@@ -156,7 +156,7 @@
 										</div>
 									</div>
 									<div class="comment-respond">
-										@if (Auth::check())
+										@if (Auth::guard('web')->check())
 											@if ($count > 0)
 											<h3 class="comment-reply-title">Bạn đã đánh giá sản phẩm này</h3>
 											@else
@@ -167,12 +167,12 @@
 												<div class="row">
 													<div class="col-md-12">
 														<p>Họ tên *</p>
-														<input type="text" name="name" value="{{ Auth::user()->name }}">
+														<input type="text" name="name" value="{{ Auth::guard('web')->user()->name }}">
 														{{ notifyError($errors,'name') }}
 													</div>
 													<div class="col-md-12">
 														<p>Email *</p>
-														<input type="email" name="email" value="{{ Auth::user()->email }}">
+														<input type="email" name="email" value="{{ Auth::guard('web')->user()->email }}">
 														{{ notifyError($errors,'email') }}
 													</div>
 													<div class="col-md-12">
@@ -186,8 +186,8 @@
 														{{ notifyError($errors,'number') }}
 													</div>
 													<div class="col-md-12 comment-form-comment">
-														<textarea id="message" name="content" cols="30" rows="10"></textarea>
-														{{ notifyError($errors,'content') }}
+														<textarea id="message" name="comment" cols="30" rows="10"></textarea>
+														{{ notifyError($errors,'comment') }}
 														<input type="submit" value="Gửi đánh giá">
 													</div>
 												</div>

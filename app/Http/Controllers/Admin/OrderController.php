@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -30,11 +31,21 @@ class OrderController extends Controller
         return response()->json(['message' => 'Cập nhật thành công'], 200);
     }
 
-    public function destroy($id)
+    public function cancel($id)
     {
         $order = Order::find($id);
-        $order->delete();
-        OrderDetail::where('idOrder', $id)->delete();
-        return response()->json(['message' => 'Xóa thành công'], 200);
+        $order->status = 2;
+        $order->save();
+        $order_details = OrderDetail::where('idOrder', $id)->get();
+        foreach ($order_details as $item) {
+            $product = Product::find($item->idProduct);
+            $product->quantity += $item->quantity;
+            $product->purchase_number -= $item->quantity;
+            if($product->status == 0) {
+                $product->status = 1;
+            }
+            $product->save();
+        }
+        return response()->json(['message' => 'Đã hủy đơn hàng'], 200);
     }
 }

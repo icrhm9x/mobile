@@ -40,21 +40,23 @@ $(document).ready(function() {
     });
 
     // delete order
-    $(this).on("click", ".delOrderDetailJS", function() {
+    $(this).on("click", ".cancelOrderDetailJS", function() {
         $(".idOrderDetailJS").text($(this).data("id"));
     });
     $(".btn-acceptOrderDetailJS").click(function() {
         let id = $(".idOrderDetailJS").text();
         $.ajax({
-            url: "/admin/order/" + id,
+            url: "/admin/order/cancel/" + id,
             dataType: "json",
-            type: "delete",
+            type: "put",
             success: function(data) {
                 toastr.success(data.message, "Thông báo", {
                     timeOut: 3000
                 });
-                $(".rowTable" + id).remove();
-                $("#delOrderDetailModal").modal("hide");
+                html = '<button type="button" class="btn btn-warning btn-sm">Đã hủy</button>';
+                $(".rowTable" + id).find('#handleJS').empty().append(html);
+                $(".rowTable" + id).find('.cancelOrderDetailJS').remove();
+                $("#cancelOrderDetailModal").modal("hide");
             }
         });
     });

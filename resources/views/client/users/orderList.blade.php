@@ -79,7 +79,15 @@
                                     <td>
                                         <p class="special-price">{{ $item->created_at }}</p>
                                     </td>
-                                    <td><p>{{ $item->status == 0 ? 'Đang xử lý' : 'Giao hàng thành công' }}</p></td>
+                                    <td><p>
+                                            @if($item->status == 0)
+                                                Đơn hàng đang được xử lý
+                                            @elseif($item->status == 1)
+                                                Giao hàng thành công
+                                            @elseif($item->status == 2)
+                                                Đơn hàng đã hủy
+                                            @endif
+                                        </p></td>
                                 </tr>
                             @empty
                                 <tr><td colspan="5">Bạn chưa có đơn hàng nào</td></tr>

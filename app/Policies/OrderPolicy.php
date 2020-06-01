@@ -37,9 +37,9 @@ class OrderPolicy
     /**
      * Determine whether the user can delete the order.
      */
-    public function delete(Member $member)
+    public function cancel(Member $member)
     {
-        return $member->checkPermissionAccess('order_delete');
+        return $member->checkPermissionAccess('order_cancel');
     }
 
     /**

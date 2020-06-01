@@ -117,7 +117,7 @@
                                     {!! '<span class="rounded-0 badge badge-success">Còn hàng</span>' !!}
                                 @elseif ($value->status == 2)
                                     {!! '<span class="rounded-0 badge badge-info">Sắp ra mắt</span>' !!}
-                                @else
+                                @elseif ($value->status == 0)
                                     {!! '<span class="rounded-0 badge badge-warning">Hết hàng</span>' !!}
                                 @endif
                             </td>

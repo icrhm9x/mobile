@@ -42,8 +42,10 @@
                                                 data-id="{{ $value->id }}">
                                             Chờ xử lý
                                         </button>
-                                    @else
+                                    @elseif ($value->status == 1)
                                         <button type="button" class="btn btn-success btn-sm">Đã xử lý</button>
+                                    @elseif ($value->status == 2)
+                                        <button type="button" class="btn btn-warning btn-sm">Đã hủy</button>
                                     @endif
                                 @endcan
                             </td>
@@ -58,12 +60,12 @@
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 @endcan
-                                @can('order_delete')
-                                    <button type="button" title="Xóa" data-toggle="modal"
-                                            data-target="#delOrderDetailModal"
-                                            class="btn btn-sm ml-2 btn-outline-danger delOrderDetailJS"
+                                @can('order_cancel')
+                                    <button type="button" title="Hủy đơn hàng" data-toggle="modal"
+                                            data-target="#cancelOrderDetailModal"
+                                            class="btn btn-sm ml-2 btn-outline-danger cancelOrderDetailJS"
                                             data-id="{{ $value->id }}">
-                                        <i class="far fa-trash-alt"></i>
+                                        <i class="fas fa-ban"></i>
                                     </button>
                                 @endcan
                             </td>
@@ -100,8 +102,8 @@
     @can('order_status')
         @include('admin.orders.handleOrder')
     @endcan
-    @can('order_delete')
-        @include('admin.orders.delModal')
+    @can('order_cancel')
+        @include('admin.orders.cancelModal')
     @endcan
 
 @endsection

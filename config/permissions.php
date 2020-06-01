@@ -23,7 +23,7 @@ return [
         'order_list',
         'order_status',
         'order_detail',
-        'order_delete',
+        'order_cancel',
         'news',
         'news_list',
         'news_add',

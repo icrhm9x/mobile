@@ -15,9 +15,9 @@ Route::prefix('order')->group(function () {
         'uses' => 'OrderController@update',
         'middleware' => 'can:order_status'
     ]);
-    Route::delete('{order}', [
-        'as' => 'order.destroy',
-        'uses' => 'OrderController@destroy',
-        'middleware' => 'can:order_delete'
+    Route::put('cancel/{order}', [
+        'as' => 'order.cancel',
+        'uses' => 'OrderController@cancel',
+        'middleware' => 'can:order_cancel'
     ]);
 });

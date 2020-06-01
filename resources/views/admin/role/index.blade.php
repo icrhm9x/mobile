@@ -32,7 +32,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($roles as $key => $role)
+                    @forelse ($roles as $key => $role)
                         <tr class="rowTable{{$role->id}}">
                             <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
                             <td>{{ $role->name }}</td>
@@ -53,7 +53,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" style="text-align: center;">Chưa có vai trò nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>

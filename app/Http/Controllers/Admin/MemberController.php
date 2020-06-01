@@ -19,7 +19,7 @@ class MemberController extends Controller
 
     public function index(Request $request)
     {
-        $members = Member::orderByDesc('id');
+        $members = Member::orderBy('id');
         if (isset($request->name)) {
             $members->where('name', 'like', '%' . $request->name . '%');
         }

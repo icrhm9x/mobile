@@ -33,7 +33,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($permissions as $permission)
+                    @forelse ($permissions as $permission)
                         <tr class="rowTable{{$permission->id}}">
                             <td>{{ $permission->id }}</td>
                             <td>{{ $permission->name }}</td>
@@ -54,7 +54,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="5" style="text-align: center;">Chưa có quyền nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>

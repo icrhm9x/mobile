@@ -112,7 +112,6 @@
                                                     <img src="{{ $item->options->img_path }}" alt="">
                                                 </a>
                                                 <div class="small-cart-detail">
-                                                    <a class="remove" href="{{ route('del.cart', $key) }}"><i class="fa fa-times-circle"></i></a>
                                                     <a class="small-cart-name" href="#">{{ $item->name }}</a>
                                                     <span class="quantitys"><strong>{{ $item->qty }}</strong>x<span>{{ number_format($item->price, 0, ',', '.') }}₫</span></span>
                                                 </div>
@@ -153,8 +152,8 @@
                             <a href="#"><i class="fa fa-align-right"></i></a>
                             <ul class="restrain language">
                                 @if (Auth::guard('web')->check())
-                                    <li><a href="#">{{ Auth::guard('web')->user()->name }}</a></li>
-                                    <li><a href="#">Yêu thích</a></li>
+                                    <li><a href="{{ route('user.index') }}">{{ Auth::guard('web')->user()->name }}</a></li>
+                                    <li><a href="{{ route('wishlist.index') }}">Yêu thích</a></li>
                                     <li><a href="{{ route('list.cart') }}">Giỏ hàng</a></li>
                                     <li><a href="{{ route('get.logout') }}">Thoát</a></li>
                                 @else

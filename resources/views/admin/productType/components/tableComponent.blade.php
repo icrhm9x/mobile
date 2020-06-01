@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody id="dataTableJS">
-        @foreach ($productType as $key => $value)
+        @forelse ($productType as $key => $value)
             <tr class="rowTable{{$value->id}}">
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $value->name }}</td>
@@ -38,7 +38,9 @@
                     @endcan
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr><td colspan="6" style="text-align: center;">Chưa có Loại sản phẩm nào</td></tr>
+        @endforelse
         </tbody>
     </table>
 </div>

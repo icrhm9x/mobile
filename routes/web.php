@@ -13,15 +13,6 @@
 
 use UniSharp\LaravelFilemanager\Lfm;
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'CheckLoginAdmin'], function () {
-
-    Route::get('/', 'HomeController@show')->name('admin.home');
-
-    Route::get('getprdtype', 'AjaxProductController@getPrdType');
-
-
-});
-
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     Lfm::routes();
 });

@@ -36,7 +36,8 @@
                     <div class="topbar-left">
                         <aside class="widge-topbar">
                             <div class="bar-title">
-                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
+                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt="">
+                                </div>
                                 <h2>Lọc sản phẩm</h2>
                             </div>
                         </aside>
@@ -76,22 +77,6 @@
                                        href="{{ request()->fullUrlWithQuery(['price' => 5]) }}">Trên 10.000.000đ</a>
                                 </li>
                             </ul>
-                        </aside>
-                        <aside class="widge-topbar">
-                            <div class="bar-title">
-                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
-                                <h2>Tags</h2>
-                            </div>
-                            <div class="exp-tags">
-                                <div class="tags">
-                                    <a href="#">Samsung</a>
-                                    <a href="#">Mobile</a>
-                                    <a href="#">Sản phẩm mới</a>
-                                    <a href="#">Giá rẻ</a>
-                                    <a href="#">Apple</a>
-                                    <a href="#">Laptop</a>
-                                </div>
-                            </div>
                         </aside>
                     </div>
                 </div>
@@ -162,18 +147,17 @@
                                                                 <div class="action-buttons">
                                                                     <div class="add-to-links">
                                                                         <div class="add-to-wishlist">
-                                                                            <a href="#" title="Yêu thích"><i
+                                                                            <a href="{{ route('wishlist.store', $item->id) }}"
+                                                                               title="Yêu thích"
+                                                                               class="addWishListJS"><i
                                                                                     class="fa fa-heart"></i></a>
                                                                         </div>
                                                                         <div class="compare-button">
                                                                             <a href="{{ route('add.cart', $item->id) }}"
-                                                                               title="Thêm vào giỏ hàng"><i
+                                                                               title="Thêm vào giỏ hàng"
+                                                                               class="addCardJS"><i
                                                                                     class="icon-bag"></i></a>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="quickviewbtn">
-                                                                        <a href="#" title="So sánh"><i
-                                                                                class="fa fa-retweet"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -253,21 +237,16 @@
                                                         <div class="actions-e">
                                                             <div class="action-buttons">
                                                                 <div class="add-to-cart">
-                                                                    <a href="{{ route('add.cart', $item->id) }}">Thêm
+                                                                    <a href="{{ route('add.cart', $item->id) }}"
+                                                                       class="addCardJS">Thêm
                                                                         vào giỏ hàng</a>
                                                                 </div>
                                                                 <div class="add-to-links">
                                                                     <div class="add-to-wishlist">
-                                                                        <a href="#" data-toggle="tooltip"
+                                                                        <a href="{{ route('wishlist.store', $item->id) }}" data-toggle="tooltip"
                                                                            title="Yêu thích"
-                                                                           data-original-title="Add to Wishlist"><i
+                                                                           data-original-title="Add to Wishlist" class="addWishListJS"><i
                                                                                 class="fa fa-heart"></i></a>
-                                                                    </div>
-                                                                    <div class="compare-button">
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                           title="So sánh"
-                                                                           data-original-title="Compare"><i
-                                                                                class="fa fa-refresh"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -301,4 +280,5 @@
             });
         });
     </script>
+    <script src="{{ asset('assets/client/addCart/add-index.js') }}"></script>
 @endpush

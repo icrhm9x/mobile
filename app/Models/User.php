@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'status',
+        'name', 'email', 'phone', 'password', 'gender',
     ];
 
     /**
@@ -29,4 +29,9 @@ class User extends Authenticatable
     ];
 
     protected $table = 'users';
+
+    public function wishList()
+    {
+        return $this->hasMany(WishLish::class, 'idUser', 'id');
+    }
 }

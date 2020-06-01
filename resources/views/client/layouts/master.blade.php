@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ $title ?? '' }} | Lavoro</title>
     <meta name="description" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ $title ?? '' }} | Lavoro</title>
 
     <!-- Favicon
     ============================================ -->
@@ -38,7 +38,6 @@
 
 <!-- JS -->
 {!! Assets::renderFooter() !!}
-
 
 @stack('clientAjax')
 <script src="{{ asset('assets/admin/js/toastr.min.js') }}"></script>

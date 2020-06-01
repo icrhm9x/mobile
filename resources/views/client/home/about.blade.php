@@ -8,10 +8,10 @@
 						<div class="container-inner">
 							<ul>
 								<li class="home">
-									<a href="index.html">Home</a>
+									<a href="/">Trang chủ</a>
 									<span><i class="fa fa-angle-right"></i></span>
 								</li>
-								<li class="category3"><span>About</span></li>
+								<li class="category3"><span>Giới thiệu</span></li>
 							</ul>
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="f-title text-center">
-							<h3 class="title text-uppercase">About Us</h3>
+							<h3 class="title text-uppercase">Giới thiệu về LAVORO</h3>
 						</div>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 					</div>
 					<div class="col-md-5 col-sm-12 col-xs-12">
 						<div class="img-element">
-							<img src="/assets/client/img/about/about.jpg" alt="banner1">
+							<img src="{{ asset('assets/client/img/about.jpg') }}" alt="banner1">
 						</div>
 					</div>
 				</div>

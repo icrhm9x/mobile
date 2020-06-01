@@ -26,28 +26,18 @@ class CartController extends Controller
     public function getList()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        if (Cart::count() > 0) {
-            $cart = Cart::content();
-            return view('client.cart.index', compact('cart'));
-        } else {
-            return redirect()->route('home')->with('warning', 'Giỏ hàng của bạn chưa có sản phẩm nào');
-        }
+        $cart = Cart::content();
+        return view('client.cart.index', compact('cart'));
     }
 
-    public function addCart($id, Request $request)
+    public function addCart($id)
     {
         $product = Product::findOrFail($id);
 
         if ($product->status == 3) {
-            return redirect()->back()->with('warning', 'Sản phẩm đang tạm thời hết hàng');
+            return response()->json(['message' => 'Sản phẩm đang tạm thời hết hàng', 'status' => 3], 200);
         } elseif ($product->status == 2) {
-            return redirect()->back()->with('warning', 'Sản phẩm sắp ra mắt');
-        }
-
-        if ($request->qty) {
-            $qty = $request->qty;
-        } else {
-            $qty = 1;
+            return response()->json(['message' => 'Sản phẩm sắp ra mắt', 'status' => 2], 200);
         }
 
         if ($product->promotion > 0) {
@@ -59,12 +49,20 @@ class CartController extends Controller
         $cart = [
             'id' => $id,
             'name' => $product->name,
-            'qty' => $qty,
+            'qty' => 1,
             'price' => $price,
-            'options' => ['img_path' => $product->img_path, 'old_price' => $product->price, 'promotion' => $product->promotion]
+            'options' => [
+                'img_path' => $product->img_path,
+                'old_price' => $product->price,
+                'promotion' => $product->promotion
+            ]
         ];
         Cart::add($cart);
-        return redirect()->back()->with('success', 'Sản phẩm ' . $product->name . ' đã được thêm vào giỏ hàng');
+        return response()->json([
+            'message' => 'Sản phẩm ' . $product->name . ' đã được thêm vào giỏ hàng',
+            'quantity' => Cart::count(),
+            'status' => 1
+        ], 200);
     }
 
     public function updateCart(Request $request, $key)
@@ -85,6 +83,7 @@ class CartController extends Controller
             return response()->json([
                 'message' => 'Cập nhật số lượng sản phẩm thành công',
                 'cartComponent' => $cartComponent,
+                'quantity' => Cart::count(),
                 'code' => 200
             ], 200);
         }
@@ -98,6 +97,7 @@ class CartController extends Controller
         return response()->json([
             'message' => 'Sản phẩm đã được xóa khỏi giỏ hàng',
             'cartComponent' => $cartComponent,
+            'quantity' => Cart::count(),
             'code' => 200
         ], 200);
     }

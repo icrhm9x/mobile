@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -21,13 +22,15 @@ class ProductController extends Controller
     {
         \Assets::addStyles(['jquery-ui']);
         $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->firstOrFail();
-        $newPrd = Product::orderByDesc('id')->limit(8)->get();
+
+        $ProductType = ProductType::where('slug', $prdType_slug)->first();
+        $sameProduct = $ProductType->product;
         $ratings = Rating::where('idProduct', $product->id)->get();
         $idUser = get_data_user('web');
         $count = Rating::where('idProduct', $product->id)->where('idUser', $idUser)->count();
         $data = [
             'product' => $product,
-            'newPrd' => $newPrd,
+            'sameProduct' => $sameProduct,
             'ratings' => $ratings,
             'count' => $count
         ];

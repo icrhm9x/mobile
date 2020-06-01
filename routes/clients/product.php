@@ -1,7 +1,7 @@
 <?php
-Route::group(['prefix' => 'ajax', 'middleware' => 'CheckLoginUser'], function () {
-    Route::post('danh-gia/{id}', 'RatingController@saveRating')->name('post.rating');
-});
+
+Route::post('danh-gia/{id}', 'RatingController@saveRating')->middleware('CheckLoginUser')->name('post.rating');
+
 Route::get('tim-kiem', 'SearchController@list')->name('get.list.search');
 Route::get('{c_slug}', 'CategoryController@list')->name('get.category');
 

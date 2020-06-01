@@ -39,6 +39,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
         //admin
+        $this->mapAdminHomeRoutes();
         $this->mapAdminLoginLogoutRoutes();
         $this->mapAdminCategoryRoutes();
         $this->mapAdminProductTypeRoutes();
@@ -56,6 +57,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapClientLoginLogoutRoutes();
         $this->mapClientCartRoutes();
         $this->mapClientNewsRoutes();
+        $this->mapClientMyAccountRoutes();
         $this->mapClientProductRoutes();
 
         //
@@ -78,6 +80,13 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Admin
      */
+    protected function mapAdminHomeRoutes()
+    {
+        Route::middleware('web', 'CheckLoginAdmin')
+            ->namespace('App\Http\Controllers\Admin')
+            ->group(base_path('routes/admins/home.php'));
+    }
+
     protected function mapAdminLoginLogoutRoutes()
     {
         Route::middleware('web')
@@ -186,6 +195,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace('App\Http\Controllers\Client')
             ->group(base_path('routes/clients/news.php'));
+    }
+
+    protected function mapClientMyAccountRoutes()
+    {
+        Route::middleware('web')
+            ->namespace('App\Http\Controllers\Client')
+            ->group(base_path('routes/clients/user.php'));
     }
 
     protected function mapClientProductRoutes()

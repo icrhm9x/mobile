@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveRatingRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,29 +25,29 @@ class SaveRatingRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
-            'email' => 'required|min:2|max:255',
-            'number' => 'required|digits_between:1,5',
-            'comment' => 'required'
+            'email' => 'required|email|unique:users,email,'.($this->id ?? ''),
+            'phone' => 'required|digits_between:8,13'
         ];
     }
+
     public function messages()
     {
         return [
             'required' => ':attribute không được bỏ trống',
             'min' => ':attribute tối thiểu có 2 kí tự',
             'max' => ':attribute tối đa có 255 kí tự',
-            'digits_between' => ':attribute phải từ 8-13 số',
-            'number.required' => 'Bạn chưa đánh giá sản phẩm',
-            'number.digits_between' => 'Bạn chưa đánh giá sản phẩm'
+            'email' => ':attribute không đúng định dạng',
+            'unique' => ':attribute đã tồn tại',
+            'digits_between' => ':attribute phải từ 8-13 số'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Tên người mua hàng',
+            'name' => 'Họ tên',
             'email' => 'Địa chỉ email',
-            'comment' => 'Nội dung đánh giá'
+            'phone' => 'Số điện thoại',
         ];
     }
 }

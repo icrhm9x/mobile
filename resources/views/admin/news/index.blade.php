@@ -52,7 +52,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($news as $key => $value)
+                    @forelse ($news as $key => $value)
                         <tr class="rowTable{{$value->id}}">
                             <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
                             <td>{{ $value->name }}</td>
@@ -85,7 +85,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" style="text-align: center;">Chưa có bài viết nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>

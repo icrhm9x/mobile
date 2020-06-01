@@ -19,11 +19,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($cart as $key => $item)
+                    @forelse ($cart as $key => $item)
                         <tr>
                             <td>
-                                <a href="#"><img src="{{ asset($item->options->img_path) }}"
-                                                 class="img-responsive" alt=""/></a>
+                                <a href="#"><img src="{{ asset($item->options->img_path) }}" class="img-responsive"/></a>
                             </td>
                             <td>
                                 <h6>{{ $item->name }}</h6>
@@ -42,13 +41,15 @@
                                    class="btn btn-primary cartUpdateJs">Cập nhật</a></td>
                             <td><a href="{{ route('del.cart', $key) }}" class="btn btn-danger cartDelJs">Xóa</a></td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr><td colspan="7">Giỏ hàng của bạn chưa có sản phẩm nào</td></tr>
+                    @endforelse
                     <tr>
                         <td class="actions-crt" colspan="7">
                             <div class="">
-                                <div class="col-md-4 col-sm-4 col-xs-4 pull-right"><a class="cbtn"
-                                                                                      href="{{ route('home') }}">Tiếp
-                                        tục mua hàng</a></div>
+                                <div class="col-md-4 col-sm-4 col-xs-4 pull-right">
+                                    <a class="cbtn" href="{{ route('home') }}">Tiếp tục mua sắm</a>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -58,10 +59,9 @@
         </div>
     </div>
     <!-- Shopping Cart Table -->
-    <!-- Shopping Coupon -->
+    @if(Cart::count() > 0)
     <div class="row">
         <div class="col-md-12 vendee-clue">
-            <!-- Shopping Totals -->
             <div class="shipping coupon cart-totals">
                 <ul>
                     <li class="cartSubT">Tổng tiền ({{ Cart::count() }} sản phẩm): <span>{{ Cart::subtotal(0,',','.') }}₫</span>
@@ -69,8 +69,7 @@
                 </ul>
                 <a class="proceedbtn" href="{{ route('checkout') }}">THANH TOÁN</a>
             </div>
-            <!-- Shopping Totals -->
         </div>
     </div>
-    <!-- Shopping Coupon -->
+    @endif
 </div>

@@ -8,7 +8,7 @@
                     <div class="container-inner">
                         <ul>
                             <li class="home">
-                                <a href="index.html">Trang chủ</a>
+                                <a href="/">Trang chủ</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="category3"><span>Giỏ hàng</span></li>

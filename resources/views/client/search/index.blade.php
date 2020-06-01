@@ -27,9 +27,9 @@
         </div>
     </div>
     @if(Request::get('key'))
-    <div class="area-title_search">
-        <h2 class="title_search">{{ Request::get('key') }}</h2>
-    </div>
+        <div class="area-title_search">
+            <h2 class="title_search">{{ Request::get('key') }}</h2>
+        </div>
     @endif
     <!-- breadcrumbs area end -->
     <div class="shop-with-sidebar">
@@ -50,7 +50,7 @@
                                                         <div class="product-img">
                                                             <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
                                                                 <img class="primary-image"
-                                                                     src="/img/upload/product/{{ $item->img }}" alt=""/>
+                                                                     src="{{ asset($item->img_path) }}" alt=""/>
                                                             </a>
                                                             <div class="actions">
                                                                 <div class="action-buttons">
@@ -61,7 +61,7 @@
                                                                         </div>
                                                                         <div class="compare-button">
                                                                             <a href="{{ route('add.cart', $item->id) }}"
-                                                                               title="Thêm vào giỏ hàng"><i
+                                                                               title="Thêm vào giỏ hàng" class="addCardJS"><i
                                                                                     class="icon-bag"></i></a>
                                                                         </div>
                                                                     </div>
@@ -107,3 +107,6 @@
         </div>
     </div>
 @endsection
+@push('clientAjax')
+    <script src="{{ asset('assets/client/addCart/add-index.js') }}"></script>
+@endpush

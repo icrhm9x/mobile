@@ -51,7 +51,7 @@
                     </tr>
                     </thead>
                     <tbody id="dataTableJS">
-                    @foreach ($members as $value)
+                    @forelse ($members as $value)
                         <tr class="rowTable{{$value->id}}">
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->name }}</td>
@@ -84,7 +84,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" style="text-align: center;">Chưa có thành viên nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>

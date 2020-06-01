@@ -43,7 +43,8 @@
                     <div class="topbar-left">
                         <aside class="widge-topbar">
                             <div class="bar-title">
-                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
+                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt="">
+                                </div>
                                 <h2>Lọc sản phẩm</h2>
                             </div>
                         </aside>
@@ -85,22 +86,6 @@
                                 </li>
                             </ul>
                         </aside>
-                        <aside class="widge-topbar">
-                            <div class="bar-title">
-                                <div class="bar-ping"><img src="{{ asset('assets/client/img/bar-ping.png') }}" alt=""></div>
-                                <h2>Tags</h2>
-                            </div>
-                            <div class="exp-tags">
-                                <div class="tags">
-                                    <a href="#">Samsung</a>
-                                    <a href="#">Mobile</a>
-                                    <a href="#">Sản phẩm mới</a>
-                                    <a href="#">Giá rẻ</a>
-                                    <a href="#">Apple</a>
-                                    <a href="#">Laptop</a>
-                                </div>
-                            </div>
-                        </aside>
                     </div>
                 </div>
                 <!-- left sidebar end -->
@@ -138,9 +123,11 @@
                                 <div class="view-mode">
                                     <label>View on</label>
                                     <ul>
-                                        <li class="{{ Request::get('shop') == 'grid' || !Request::get('shop') ? 'active' : '' }}"><a href="{{ request()->fullUrlWithQuery(['shop' => 'grid']) }}"><i
+                                        <li class="{{ Request::get('shop') == 'grid' || !Request::get('shop') ? 'active' : '' }}">
+                                            <a href="{{ request()->fullUrlWithQuery(['shop' => 'grid']) }}"><i
                                                     class="fa fa-th"></i></a></li>
-                                        <li class="{{ Request::get('shop') == 'list' ? 'active' : '' }}"><a href="{{ request()->fullUrlWithQuery(['shop' => 'list']) }}"><i
+                                        <li class="{{ Request::get('shop') == 'list' ? 'active' : '' }}"><a
+                                                href="{{ request()->fullUrlWithQuery(['shop' => 'list']) }}"><i
                                                     class="fa fa-th-list"></i></a></li>
                                     </ul>
                                 </div>
@@ -149,7 +136,9 @@
                     </div>
                     <!-- shop toolbar end -->
                     <div class="tab-content">
-                        <div class="tab-pane fade {{ Request::get('shop') == 'grid' || !Request::get('shop') ? 'active in' : '' }}" id="shop-grid-tab">
+                        <div
+                            class="tab-pane fade {{ Request::get('shop') == 'grid' || !Request::get('shop') ? 'active in' : '' }}"
+                            id="shop-grid-tab">
                             <div class="row">
                                 <div class="shop-product-tab first-sale">
                                     @if (isset($listPrd))
@@ -166,18 +155,17 @@
                                                                 <div class="action-buttons">
                                                                     <div class="add-to-links">
                                                                         <div class="add-to-wishlist">
-                                                                            <a href="#" title="Yêu thích"><i
+                                                                            <a href="{{ route('wishlist.store', $item->id) }}"
+                                                                               title="Yêu thích"
+                                                                               class="addWishListJS"><i
                                                                                     class="fa fa-heart"></i></a>
                                                                         </div>
                                                                         <div class="compare-button">
                                                                             <a href="{{ route('add.cart', $item->id) }}"
-                                                                               title="Thêm vào giỏ hàng"><i
+                                                                               title="Thêm vào giỏ hàng"
+                                                                               class="addCardJS"><i
                                                                                     class="icon-bag"></i></a>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="quickviewbtn">
-                                                                        <a href="#" title="So sánh"><i
-                                                                                class="fa fa-retweet"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -207,7 +195,8 @@
                             </div>
                         </div>
                         <!-- list view -->
-                        <div class="tab-pane fade {{ Request::get('shop') == 'list' ? 'active in' : '' }}" id="shop-list-tab">
+                        <div class="tab-pane fade {{ Request::get('shop') == 'list' ? 'active in' : '' }}"
+                             id="shop-list-tab">
                             <div class="list-view">
                                 @if (isset($listPrd))
                                     @foreach ($listPrd as $item)
@@ -256,21 +245,15 @@
                                                         <div class="actions-e">
                                                             <div class="action-buttons">
                                                                 <div class="add-to-cart">
-                                                                    <a href="{{ route('add.cart', $item->id) }}">Thêm
+                                                                    <a href="{{ route('add.cart', $item->id) }}"
+                                                                       class="addCardJS">Thêm
                                                                         vào giỏ hàng</a>
                                                                 </div>
                                                                 <div class="add-to-links">
                                                                     <div class="add-to-wishlist">
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                           title="Yêu thích"
-                                                                           data-original-title="Add to Wishlist"><i
+                                                                        <a href="{{ route('wishlist.store', $item->id) }}"
+                                                                           title="Yêu thích"><i
                                                                                 class="fa fa-heart"></i></a>
-                                                                    </div>
-                                                                    <div class="compare-button">
-                                                                        <a href="#" data-toggle="tooltip"
-                                                                           title="So sánh"
-                                                                           data-original-title="Compare"><i
-                                                                                class="fa fa-refresh"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -304,4 +287,5 @@
             });
         });
     </script>
+    <script src="{{ asset('assets/client/addCart/add-index.js') }}"></script>
 @endpush

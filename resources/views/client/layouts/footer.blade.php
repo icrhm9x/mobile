@@ -6,42 +6,41 @@
                 <div class="col-md-3 col-sm-4">
                     <div class="single-snap-footer">
                         <div class="snap-footer-title">
-                            <h4>Company info</h4>
+                            <h4>GIỚI THIỆU</h4>
                         </div>
                         <div class="cakewalk-footer-content">
-                            <p class="footer-des">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim adm.</p>
-                            <a href="#" class="read-more">Read more</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-4">
-                    <div class="single-snap-footer">
-                        <div class="snap-footer-title">
-                            <h4>Information</h4>
-                        </div>
-                        <div class="cakewalk-footer-content">
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Careers</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms & Condition</a></li>
-                            </ul>
+                            <p class="footer-des">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+                                ut laoreet dolore magna aliquam erat volutpat.</p>
+                            <a href="#" class="read-more" style="position: relative;">Read more</a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-4">
                     <div class="single-snap-footer">
                         <div class="snap-footer-title">
-                            <h4>Fashion Tags</h4>
+                            <h4>CHÍNH SÁCH CHUNG</h4>
                         </div>
                         <div class="cakewalk-footer-content">
                             <ul>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Login</a></li>
-                                <li><a href="#">My Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Checkout</a></li>
+                                <li><a href="#">Chính sách, quy định chung</a></li>
+                                <li><a href="#">Chính sách vận chuyển</a></li>
+                                <li><a href="#">Chính sách bảo hành</a></li>
+                                <li><a href="#">Chính sách đổi, trả lại hàng</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4">
+                    <div class="single-snap-footer">
+                        <div class="snap-footer-title">
+                            <h4>HỖ TRỢ KHÁCH HÀNG</h4>
+                        </div>
+                        <div class="cakewalk-footer-content">
+                            <ul>
+                                <li><a href="#">Hướng dẫn mua hàng trực tuyến</a></li>
+                                <li><a href="#">Hướng dẫn mua hàng trả góp</a></li>
+                                <li><a href="#">In hóa đơn điện tử</a></li>
+                                <li><a href="#">Gửi yêu cầu bảo hành</a></li>
                             </ul>
                         </div>
                     </div>
@@ -49,15 +48,13 @@
                 <div class="col-md-2 hidden-sm">
                     <div class="single-snap-footer">
                         <div class="snap-footer-title">
-                            <h4>Fashion Tags</h4>
+                            <h4>Liên hệ</h4>
                         </div>
                         <div class="cakewalk-footer-content">
                             <ul>
-                                <li><a href="#">Sitemap</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Advanced Search</a></li>
-                                <li><a href="#">Affiliates</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">Gọi mua hàng: 1800.2097 (8h00 - 22h00)</a></li>
+                                <li><a href="#">Gọi khiếu nại: 1800.2063 (8h00 - 21h30)</a></li>
+                                <li><a href="#">Gọi bảo hành: 1800.2064 (8h00 - 21h00)</a></li>
                             </ul>
                         </div>
                     </div>
@@ -65,7 +62,7 @@
                 <div class="col-md-2 hidden-sm">
                     <div class="single-snap-footer">
                         <div class="snap-footer-title">
-                            <h4>Follow Us</h4>
+                            <h4>Theo dõi</h4>
                         </div>
                         <div class="cakewalk-footer-content social-footer">
                             <ul>
@@ -79,7 +76,7 @@
                 </div>
             </div>
         </div>
-    </div>	
+    </div>
     <!-- top footer area end -->
     <!-- info footer start -->
     <div class="info-footer">
@@ -91,8 +88,8 @@
                             <i class="fa fa-map-marker"></i>
                         </div>
                         <div class="infof-content">
-                            <h3>Our Address</h3>
-                            <p>Main Street, Banasree, Dhaka</p>
+                            <h3>Địa chỉ</h3>
+                            <p>Số 43 Thái Hà - Đống Đa - Hà Nội</p>
                         </div>
                     </div>
                 </div>
@@ -102,8 +99,8 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="infof-content">
-                            <h3>Phone Support</h3>
-                            <p>+88 0173 7803547</p>
+                            <h3>SĐT hỗ trợ</h3>
+                            <p>(0243) 5380088</p>
                         </div>
                     </div>
                 </div>
@@ -113,8 +110,8 @@
                             <i class="fa fa-envelope"></i>
                         </div>
                         <div class="infof-content">
-                            <h3>Email Support</h3>
-                            <p>admin@bootexperts.com</p>
+                            <h3>Email Hỗ trợ</h3>
+                            <p>admin@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -124,8 +121,8 @@
                             <i class="fa fa-clock-o"></i>
                         </div>
                         <div class="infof-content">
-                            <h3>Openning Hour</h3>
-                            <p>Sat - Thu : 9:00 am - 22:00 pm</p>
+                            <h3>Thời gian mở cửa</h3>
+                            <p>Từ 8h-21h30 hàng ngày</p>
                         </div>
                     </div>
                 </div>
@@ -133,7 +130,7 @@
         </div>
     </div>
     <!-- info footer end -->
-    
+
     <!-- footer address area start -->
     <div class="address-footer">
         <div class="container">

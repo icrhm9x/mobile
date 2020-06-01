@@ -4,6 +4,7 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
         }
     });
+
     // update cart
     function cartUpdate(event) {
         event.preventDefault();
@@ -21,6 +22,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.code === 200) {
                     $('.cart_wrapper').html(data.cartComponent);
+                    $('.cart-quantity').text(data.quantity);
                     toastr.success(data.message, "Thông báo", {
                         timeOut: 3000
                     });
@@ -32,7 +34,9 @@ $(document).ready(function () {
             }
         });
     }
+
     $(this).on('click', '.cartUpdateJs', cartUpdate);
+
     // delete cart
     function cartDel(event) {
         event.preventDefault();
@@ -44,16 +48,14 @@ $(document).ready(function () {
             success: function (data) {
                 if (data.code === 200) {
                     $('.cart_wrapper').html(data.cartComponent);
+                    $('.cart-quantity').text(data.quantity);
                     toastr.success(data.message, "Thông báo", {
-                        timeOut: 3000
-                    });
-                } else if (data.code === 400) {
-                    toastr.warning(data.message, "Thông báo", {
                         timeOut: 3000
                     });
                 }
             }
         });
     }
+
     $(this).on('click', '.cartDelJs', cartDel);
 })

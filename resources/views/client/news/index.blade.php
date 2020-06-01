@@ -53,7 +53,8 @@
                                                         <p>{{ $item->description }}</p>
                                                     </div>
                                                     <div class="actions-e">
-                                                        <span style="margin-right: 7px;">Biên tập bởi {{ $item->author_name }}</span>
+                                                        <span
+                                                            style="margin-right: 7px;">Biên tập bởi {{ $item->author_name }}</span>
                                                         <span>{{ $item->created_at }}</span>
                                                     </div>
                                                 </div>
@@ -61,7 +62,13 @@
                                         </div>
                                     </div>
                                 @empty
-                                    <div>chưa có bài viết nào</div>
+                                    <div class="row">
+                                        <div class="col-md-12 my-12">
+                                            <div class="f-title text-center">
+                                                <h3 class="title text-uppercase">Đang cập nhật bài viết</h3>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforelse
                             </div>
                         </div>

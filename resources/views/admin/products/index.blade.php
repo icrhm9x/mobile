@@ -75,7 +75,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($products as $key => $value)
+                    @forelse ($products as $key => $value)
                         <?php
                         $average = 0;
                         if ($value->star_number) {
@@ -142,7 +142,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="9" style="text-align: center;">Chưa có Sản phẩm nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
@@ -154,8 +158,8 @@
         </ul>
     </nav>
     @can('product_delete')
-    <!-- delete Modal-->
-    @include('admin.products.delModal')
+        <!-- delete Modal-->
+        @include('admin.products.delModal')
     @endcan
 
 @endsection

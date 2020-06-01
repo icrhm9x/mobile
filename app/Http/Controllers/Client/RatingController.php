@@ -14,11 +14,7 @@ class RatingController extends Controller
     public function saveRating($id, SaveRatingRequest $request)
     {
         $idUser = get_data_user('web');
-        $check = Rating::where('idProduct', $id)->where('idUser', $idUser)->count();
-        if($check > 0){
-            return redirect()->back()->with('warning', 'Bạn đã đánh giá sản phẩm này');
-        }
-        $rating = Rating::create([
+        Rating::create([
             'idProduct' => $id,
             'idUser' => $idUser,
             'number' => $request->number,

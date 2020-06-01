@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody id="dataTableJS">
-        @foreach ($category as $key => $value)
+        @forelse ($category as $key => $value)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $value->name }}</td>
@@ -36,7 +36,9 @@
                     @endcan
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr><td colspan="5" style="text-align: center;">Chưa có Danh mục nào</td></tr>
+        @endforelse
         </tbody>
     </table>
 </div>

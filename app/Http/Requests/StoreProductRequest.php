@@ -24,6 +24,7 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
+            dd($this),
             'name' => 'required|min:2|max:255|unique:products,name,'.($this->product ?? ''),
             'idProductType' => 'required',
             'description' => 'required|min:2',

@@ -44,9 +44,9 @@
                                 <div class="actions-log">
                                     <input type="submit" class="button" name="login" value="Đăng nhập">
                                 </div>
-                                <label for="rememberme" class="inline">
-                                    <input name="rememberme" type="checkbox" id="rememberme" value="forever"> Remember
-                                    me </label>
+                                <div class="actions-log">
+                                    <a href="{{ route('get.register') }}" class="button">Đăng ký</a>
+                                </div>
                             </div>
                         </form>
                     </div>

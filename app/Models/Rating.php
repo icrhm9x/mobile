@@ -9,9 +9,9 @@ class Rating extends Model
     protected $table = 'ratings';
 
     protected $fillable =  [
-        'idProduct', 'idUser', 'number', 'content',
+        'idProduct', 'idUser', 'number', 'comment',
     ];
-    
+
     public function User(){
         return $this->belongsTo('App\Models\User', 'idUser', 'id');
     }

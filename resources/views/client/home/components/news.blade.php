@@ -10,7 +10,7 @@
                         <div class="single-post">
                             <div class="post-thumb">
                                 <a href="{{ route('get.detail.news', [$item->slug]) }}">
-                                    <img src="{{ asset($item->avatar) }}" alt="" />
+                                    <img src="{{ asset($item->avatar) }}" alt=""/>
                                 </a>
                             </div>
                             <div class="post-thumb-info">
@@ -19,13 +19,20 @@
                                 </div>
                                 <div class="postexcerpt">
                                     <p>{{ $item->description }}</p>
-                                    <a href="{{ route('get.detail.news', [$item->slug]) }}" class="read-more">Đọc tiếp</a>
+                                    <a href="{{ route('get.detail.news', [$item->slug]) }}" class="read-more">Đọc
+                                        tiếp</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div>chưa có bài biết nào</div>
+                    <div class="row">
+                        <div class="col-md-12 my-2">
+                            <div class="f-title text-center">
+                                <h3 class="title text-uppercase">Đang cập nhật bài viết</h3>
+                            </div>
+                        </div>
+                    </div>
                 @endforelse
             </div>
         </div>

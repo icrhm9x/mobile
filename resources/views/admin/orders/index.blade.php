@@ -27,7 +27,7 @@
                     </tr>
                     </thead>
                     <tbody id="dataTableJS">
-                    @foreach ($order as $value)
+                    @forelse ($order as $value)
                         <tr class="rowTable{{$value->id}}">
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->name }}</td>
@@ -68,7 +68,11 @@
                                 @endcan
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="8" style="text-align: center;">Chưa có Đơn hàng nào</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>

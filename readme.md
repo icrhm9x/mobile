@@ -8,7 +8,7 @@
 </p>
 
 ## Install
-
+- change file .env.example to .env
 - composer install
 - php artisan key:generate
 - php artisan storage:link

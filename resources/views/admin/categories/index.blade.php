@@ -17,25 +17,25 @@
             <h6 class="m-0 font-weight-bold text-info">Danh sách danh mục</h6>
         </div>
         <div class="card-body">
-            @include('admin.categories.components.tableComponent')
+            @include('admin.categories.components.table-component')
         </div>
     </div>
 
     @can('category_add')
         <!-- Add Modal-->
-        @include('admin.categories.addModal')
+        @include('admin.categories.add-modal')
     @endcan
     @can('category_edit')
         <!-- Edit Modal-->
-        @include('admin.categories.editModal')
+        @include('admin.categories.edit-modal')
     @endcan
     @can('category_delete')
         <!-- delete Modal-->
-        @include('admin.categories.delModal')
+        @include('admin.categories.del-modal')
     @endcan
 
 @endsection
 @push('adminAjax')
     <!-- ajax modal -->
-    <script src="/assets/admin/js/category-ajax.js"></script>
+    <script src="{{ asset('assets/admin/js/category-ajax.js') }}"></script>
 @endpush

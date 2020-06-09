@@ -11,10 +11,10 @@
     @forelse($wishList as $item)
         <tr>
             <td>
-                <a class="tb-img" href="#"><img alt="" class="img-responsive" src="{{ asset($item->product->img_path) }}"></a>
+                <a class="tb-img" href="{{ route('get.detail.product', [$item->product->slug]) }}"><img alt="" class="img-responsive" src="{{ asset($item->product->img_path) }}"></a>
             </td>
             <td>
-                <h6><a href="#">{{ $item->product->name }}</a></h6>
+                <h6><a href="{{ route('get.detail.product', [$item->product->slug]) }}">{{ $item->product->name }}</a></h6>
                 <p>{{ $item->product->description }}</p>
             </td>
             <td class="text-center">

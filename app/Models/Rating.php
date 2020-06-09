@@ -12,11 +12,11 @@ class Rating extends Model
         'idProduct', 'idUser', 'number', 'comment',
     ];
 
-    public function User(){
+    public function user(){
         return $this->belongsTo('App\Models\User', 'idUser', 'id');
     }
 
-    public function Product(){
+    public function product(){
         return $this->belongsTo('App\Models\Product', 'idProduct', 'id');
     }
 }

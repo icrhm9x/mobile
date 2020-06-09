@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody id="dataTableJS">
-        @forelse ($category as $key => $value)
+        @forelse ($categories as $key => $value)
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $value->name }}</td>

@@ -24,13 +24,13 @@
                     </tr>
                     </thead>
                     <tbody id="dataTableJS">
-                    @forelse ($ratings as $value)
+                    @forelse ($ratings as $rating)
                         <tr>
-                            <td>{{ $value->id }}</td>
-                            <td>{{ isset($value->user->name) ? $value->user->name : 'đã xóa' }}</td>
-                            <td>{{ isset($value->product->name) ? $value->product->name : 'đã xóa' }}</td>
-                            <td>{{ $value->comment }}</td>
-                            <td>{{ $value->number }}<i class="fa fa-star"></i></td>
+                            <td>{{ $rating->id }}</td>
+                            <td>{{ isset($rating->user->name) ? $rating->user->name : 'đã xóa' }}</td>
+                            <td>{{ isset($rating->product->name) ? $rating->product->name : 'đã xóa' }}</td>
+                            <td>{{ $rating->comment }}</td>
+                            <td>{{ $rating->number }}<i class="fa fa-star"></i></td>
                         </tr>
                     @empty
                         <tr>

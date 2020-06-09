@@ -20,4 +20,9 @@ Route::prefix('order')->group(function () {
         'uses' => 'OrderController@cancel',
         'middleware' => 'can:order_cancel'
     ]);
+    Route::delete('{order}', [
+        'as' => 'order.destroy ',
+        'uses' => 'OrderController@destroy',
+        'middleware' => 'can:order_delete'
+    ]);
 });

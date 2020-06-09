@@ -12,11 +12,11 @@ class ProductType extends Model
         'idCategory', 'name', 'slug', 'status',
     ];
 
-    public function Category(){
+    public function category(){
         return $this->belongsTo(Category::class, 'idCategory', 'id');
     }
 
-    public function Product(){
+    public function products(){
         return $this->hasMany(Product::class, 'idProductType', 'id');
     }
 }

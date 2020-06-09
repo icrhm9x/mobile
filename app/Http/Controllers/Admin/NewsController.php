@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class NewsController extends Controller
 {
     use StorageImageTrait;
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $news = News::orderByDesc('id');
@@ -27,43 +25,31 @@ class NewsController extends Controller
         return view('admin.news.index', compact('news'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.news.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(NewsRequest $request)
     {
         $dataUploadImg = $this->storageTraitUpload($request, 'avatar', 'news');
         if(!empty($dataUploadImg)) {
             $data = $request->all();
             $data['slug'] = str_slug($request->name);
-            $data['idAuthor'] = Auth::guard('members')->user()->id;
-            $data['author_name'] = Auth::guard('members')->user()->name;
+            $data['idAuthor'] = Auth::user()->id;
+            $data['author_name'] = Auth::user()->name;
             $data['avatar'] = $dataUploadImg['file_path'];
             News::create($data);
             return redirect()->route('news.index')->with('success', 'Thêm sản phẩm thành công');
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $news = News::find($id);
         return view('admin.news.edit', compact('news'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(NewsRequest $request, $id)
     {
 
@@ -88,9 +74,6 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('success', 'Sửa bài viết thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $news = News::find($id);

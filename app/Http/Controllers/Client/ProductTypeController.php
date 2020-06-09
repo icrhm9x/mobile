@@ -11,18 +11,14 @@ use Illuminate\Support\Facades\View;
 
 class ProductTypeController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
-    public function list(Request $request,$c_slug, $prdType_slug)
+    public function list(Request $request, $prdType_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        $cate = Category::where('slug', $c_slug)->orderByDesc('id')->first();
-        $prdType = ProductType::where('slug', $prdType_slug)->orderByDesc('id')->firstOrFail();
-        $product = Product::with('Category:id,slug','ProductType:id,slug');
+
+        $productType = ProductType::with('category')->where('slug', $prdType_slug)->orderByDesc('id')->firstOrFail();
+        $menuProductType = ProductType::with('products')->where('idCategory', $productType->category->id)->get();
+
+        $product = Product::with('category','productType');
 
         if($request->price){
             $price = $request->price;
@@ -47,11 +43,11 @@ class ProductTypeController extends Controller
             }
         }
 
-        $listPrd = $product->where('idProductType', $prdType->id)->orderByDesc('id')->paginate(6);
+        $listProduct = $product->where('idProductType', $productType->id)->orderByDesc('id')->paginate(6);
         $data = [
-            'cate' => $cate,
-            'prdType' => $prdType,
-            'listPrd' => $listPrd
+            'productType' => $productType,
+            'menuProductType' => $menuProductType,
+            'listProduct' => $listProduct
         ];
         return view('client.productTypes.list', $data);
     }

@@ -11,36 +11,30 @@ use Illuminate\Support\Facades\View;
 
 class CategoryController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function list(Request $request, $c_slug)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        
-        $cate = Category::where('slug', $c_slug)->orderByDesc('id')->firstOrFail();
-        $product = Product::with('Category:id,slug', 'ProductType:id,slug');
+
+        $category = Category::with('productTypes')->where('slug', $c_slug)->orderByDesc('id')->firstOrFail();
+        $products = Product::with('category', 'productType');
 
         if ($request->price) {
             $price = $request->price;
             switch ($price) {
                 case '1':
-                    $product->where('price', '<', 1000000);
+                    $products->where('price', '<', 1000000);
                     break;
                 case '2':
-                    $product->whereBetween('price', [1000000, 3000000]);
+                    $products->whereBetween('price', [1000000, 3000000]);
                     break;
                 case '3':
-                    $product->whereBetween('price', [3000000, 5000000]);
+                    $products->whereBetween('price', [3000000, 5000000]);
                     break;
                 case '4':
-                    $product->whereBetween('price', [5000000, 10000000]);
+                    $products->whereBetween('price', [5000000, 10000000]);
                     break;
                 case '5':
-                    $product->where('price', '>', 10000000);
+                    $products->where('price', '>', 10000000);
                     break;
             }
         }
@@ -49,24 +43,24 @@ class CategoryController extends Controller
             $orderby = $request->orderby;
             switch ($orderby) {
                 case 'id_desc':
-                    $product->orderBy('id', 'DESC');
+                    $products->orderBy('id', 'DESC');
                     break;
                 case 'id_asc':
-                    $product->orderBy('id', 'ASC');
+                    $products->orderBy('id', 'ASC');
                     break;
                 case 'price_desc':
-                    $product->orderBy('price', 'DESC');
+                    $products->orderBy('price', 'DESC');
                     break;
                 case 'price_asc':
-                    $product->orderBy('price', 'ASC');
+                    $products->orderBy('price', 'ASC');
                     break;
             }
         }
 
-        $listPrd = $product->where('idCategory', $cate->id)->orderByDesc('id')->paginate(6);
+        $listProduct = $products->where('idCategory', $category->id)->orderByDesc('id')->paginate(6);
         $data = [
-            'cate' => $cate,
-            'listPrd' => $listPrd
+            'category' => $category,
+            'listProduct' => $listProduct
         ];
         return view('client.categories.list', $data);
     }

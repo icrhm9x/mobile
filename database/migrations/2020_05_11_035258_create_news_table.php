@@ -17,7 +17,7 @@ class CreateNewsTable extends Migration
             $table->increments('id');
             $table->string('name')->unique();
             $table->string('slug')->index();
-            $table->string('description');
+            $table->text('description');
             $table->longText('article');
             $table->tinyInteger('status')->nullablle()->default(0);
             $table->integer('idAuthor')->index();

@@ -13,7 +13,7 @@
                     <div class="container-inner">
                         <ul>
                             <li class="home">
-                                <a href="/">Trang chủ</a>
+                                <a href="{{ route('home') }}">Trang chủ</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="category3"><span>Quản lý đơn hàng</span></li>
@@ -67,8 +67,8 @@
                                         <p>{{ $item->id }}</p>
                                     </td>
                                     <td>
-                                        @foreach($item->Product as $itemProduct)
-                                            <p>{{ $itemProduct->name }}</p>
+                                        @foreach($item->orderDetails as $orderDetail)
+                                            <p><a target="_blank" href="{{ route('get.detail.product', [$orderDetail->product->slug]) }}">{{ $orderDetail->product->name }} <span>({{ $orderDetail->quantity }})</span></a></p>
                                         @endforeach
                                     </td>
                                     <td class="text-center">

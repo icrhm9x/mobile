@@ -12,15 +12,15 @@ class Product extends Model
         'name', 'slug', 'description', 'article', 'quantity', 'price', 'promotion', 'img_name', 'img_path', 'hot', 'idCategory', 'idProductType', 'status',
     ];
 
-    public function ProductType(){
+    public function productType(){
         return $this->belongsTo('App\Models\ProductType', 'idProductType', 'id');
     }
 
-    public function Category(){
+    public function category(){
         return $this->belongsTo('App\Models\Category', 'idCategory', 'id');
     }
 
-    public function Rating(){
+    public function ratings(){
         return $this->hasMany(Role::class, 'idProduct', 'id');
     }
 

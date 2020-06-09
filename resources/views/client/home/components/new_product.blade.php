@@ -12,7 +12,7 @@
                             <div class="col-lg-12 col-md-12">
                                 <div class="single-product first-sale">
                                     <div class="product-img">
-                                        <a href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">
+                                        <a href="{{ route('get.detail.product', [$newprd->slug]) }}">
                                             <img class="primary-image" src="{{ asset($newprd->img_path) }}" alt=""/>
                                         </a>
                                         <div class="actions">
@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="product-content">
                                         <h2 class="product-name"><a
-                                                href="{{ route('get.detail.product', [$newprd->Category->slug,$newprd->ProductType->slug,$newprd->slug]) }}">{{ $newprd->name }}</a>
+                                                href="{{ route('get.detail.product', [$newprd->slug]) }}">{{ $newprd->name }}</a>
                                         </h2>
                                         <div class="product-price">
                                             @if ($newprd->promotion > 0)

@@ -1,4 +1,4 @@
-@extends('client.layouts.master', ['title' => $cate->name])
+@extends('client.layouts.master', ['title' => $category->name])
 @section('content')
     <style>
         .sidebar-content .active {
@@ -16,10 +16,10 @@
                     <div class="container-inner">
                         <ul>
                             <li class="home">
-                                <a href="/">Trang chủ</a>
+                                <a href="{{ route('home') }}">Trang chủ</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
-                            <li class="category3"><span>{{ $cate->name }}</span></li>
+                            <li class="category3"><span>{{ $category->name }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -46,11 +46,12 @@
                                 <h6>Thương hiệu</h6>
                             </div>
                             <ul class="sidebar-tags">
-                                @if (isset($cate))
-                                    @foreach ($cate->productType as $item)
-                                        @if ($item->Product->count() > 0)
+                                @if (isset($category))
+                                    @foreach ($category->productTypes as $productType)
+                                        @if ($productType->products->count() > 0)
                                             <li>
-                                                <a href="{{ route('get.list.productType',['c_slug'=>$cate->slug, 'prdType_slug'=>$item->slug]) }}">{{ $item->name }}</a><span> ({{ $item->Product->count() }})</span>
+                                                <a href="{{ route('get.list.productType',[$productType->slug]) }}">{{ $productType->name }}</a>
+                                                <span> ({{ $productType->products->count() }})</span>
                                             </li>
                                         @endif
                                     @endforeach
@@ -133,13 +134,13 @@
                             id="shop-grid-tab">
                             <div class="row">
                                 <div class="shop-product-tab first-sale">
-                                    @if (isset($listPrd))
-                                        @foreach ($listPrd as $item)
+                                    @if (isset($listProduct))
+                                        @foreach ($listProduct as $item)
                                             <div class="col-lg-4 col-md-4 col-sm-4 mb-4">
                                                 <div class="two-product">
                                                     <div class="single-product">
                                                         <div class="product-img">
-                                                            <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
+                                                            <a href="{{ route('get.detail.product', [$item->slug]) }}">
                                                                 <img class="primary-image"
                                                                      src="{{ asset($item->img_path) }}" alt=""/>
                                                             </a>
@@ -164,7 +165,7 @@
                                                         </div>
                                                         <div class="product-content">
                                                             <h2 class="product-name"><a
-                                                                    href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a>
+                                                                    href="{{ route('get.detail.product', [$item->slug]) }}">{{ $item->name }}</a>
                                                             </h2>
                                                             <div class="product-price">
                                                                 @if ($item->promotion > 0)
@@ -190,13 +191,13 @@
                         <div class="tab-pane fade {{ Request::get('shop') == 'list' ? 'active in' : '' }}"
                              id="shop-list-tab">
                             <div class="list-view">
-                                @if (isset($listPrd))
-                                    @foreach ($listPrd as $item)
+                                @if (isset($listProduct))
+                                    @foreach ($listProduct as $item)
                                         <div class="product-list-wrapper">
                                             <div class="single-product mb-2">
                                                 <div class="col-md-4 col-sm-4 col-xs-12">
                                                     <div class="product-img">
-                                                        <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
+                                                        <a href="{{ route('get.detail.product', [$item->slug]) }}">
                                                             <img class="primary-image"
                                                                  src="{{ asset($item->img_path) }}" alt=""/>
                                                         </a>
@@ -205,7 +206,7 @@
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                                     <div class="product-content">
                                                         <h2 class="product-name"><a
-                                                                href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a>
+                                                                href="{{ route('get.detail.product', [$item->slug]) }}">{{ $item->name }}</a>
                                                         </h2>
                                                         <div class="rating-price">
                                                             <div class="pro-rating">
@@ -261,7 +262,7 @@
                         </div>
                         <!-- shop toolbar start -->
                         <div class="text-center">
-                            {{ $listPrd->appends(['price'=>request()->price,'orderby'=>request()->orderby,'shop'=>request()->shop])->render('client.layouts.paginate') }}
+                            {{ $listProduct->appends(['price'=>request()->price,'orderby'=>request()->orderby,'shop'=>request()->shop])->render('client.layouts.paginate') }}
                         </div>
                         <!-- shop toolbar end -->
                     </div>

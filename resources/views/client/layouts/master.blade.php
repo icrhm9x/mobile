@@ -10,7 +10,7 @@
 
     <!-- Favicon
     ============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/client/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/img/favicon.ico') }}">
 
     <!-- Fonts
     ============================================ -->
@@ -44,17 +44,17 @@
 
 @if (session('success'))
     <script type="text/javascript">
-        toastr.success('{{ session('success') }}', "Thông báo", {timeOut: 3000});
+        toastr.success('{{ session('success') }}', "Thông báo", {timeOut: 2000});
     </script>
 @endif
 @if (session('error'))
     <script type="text/javascript">
-        toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 3000});
+        toastr.error('{{ session('error') }}', "Thông báo", {timeOut: 2000});
     </script>
 @endif
 @if (session('warning'))
     <script type="text/javascript">
-        toastr.warning('{{ session('warning') }}', "Thông báo", {timeOut: 3000});
+        toastr.warning('{{ session('warning') }}', "Thông báo", {timeOut: 2000});
     </script>
 @endif
 

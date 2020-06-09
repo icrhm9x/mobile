@@ -51,26 +51,26 @@
                     </tr>
                     </thead>
                     <tbody id="dataTableJS">
-                    @forelse ($members as $value)
-                        <tr class="rowTable{{$value->id}}">
-                            <td>{{ $value->id }}</td>
-                            <td>{{ $value->name }}</td>
-                            <td>{{ $value->email }}</td>
+                    @forelse ($members as $member)
+                        <tr class="rowTable{{$member->id}}">
+                            <td>{{ $member->id }}</td>
+                            <td>{{ $member->name }}</td>
+                            <td>{{ $member->email }}</td>
                             <td>
                                 <img
-                                    src="{{ asset(isset($value->avatar) ? $value->avatar : 'assets/admin/img/default-avatar.png') }}"
+                                    src="{{ asset(isset($member->avatar) ? $member->avatar : 'assets/admin/img/default-avatar.png') }}"
                                     class="img-fluid" style="width:100px">
                             </td>
                             <td>
-                                @foreach($value->roles as $role)
+                                @foreach($member->roles as $role)
                                     <span>{{ $role->name }}</span>
                                     <br>
                                 @endforeach
                             </td>
-                            <td>{{ $value->created_at }}</td>
+                            <td>{{ $member->created_at }}</td>
                             <td>
                                 @can('member_edit')
-                                    <a href="{{ route('member.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
+                                    <a href="{{ route('member.edit', $member->id) }}" type="button" title="{{ "Sửa" }}"
                                        class="btn btn-sm mr-2 mb-2 btn-outline-primary">
                                         <i class="far fa-edit"></i>
                                     </a>
@@ -78,7 +78,7 @@
                                 @can('member_delete')
                                     <button type="button" title="Xóa" data-toggle="modal" data-target="#delModal"
                                             class="btn btn-sm mb-2 btn-outline-danger delMemberJS"
-                                            data-id="{{ $value->id }}" data-name="{{ $value->name }}">
+                                            data-id="{{ $member->id }}" data-name="{{ $member->name }}">
                                         <i class="far fa-trash-alt"></i>
                                     </button>
                                 @endcan

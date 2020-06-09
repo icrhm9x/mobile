@@ -12,23 +12,17 @@ use Illuminate\Support\Facades\View;
 
 class WishListController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function index()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
-        $wishList = WishLish::where('idUser', Auth::guard('web')->id())->orderByDesc('id')->get();
+        $wishList = WishLish::with('product')->where('idUser', Auth::guard('web')->id())->orderByDesc('id')->get();
         return view('client.wishlist.index', compact('wishList'));
     }
 
     public function store($id)
     {
         if (Auth::guard('web')->check()) {
-            $count = Auth::guard('web')->user()->wishList->count();
+            $count = Auth::guard('web')->user()->wishLists()->count();
             if ($count >= 6) {
                 return response()->json(['message' => 'Danh sách của bạn đã đầy, vui lòng xóa bớt', 'status' => 2],
                     200);

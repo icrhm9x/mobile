@@ -14,12 +14,6 @@ use App\Http\Requests\RequestResetPassword;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function getRegister()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);

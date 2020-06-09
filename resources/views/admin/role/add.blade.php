@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 @foreach($permissionsParent as $permissionsParentItem)
-                    @if(count($permissionsParentItem->permissionsChildrent) > 0)
+                    @if(count($permissionsParentItem->permissionsChildrents) > 0)
                         <div class="col-md-12 card_wrapper">
                             <div class="form-group">
                                 <div class="card">
@@ -44,7 +44,7 @@
                                         </label>
                                     </h5>
                                     <div class="row">
-                                        @foreach($permissionsParentItem->permissionsChildrent as $permissionsChildrentItem)
+                                        @foreach($permissionsParentItem->permissionsChildrents as $permissionsChildrentItem)
                                             <div class="card-body col-md-3">
                                                 <p class="card-text pl-2">
                                                     <label for="childrent-{{ $permissionsChildrentItem->id }}">

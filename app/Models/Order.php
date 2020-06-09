@@ -12,15 +12,15 @@ class Order extends Model
         'idUser', 'name', 'address', 'phone', 'totalMoney', 'message', 'status',
     ];
 
-    public function User(){
+    public function user(){
         return $this->belongsTo('App\Models\User', 'idUser', 'id');
     }
 
-    public function Order_details() {
+    public function orderDetails() {
         return $this->hasMany(OrderDetail::class, 'idOrder');
     }
 
-    public function Product() {
+    public function products() {
         return $this->belongsToMany(Product::class, 'order_details', 'idOrder', 'idProduct');
     }
 }

@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody id="dataTableJS">
-        @forelse ($productType as $key => $value)
+        @forelse ($productTypes as $key => $value)
             <tr class="rowTable{{$value->id}}">
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $value->name }}</td>

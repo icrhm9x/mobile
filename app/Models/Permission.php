@@ -14,7 +14,7 @@ class Permission extends Model
         'key_code'
     ];
 
-    public function permissionsChildrent()
+    public function permissionsChildrents()
     {
         return $this->hasMany(Permission::class, 'parent_id', 'id');
     }

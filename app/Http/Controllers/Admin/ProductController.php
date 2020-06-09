@@ -15,12 +15,10 @@ use File;
 class ProductController extends Controller
 {
     use StorageImageTrait;
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
-        $products = Product::with('Category:id,name', 'ProductType:id,name');
+        $products = Product::with('Category', 'ProductType');
         if ($request->name != '') {
             $products->where('name', 'like', '%' . $request->name . '%');
         }
@@ -41,17 +39,19 @@ class ProductController extends Controller
         return view('admin.products.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function getPrdType(Request $request){
+        $productTypes = ProductType::where('idCategory',$request->idCat)->get();
+        return response()->json($productTypes, 200);
+    }
+
     public function create()
     {
         if (Category::count() > 0) {
             if (ProductType::count() > 0) {
-                $category = Category::get();
-                $firstCat = Category::select('id')->first();
-                $productType = ProductType::where('idCategory', $firstCat->id)->get();
-                return view('admin.products.create', ['category' => $category, 'productType' => $productType]);
+                $categories = Category::get();
+                $firstCat = Category::min('id');
+                $productTypes = ProductType::where('idCategory', $firstCat)->get();
+                return view('admin.products.create', ['categories' => $categories, 'productTypes' => $productTypes]);
             } else {
                 return redirect()->route('productType.index')->with('warning', 'Bạn cần tạo Loại sản phẩm trước');
             }
@@ -60,13 +60,10 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreProductRequest $request)
     {
         $dataUploadImg = $this->storageTraitUpload($request, 'img', 'product');
-        if(!empty($dataUploadImg)) {
+        if (!empty($dataUploadImg)) {
             $data = $request->all();
             $data['slug'] = str_slug($request->name);
             $data['img_name'] = $dataUploadImg['file_name'];
@@ -76,9 +73,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $product = Product::find($id);
@@ -88,9 +82,6 @@ class ProductController extends Controller
             ['product' => $product, 'categories' => $categories, 'productTypes' => $productTypes]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreProductRequest $request, $id)
     {
         $product = Product::find($id);
@@ -101,7 +92,7 @@ class ProductController extends Controller
             $data['hot'] = 0;
         }
         $dataUploadImg = $this->storageTraitUpload($request, 'img', 'product');
-        if(!empty($dataUploadImg)) {
+        if (!empty($dataUploadImg)) {
             $data['img_name'] = $dataUploadImg['file_name'];
             $data['img_path'] = $dataUploadImg['file_path'];
             $url_file = substr($product->img_path, 1); // xoa dau / trong url
@@ -116,9 +107,6 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('success', 'Sửa sản phẩm thành công');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $product = Product::find($id);

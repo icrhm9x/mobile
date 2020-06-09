@@ -43,7 +43,7 @@
                                     </label>
                                 </h5>
                                 <div class="row">
-                                    @foreach($permissionsParentItem->permissionsChildrent as $permissionsChildrentItem)
+                                    @foreach($permissionsParentItem->permissionsChildrents as $permissionsChildrentItem)
                                         <div class="card-body col-md-3">
                                             <p class="card-text pl-2">
                                                 <label for="childrent-{{ $permissionsChildrentItem->id }}">

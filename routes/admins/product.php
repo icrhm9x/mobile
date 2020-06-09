@@ -28,4 +28,5 @@ Route::prefix('product')->group(function () {
         'uses' => 'ProductController@destroy',
         'middleware' => 'can:product_delete'
     ]);
+    Route::get('getprdtype', 'ProductController@getPrdType');
 });

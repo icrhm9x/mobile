@@ -15,7 +15,7 @@
                             </div>
                             <div class="post-thumb-info">
                                 <div class="post-time">
-                                    <a href="#">{{ $item->name }}</a>
+                                    <a href="{{ route('get.detail.news', [$item->slug]) }}">{{ $item->name }}</a>
                                 </div>
                                 <div class="postexcerpt">
                                     <p>{{ $item->description }}</p>

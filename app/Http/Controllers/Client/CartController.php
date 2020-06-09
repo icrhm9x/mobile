@@ -17,12 +17,6 @@ use DB;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function getList()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -136,7 +130,7 @@ class CartController extends Controller
                     } else {
                         $promotion = 0;
                     }
-                    $order->Order_details()->create([
+                    $order->orderDetails()->create([
                         'idProduct' => $product->id,
                         'quantity' => $product->qty,
                         'price' => $product->options->old_price,

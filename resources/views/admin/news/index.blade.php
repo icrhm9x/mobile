@@ -2,7 +2,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="text-black" href="/admin">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a class="text-black" href="{{ route('admin.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">Tin tức</li>
         </ol>
     </nav>
@@ -52,25 +52,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @forelse ($news as $key => $value)
-                        <tr class="rowTable{{$value->id}}">
-                            <td>{{ \Request::get('page') ? ((\Request::get('page') - 1)*5+$key+1) : ($key + 1) }}</td>
-                            <td>{{ $value->name }}</td>
-                            <td><img src="{{ asset($value->avatar) }}" class="img-fluid" style="width:170px">
+                    @forelse ($news as $item)
+                        <tr class="rowTable{{ $item->id }}">
+                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td><img src="{{ asset($item->avatar) }}" class="img-fluid" style="width:170px">
                             </td>
-                            <td>{{ $value->description }}</td>
-                            <td>{{ $value->author_name }}</td>
+                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->author_name }}</td>
                             <td>
-                                @if ($value->status == 1)
+                                @if ($item->status == 1)
                                     {!! '<span class="rounded-0 badge badge-success">Hiển thị</span>' !!}
                                 @else
                                     {!! '<span class="rounded-0 badge badge-secondary">Không hiển thị</span>' !!}
                                 @endif
                             </td>
-                            <td>{{ $value->created_at }}</td>
+                            <td>{{ $item->created_at }}</td>
                             <td>
                                 @can('news_edit')
-                                    <a href="{{ route('news.edit', $value->id) }}" type="button" title="{{ "Sửa" }}"
+                                    <a href="{{ route('news.edit', $item->id) }}" type="button" title="{{ "Sửa" }}"
                                        class="btn btn-sm mr-2 mb-2 btn-outline-primary">
                                         <i class="far fa-edit"></i>
                                     </a>
@@ -78,8 +78,8 @@
                                 @can('news_delete')
                                     <button type="button" title="Xóa" data-toggle="modal" data-target="#delModal"
                                             class="btn btn-sm mb-2 btn-outline-danger delNewsJS"
-                                            data-id="{{ $value->id }}"
-                                            data-name="{{ $value->name }}">
+                                            data-id="{{ $item->id }}"
+                                            data-name="{{ $item->name }}">
                                         <i class="far fa-trash-alt"></i>
                                     </button>
                                 @endcan

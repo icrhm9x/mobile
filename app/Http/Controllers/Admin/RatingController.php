@@ -10,7 +10,7 @@ class RatingController extends Controller
 {
     public function index()
     {
-        $ratings = Rating::orderBy('id')->paginate(10);
+        $ratings = Rating::with('user', 'product')->orderBy('id')->paginate(10);
         return view('admin.ratings.index', compact('ratings'));
     }
 }

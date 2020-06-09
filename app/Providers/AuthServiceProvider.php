@@ -72,6 +72,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('order_status', 'App\Policies\OrderPolicy@status');
         Gate::define('order_detail', 'App\Policies\OrderPolicy@detailOrder');
         Gate::define('order_cancel', 'App\Policies\OrderPolicy@cancel');
+        Gate::define('order_delete', 'App\Policies\OrderPolicy@delete');
     }
 
     public function defineGateNews()

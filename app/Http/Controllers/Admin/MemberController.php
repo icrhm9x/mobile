@@ -19,17 +19,12 @@ class MemberController extends Controller
 
     public function index(Request $request)
     {
-        $members = Member::orderBy('id');
+        $members = Member::with('roles');
         if (isset($request->name)) {
-            $members->where('name', 'like', '%' . $request->name . '%');
+            $members->orderBy('id')->where('name', 'like', '%' . $request->name . '%');
         }
         $members = $members->paginate(10);
-        $roles = Role::all();
-        $data = [
-            'members' => $members,
-            'roles' => $roles
-        ];
-        return view('admin.members.index', $data);
+        return view('admin.members.index', compact('members'));
     }
 
     public function create()

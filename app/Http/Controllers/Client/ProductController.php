@@ -12,27 +12,20 @@ use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
-    public function detail($c_slug, $prdType_slug, $prd_slug)
+    public function detail($prd_slug)
     {
         \Assets::addStyles(['jquery-ui']);
-        $product = Product::with('Category:id,name,slug','ProductType:id,name,slug')->whereSlug($prd_slug)->firstOrFail();
 
-        $ProductType = ProductType::where('slug', $prdType_slug)->first();
-        $sameProduct = $ProductType->product;
-        $ratings = Rating::where('idProduct', $product->id)->get();
+        $product = Product::with('category','productType')->whereSlug($prd_slug)->firstOrFail();
+        $sameProduct = Product::where('idProductType', $product->productType->id)->where('id', '<>', $product->id)->get();
+        $ratings = Rating::with('user')->where('idProduct', $product->id)->get();
         $idUser = get_data_user('web');
-        $count = Rating::where('idProduct', $product->id)->where('idUser', $idUser)->count();
+        $countRating = Rating::where('idProduct', $product->id)->where('idUser', $idUser)->count();
         $data = [
             'product' => $product,
             'sameProduct' => $sameProduct,
             'ratings' => $ratings,
-            'count' => $count
+            'countRating' => $countRating
         ];
         return view('client.products.detail', $data);
     }

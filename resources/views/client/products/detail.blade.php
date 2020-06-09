@@ -8,15 +8,15 @@
                     <div class="container-inner">
                         <ul>
                             <li class="home">
-                                <a href="/">Trang chủ</a>
+                                <a href="{{ route('home') }}">Trang chủ</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="home">
-                                <a href="{{ route('get.category',[$product->Category->slug]) }}">{{ $product->Category->name }}</a>
+                                <a href="{{ route('get.category',[$product->category->slug]) }}">{{ $product->category->name }}</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="home">
-                                <a href="{{ route('get.list.productType',[$product->Category->slug, $product->ProductType->slug]) }}">{{ $product->ProductType->name }}</a>
+                                <a href="{{ route('get.list.productType',[$product->productType->slug]) }}">{{ $product->productType->name }}</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="category3"><span>{{ $product->name }}</span></li>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="singl-share">
-                                    <a href="#"><img src="/assets/client/img/single-share.png" alt=""></a>
+                                    <a href="#"><img src="{{ asset('assets/client/img/single-share.png') }}" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                                                         </div>
                                                         <div class="comments-content-wrap">
 															<span>
-																<b><a style="text-transform: capitalize;" href="#">{{ $item->User->name }} - </a></b>
+																<b><a style="text-transform: capitalize;" href="#">{{ $item->user->name }} - </a></b>
 																<span class="post-time">{{ $item->created_at }}</span>
 															</span>
                                                             <p>{{ $item->comment }}</p>
@@ -164,7 +164,7 @@
                                 </div>
                                 <div class="comment-respond">
                                     @if (Auth::guard('web')->check())
-                                        @if ($count > 0)
+                                        @if ($countRating > 0)
                                             <h3 class="comment-reply-title">Bạn đã đánh giá sản phẩm này</h3>
                                         @else
                                             <h3 class="comment-reply-title">Thêm đánh giá của bạn</h3>
@@ -236,7 +236,7 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="single-product first-sale">
                                             <div class="product-img">
-                                                <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
+                                                <a href="{{ route('get.detail.product', [$item->slug]) }}">
                                                     <img class="primary-image" src="{{ asset($item->img_path) }}"
                                                          alt=""/>
                                                 </a>
@@ -259,7 +259,7 @@
                                             </div>
                                             <div class="product-content">
                                                 <h2 class="product-name"><a
-                                                        href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a>
+                                                        href="{{ route('get.detail.product', [$item->slug]) }}">{{ $item->name }}</a>
                                                 </h2>
                                                 <div class="product-price">
                                                     @if ($item->promotion > 0)
@@ -270,7 +270,6 @@
                                                         <strong>{{ number_format($item->price,0,'','.') }}₫</strong>
                                                     @endif
                                                 </div>
-                                                {{--  <p>Nunc facilisis sagittis ullamcorper...</p>  --}}
                                             </div>
                                         </div>
                                     </div>

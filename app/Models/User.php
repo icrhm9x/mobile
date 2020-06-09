@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    public function wishList()
+    public function wishLists()
     {
         return $this->hasMany(WishLish::class, 'idUser', 'id');
     }

@@ -15,7 +15,7 @@
                         <div class="col mr-2">
                             <a href="{{ route('order.index') }}" class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng số đơn hàng
                             </a>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_order }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalOrder }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -34,7 +34,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Doanh số (Tháng)
                             </div>
                             <div
-                                class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($earnings_month, 0, ',', '.') }}
+                                class="h5 mb-0 font-weight-bold text-gray-800">{{ number_format($earningsMonth, 0, ',', '.') }}
                                 đ
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <a href="{{ route('product.index') }}" class="text-xs font-weight-bold text-info text-uppercase mb-1">Sản phẩm</a>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $total_product }}</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $totalProduct }}</div>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                         <div class="col mr-2">
                             <a href="{{ route('rating.index') }}" class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tổng số đánh giá
                             </a>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total_rating }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalRating }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -113,15 +113,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse ($order as $value)
+                            @forelse ($orders as $order)
                                 <tr>
-                                    <td>{{ $value->id }}</td>
-                                    <td>{{ $value->name }}</td>
-                                    <td>{{ $value->address }}</td>
-                                    <td>{{ $value->phone }}</td>
-                                    <td>{{ number_format($value->totalMoney,0,',','.') }}₫</td>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->name }}</td>
+                                    <td>{{ $order->address }}</td>
+                                    <td>{{ $order->phone }}</td>
+                                    <td>{{ number_format($order->totalMoney,0,',','.') }}₫</td>
                                     <td>
-                                        @if($value->status == 0)
+                                        @if($order->status == 0)
                                             <button type="button" class="btn btn-secondary btn-sm">
                                                 Chờ xử lý
                                             </button>
@@ -129,7 +129,7 @@
                                             <button type="button" class="btn btn-success btn-sm">Đã xử lý</button>
                                         @endif
                                     </td>
-                                    <td>{{ $value->created_at }}</td>
+                                    <td>{{ $order->created_at }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -163,12 +163,12 @@
                             </tr>
                             </thead>
                             <tbody id="dataTableJS">
-                            @forelse ($product as $value)
+                            @forelse ($products as $product)
                                 <tr>
-                                    <td>{{ $value->id }}</td>
-                                    <td>{{ $value->name }}</td>
-                                    <td>{{ $value->purchase_number }}</td>
-                                    <td>{{ number_format($value->price,0,',','.') }}₫</td>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->purchase_number }}</td>
+                                    <td>{{ number_format($product->price,0,',','.') }}₫</td>
                                 </tr>
                             @empty
                                 <tr>

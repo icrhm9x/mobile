@@ -159,10 +159,10 @@
     </nav>
     @can('product_delete')
         <!-- delete Modal-->
-        @include('admin.products.delModal')
+        @include('admin.products.del-modal')
     @endcan
 
 @endsection
 @push('adminAjax')
-    <script src="/assets/admin/js/product-ajax.js"></script>
+    <script src="{{ asset('assets/admin/js/product-ajax.js') }}"></script>
 @endpush

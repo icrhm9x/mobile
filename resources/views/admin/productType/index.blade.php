@@ -17,30 +17,30 @@
             <h6 class="m-0 font-weight-bold text-info">Danh sách Loại sản phẩm</h6>
         </div>
         <div class="card-body">
-            @include('admin.productType.components.tableComponent')
+            @include('admin.productType.components.table-component')
         </div>
     </div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">
-            {{ $productType->links() }}
+            {{ $productTypes->links() }}
         </ul>
     </nav>
 
     @can('productType_add')
         <!-- Add Modal-->
-        @include('admin.productType.addModal')
+        @include('admin.productType.add-modal')
     @endcan
     @can('productType_edit')
         <!-- Edit Modal-->
-        @include('admin.productType.editModal')
+        @include('admin.productType.edit-modal')
     @endcan
     @can('productType_delete')
         <!-- delete Modal-->
-        @include('admin.productType.delModal')
+        @include('admin.productType.del-modal')
     @endcan
 
 @endsection
 @push('adminAjax')
     <!-- ajax modal -->
-    <script src="/assets/admin/js/producttype-ajax.js"></script>
+    <script src="{{ asset('assets/admin/js/producttype-ajax.js') }}"></script>
 @endpush

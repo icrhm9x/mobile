@@ -10,17 +10,14 @@ use App\Http\Requests\StoreProductTypeRequest;
 
 class ProductTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         if(Category::count() > 0) {
-            $category = Category::all();
-            $productType = ProductType::with('Category:id,name')->orderBy('id', 'desc')->paginate(10);
+            $categories = Category::all();
+            $productTypes = ProductType::with('Category')->orderBy('id', 'desc')->paginate(10);
             $data = [
-                'category' => $category,
-                'productType' => $productType
+                'categories' => $categories,
+                'productTypes' => $productTypes
             ];
             return view('admin.productType.index', $data);
         }else{
@@ -28,22 +25,16 @@ class ProductTypeController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreProductTypeRequest $request)
     {
         $data = $request->all();
         $data['slug'] = str_slug($request->name);
         ProductType::create($data);
-        $productType = ProductType::with('Category:id,name')->orderByDesc('id')->paginate(10);
-        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        $productTypes = ProductType::with('Category')->orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.table-component', compact('productTypes'))->render();
         return response()->json(['message' => 'Thêm mới thành công','tableComponent' => $tableComponent, 'code' => 200],200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         //
@@ -51,15 +42,12 @@ class ProductTypeController extends Controller
         return response()->json($productType,200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $productType = ProductType::find($id);
-        $category = Category::where('status',1)->get();
+        $categories = Category::where('status',1)->get();
         $html = '';
-        foreach ($category as $value) {
+        foreach ($categories as $value) {
             if ($value->id == $productType->idCategory) {
                 $html .="<option value=".$value->id." selected='selected'>";
             } else {
@@ -71,29 +59,23 @@ class ProductTypeController extends Controller
         return response()->json(['productType' => $productType, 'listCat' => $html],200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreProductTypeRequest $request, $id)
     {
         $productType = ProductType::find($id);
         $data = $request->all();
         $data['slug'] = str_slug($request->name);
         $productType->update($data);
-        $productType = ProductType::with('Category:id,name')->orderByDesc('id')->paginate(10);
-        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        $productTypes = ProductType::with('Category:id,name')->orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.table-component', compact('productTypes'))->render();
         return response()->json(['message' => 'Sửa thành công', 'tableComponent' => $tableComponent, 'code' => 200],200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $productType = ProductType::find($id);
         $productType->delete();
-        $productType = ProductType::orderByDesc('id')->paginate(10);
-        $tableComponent = view('admin.productType.components.tableComponent', compact('productType'))->render();
+        $productTypes = ProductType::orderByDesc('id')->paginate(10);
+        $tableComponent = view('admin.productType.components.table-component', compact('productTypes'))->render();
         return response()->json(['message' => 'Xóa thành công', 'tableComponent' => $tableComponent, 'code' => 200], 200);
     }
 }

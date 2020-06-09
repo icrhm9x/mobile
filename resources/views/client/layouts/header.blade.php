@@ -4,7 +4,7 @@
             <!-- logo start -->
             <div class="col-md-3 col-sm-12 text-center nopadding-right">
                 <div class="top-logo">
-                    <a href="/"><img src="/assets/client/img/logo.gif" alt="" /></a>
+                    <a href="/"><img src="/assets/client/img/logo.gif" alt=""/></a>
                 </div>
             </div>
             <!-- logo end -->
@@ -14,28 +14,31 @@
                     <nav>
                         <ul>
                             <li class="expand"><a href="/">Trang chủ</a></li>
-                            @if (isset($category->first()->slug))
-                            <li class="expand"><a href="{{ route('get.category', $category->first()->slug) }}">Sản phẩm</a>
-                                <div class="restrain mega-menu megamenu1">
-                                    @foreach ($category as $cat)
-                                    <span>
-                                        <a class="mega-menu-title" href="{{ route('get.category', [$cat->slug]) }}"> {{ $cat->name }} </a>
-                                        @if (count($cat->productType) > 0)
-                                            @foreach ($cat->productType as $key => $protype)
-                                                @if ($key > 4)
-                                                    @break
+                            @if (isset($categories->first()->slug))
+                                <li class="expand"><a href="{{ route('get.category', $categories->first()->slug) }}">Sản
+                                        phẩm</a>
+                                    <div class="restrain mega-menu megamenu1">
+                                        @foreach ($categories as $category)
+                                            <span>
+                                                <a class="mega-menu-title" href="{{ route('get.category', [$category->slug]) }}">
+                                                    {{ $category->name }}
+                                                </a>
+                                                @if (count($category->productTypes) > 0)
+                                                    @foreach ($category->productTypes as $key => $productType)
+                                                        @if ($key > 4)
+                                                            @break
+                                                        @endif
+                                                        <a href="{{ route('get.list.productType',[$productType->slug]) }}">
+                                                            {{ $productType->name }}
+                                                        </a>
+                                                    @endforeach
                                                 @endif
-                                                @if ($protype->Product->count() > 0)
-                                                    <a href="{{ route('get.list.productType',['c_slug'=>$cat->slug, 'prdType_slug'=>$protype->slug]) }}">{{ $protype->name }}</a>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </span>
-                                    @endforeach
-                                </div>
-                            </li>
+                                            </span>
+                                        @endforeach
+                                    </div>
+                                </li>
                             @else
-                            <li class="expand"><a href="#">Sản phẩm</a></li>
+                                <li class="expand"><a href="#">Sản phẩm</a></li>
                             @endif
                             <li class="expand"><a href="{{ route('get.list.news') }}">Tin tức</a></li>
                             <li class="expand"><a href="{{ route('get.about') }}">Giới thiệu</a></li>
@@ -51,30 +54,32 @@
                             <nav>
                                 <ul>
                                     <li><a href="/">Trang chủ</a></li>
-                                    @if (isset($category->first()->slug))
-                                    <li><a href="{{ route('get.category', $category->first()->slug) }}">Sản phẩm</a>
-                                        <ul>
-                                            @foreach ($category as $cat)
-                                            <li><a href="{{ route('get.category', [$cat->slug]) }}">{{ $cat->name }}</a>
-                                                <ul>
-                                                    @if (count($cat->productType) > 0)
-                                                        @foreach ($cat->productType as $key => $protype)
-                                                            @if ($key > 4)
-                                                                @break
-                                                            @endif
-                                                            @if ($protype->Product->count() > 0)
-                                                                <li><a href="{{ route('get.list.productType',['c_slug'=>$cat->slug, 'prdType_slug'=>$protype->slug]) }}">{{ $protype->name }}</a></li>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                </ul>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                    @else
-                                    <li><a href="#">Sản phẩm</a></li>
-                                    @endif
+                                        @if (isset($categories->first()->slug))
+                                        <li><a href="{{ route('get.category', $categories->first()->slug) }}">Sản phẩm</a>
+                                            <ul>
+                                                @foreach ($categories as $category)
+                                                <li><a href="{{ route('get.category', [$category->slug]) }}">{{ $category->name }}</a>
+                                                    <ul>
+                                                        @if (count($category->productTypes) > 0)
+                                                            @foreach ($category->productTypes as $key => $productType)
+                                                                @if ($key > 4)
+                                                                    @break
+                                                                @endif
+                                                                <li>
+                                                                    <a href="{{ route('get.list.productType',[$productType->slug]) }}">
+                                                                        {{ $productType->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        @endif
+                                                    </ul>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                        @else
+                                        <li><a href="#">Sản phẩm</a></li>
+                                        @endif
                                     <li><a href="#">Tin tức</a>
                                         <ul>
                                             <li><a href="shop-grid.html">Shop Grid</a></li>
@@ -104,25 +109,26 @@
                                     <a href="#"><span class="cart-quantity">{{ Cart::count() }}</span></a>
                                 </div>
                                 @if (Cart::count() > 0)
-                                <div class="restrain small-cart-content">
-                                    <ul class="cart-list">
-                                        @foreach (Cart::content() as $key => $item)
-                                            <li>
-                                                <a class="sm-cart-product" href="#">
-                                                    <img src="{{ $item->options->img_path }}" alt="">
-                                                </a>
-                                                <div class="small-cart-detail">
-                                                    <a class="small-cart-name" href="#">{{ $item->name }}</a>
-                                                    <span class="quantitys"><strong>{{ $item->qty }}</strong>x<span>{{ number_format($item->price, 0, ',', '.') }}₫</span></span>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <p class="total">Tổng tiền: <span class="amount">{{ Cart::subtotal(0,',','.') }}₫</span></p>
-                                    <p class="buttons">
-                                        <a href="{{ route('list.cart') }}" class="button">Xem giỏ hàng</a>
-                                    </p>
-                                </div>
+                                    <div class="restrain small-cart-content">
+                                        <ul class="cart-list">
+                                            @foreach (Cart::content() as $key => $item)
+                                                <li>
+                                                    <a class="sm-cart-product" href="#">
+                                                        <img src="{{ $item->options->img_path }}" alt="">
+                                                    </a>
+                                                    <div class="small-cart-detail">
+                                                        <a class="small-cart-name" href="#">{{ $item->name }}</a>
+                                                        <span class="quantitys"><strong>{{ $item->qty }}</strong>x<span>{{ number_format($item->price, 0, ',', '.') }}₫</span></span>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <p class="total">Tổng tiền: <span class="amount">{{ Cart::subtotal(0,',','.') }}₫</span>
+                                        </p>
+                                        <p class="buttons">
+                                            <a href="{{ route('list.cart') }}" class="button">Xem giỏ hàng</a>
+                                        </p>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -136,9 +142,11 @@
                                 <div class="container nopadding-right">
                                     <form action="{{ route('get.list.search') }}" id="searchform" method="get">
                                         <div class="input-group">
-                                            <input type="text" name="key" class="form-control" maxlength="128" placeholder="Search product...">
+                                            <input type="text" name="key" class="form-control" maxlength="128"
+                                                   placeholder="Search product...">
                                             <span class="input-group-btn">
-                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                                <button type="submit" class="btn btn-default"><i
+                                                        class="fa fa-search"></i></button>
                                             </span>
                                         </div>
                                     </form>
@@ -152,7 +160,8 @@
                             <a href="#"><i class="fa fa-align-right"></i></a>
                             <ul class="restrain language">
                                 @if (Auth::guard('web')->check())
-                                    <li><a href="{{ route('user.index') }}">{{ Auth::guard('web')->user()->name }}</a></li>
+                                    <li><a href="{{ route('user.index') }}">{{ Auth::guard('web')->user()->name }}</a>
+                                    </li>
                                     <li><a href="{{ route('wishlist.index') }}">Yêu thích</a></li>
                                     <li><a href="{{ route('list.cart') }}">Giỏ hàng</a></li>
                                     <li><a href="{{ route('get.logout') }}">Thoát</a></li>

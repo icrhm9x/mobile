@@ -6,7 +6,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="text-black" href="/admin">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a class="text-black" href="{{ route('admin.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item"><a class="text-black" href="{{ route('member.index') }}">Thành viên</a></li>
             <li class="breadcrumb-item active" aria-current="page">Thêm thành viên</li>
         </ol>

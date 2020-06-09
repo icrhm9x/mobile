@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\View;
 
 class NewsController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
-    }
-
     public function show()
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -27,7 +21,7 @@ class NewsController extends Controller
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
         $news = News::whereSlug($n_slug)->firstOrFail();
-        $list = News::whereStatus(1)->orderByDesc('id')->limit(3)->get();
+        $list = News::whereStatus(1)->where('id', '<>', $news->id)->orderByDesc('id')->limit(3)->get();
         $data = [
             'news' => $news,
             'list' => $list

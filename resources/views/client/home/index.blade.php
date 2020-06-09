@@ -1,5 +1,11 @@
 @extends('client.layouts.master', ['title' => 'Home'])
 @section('content')
+    <style>
+        .postexcerpt p {
+            overflow: hidden;
+            height: 100px;
+        }
+    </style>
     <!-- start home slider -->
     <div class="slider-area an-1 hm-1">
         <!-- slider -->

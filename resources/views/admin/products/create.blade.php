@@ -57,16 +57,16 @@
                 <div class="form-group">
                     <label>Danh mục</label>
                     <select name="idCategory" class="form-control idCatCreateJS">
-                        @foreach ($category as $cat)
-                            <option value="{{ $cat->id }}" >{{ $cat->name }}</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" >{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Loại sản phẩm</label>
                     <select name="idProductType" class="form-control idProTypeCreateJS">
-                        @foreach ($productType as $prd)
-                            <option value="{{ $prd->id }}" >{{ $prd->name }}</option>
+                        @foreach ($productTypes as $productType)
+                            <option value="{{ $productType->id }}" >{{ $productType->name }}</option>
                         @endforeach
                     </select>
                     {{ notifyError($errors,'idProductType') }}

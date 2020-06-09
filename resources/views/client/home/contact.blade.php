@@ -8,7 +8,7 @@
                 <div class="container-inner">
                     <ul>
                         <li class="home">
-                            <a href="/">Trang chủ</a>
+                            <a href="{{ route('home') }}">Trang chủ</a>
                             <span><i class="fa fa-angle-right"></i></span>
                         </li>
                         <li class="category3"><span>Liên hệ</span></li>

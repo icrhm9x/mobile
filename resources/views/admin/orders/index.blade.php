@@ -2,7 +2,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="text-black" href="/admin">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a class="text-black" href="{{ route('admin.home') }}">Trang chủ</a></li>
             <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
         </ol>
     </nav>
@@ -27,47 +27,59 @@
                     </tr>
                     </thead>
                     <tbody id="dataTableJS">
-                    @forelse ($order as $value)
-                        <tr class="rowTable{{$value->id}}">
-                            <td>{{ $value->id }}</td>
-                            <td>{{ $value->name }}</td>
-                            <td>{{ $value->address }}</td>
-                            <td>{{ $value->phone }}</td>
-                            <td>{{ number_format($value->totalMoney,0,',','.') }}₫</td>
+                    @forelse ($orders as $order)
+                        <tr class="rowTable{{$order->id}}">
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->name }}</td>
+                            <td>{{ $order->address }}</td>
+                            <td>{{ $order->phone }}</td>
+                            <td>{{ number_format($order->totalMoney,0,',','.') }}₫</td>
                             <td id="handleJS">
                                 @can('order_status')
-                                    @if($value->status == 0)
+                                    @if($order->status == 0)
                                         <button type="button" data-toggle="modal" data-target="#handleOrder"
                                                 class="btn btn-secondary btn-sm handleOrderJS"
-                                                data-id="{{ $value->id }}">
+                                                data-id="{{ $order->id }}">
                                             Chờ xử lý
                                         </button>
-                                    @elseif ($value->status == 1)
-                                        <button type="button" class="btn btn-success btn-sm">Đã xử lý</button>
-                                    @elseif ($value->status == 2)
+                                    @elseif ($order->status == 1)
+                                        <button type="button" class="btn btn-success btn-sm">Đã thanh toán</button>
+                                    @elseif ($order->status == 2)
                                         <button type="button" class="btn btn-warning btn-sm">Đã hủy</button>
                                     @endif
                                 @endcan
                             </td>
-                            <td>{{ $value->created_at }}</td>
-                            <td>
+                            <td>{{ $order->created_at }}</td>
+                            <td id="actionJS">
                                 @can('order_detail')
                                     <button type="button" title="Chi tiết đơn hàng" data-toggle="modal"
                                             data-target="#orderDetail"
                                             class="btn btn-sm btn-outline-primary showOrderDetailJS"
-                                            data-id="{{ $value->id }}"
-                                            data-url="{{ route('order.show', ['id' => $value->id]) }}">
+                                            data-id="{{ $order->id }}"
+                                            data-url="{{ route('order.show', ['id' => $order->id]) }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 @endcan
-                                @can('order_cancel')
-                                    <button type="button" title="Hủy đơn hàng" data-toggle="modal"
-                                            data-target="#cancelOrderDetailModal"
-                                            class="btn btn-sm ml-2 btn-outline-danger cancelOrderDetailJS"
-                                            data-id="{{ $value->id }}">
-                                        <i class="fas fa-ban"></i>
-                                    </button>
-                                @endcan
+
+                                @if($order->status == 0)
+                                    @can('order_cancel')
+                                        <button type="button" title="Hủy đơn hàng" data-toggle="modal"
+                                                data-target="#cancelOrderDetailModal"
+                                                class="btn btn-sm ml-2 btn-outline-danger cancelOrderDetailJS"
+                                                data-id="{{ $order->id }}">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    @endcan
+                                @else
+                                    @can('order_delete')
+                                        <button type="button" title="Xóa đơn hàng" data-toggle="modal"
+                                                data-target="#delOrderModal"
+                                                class="btn btn-sm ml-2 btn-outline-danger delOrderJS"
+                                                data-id="{{ $order->id }}">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                    @endcan
+                                @endif
                             </td>
                         </tr>
                     @empty
@@ -100,10 +112,13 @@
     @endcan
 
     @can('order_status')
-        @include('admin.orders.handleOrder')
+        @include('admin.orders.handle-order')
     @endcan
     @can('order_cancel')
-        @include('admin.orders.cancelModal')
+        @include('admin.orders.cancel-modal')
+    @endcan
+    @can('order_delete')
+        @include('admin.orders.del-modal')
     @endcan
 
 @endsection

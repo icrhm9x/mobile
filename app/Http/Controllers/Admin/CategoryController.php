@@ -9,14 +9,10 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-//        dd(auth('members')->id());
-        $category = Category::all();
-        return view('admin.categories.index', compact("category"));
+        $categories = Category::all();
+        return view('admin.categories.index', compact("categories"));
     }
 
     /**
@@ -29,8 +25,8 @@ class CategoryController extends Controller
             'slug' => str_slug($request->name),
             'status' => $request->status
         ]);
-        $category = Category::all();
-        $tableComponent = view('admin.categories.components.tableComponent', compact('category'))->render();
+        $categories = Category::all();
+        $tableComponent = view('admin.categories.components.table-component', compact('categories'))->render();
         return response()->json(['message' => 'Thêm mới thành công', 'tableComponent' => $tableComponent, 'code' => 200], 200);
     }
 
@@ -63,8 +59,8 @@ class CategoryController extends Controller
             'slug' => str_slug($request->name),
             'status' => $request->status
         ]);
-        $category = Category::all();
-        $tableComponent = view('admin.categories.components.tableComponent', compact('category'))->render();
+        $categories = Category::all();
+        $tableComponent = view('admin.categories.components.table-component', compact('categories'))->render();
         return response()->json(['message' => 'Sửa thành công', 'tableComponent' => $tableComponent, 'code' => 200], 200);
     }
 
@@ -75,8 +71,8 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->delete();
-        $category = Category::all();
-        $tableComponent = view('admin.categories.components.tableComponent', compact('category'))->render();
+        $categories = Category::all();
+        $tableComponent = view('admin.categories.components.table-component', compact('categories'))->render();
         return response()->json(['message' => 'Xóa thành công', 'tableComponent' => $tableComponent, 'code' => 200], 200);
     }
 }

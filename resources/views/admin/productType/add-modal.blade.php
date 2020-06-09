@@ -16,7 +16,7 @@
                             <div class="form-group">
                                 <label class="font-weight-bold">Danh mục</label>
                                 <select class="form-control idCatAddPrTypeJS" name="idCategory">
-                                    @foreach($category as $item)
+                                    @foreach($categories as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>

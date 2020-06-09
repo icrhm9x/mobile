@@ -10,7 +10,7 @@ $(document).ready(function () {
         idCat.change(function () {
             let idCat = $(this).val();
             $.ajax({
-                url: "/admin/getprdtype",
+                url: "/admin/product/getprdtype",
                 data: {
                     idCat: idCat
                 },

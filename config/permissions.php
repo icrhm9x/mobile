@@ -24,6 +24,7 @@ return [
         'order_status',
         'order_detail',
         'order_cancel',
+        'order_delete',
         'news',
         'news_list',
         'news_add',

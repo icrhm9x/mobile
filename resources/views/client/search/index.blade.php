@@ -16,7 +16,7 @@
                     <div class="container-inner">
                         <ul>
                             <li class="home">
-                                <a href="/">Trang chủ</a>
+                                <a href="{{ route('home') }}}">Trang chủ</a>
                                 <span><i class="fa fa-angle-right"></i></span>
                             </li>
                             <li class="category3"><span>Tìm kiếm</span></li>
@@ -42,13 +42,13 @@
                             id="shop-grid-tab">
                             <div class="row">
                                 <div class="shop-product-tab">
-                                    @if (isset($listPrd))
-                                        @foreach ($listPrd as $item)
+                                    @if (isset($listProduct))
+                                        @foreach ($listProduct as $item)
                                             <div class="col-lg-3 col-md-3 col-sm-3 my-4">
                                                 <div class="two-product">
                                                     <div class="single-product">
                                                         <div class="product-img">
-                                                            <a href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">
+                                                            <a href="{{ route('get.detail.product', [$item->slug]) }}">
                                                                 <img class="primary-image"
                                                                      src="{{ asset($item->img_path) }}" alt=""/>
                                                             </a>
@@ -56,25 +56,24 @@
                                                                 <div class="action-buttons">
                                                                     <div class="add-to-links">
                                                                         <div class="add-to-wishlist">
-                                                                            <a href="#" title="Yêu thích"><i
+                                                                            <a href="{{ route('wishlist.store', $item->id) }}"
+                                                                               title="Yêu thích"
+                                                                               class="addWishListJS"><i
                                                                                     class="fa fa-heart"></i></a>
                                                                         </div>
                                                                         <div class="compare-button">
                                                                             <a href="{{ route('add.cart', $item->id) }}"
-                                                                               title="Thêm vào giỏ hàng" class="addCardJS"><i
+                                                                               title="Thêm vào giỏ hàng"
+                                                                               class="addCardJS"><i
                                                                                     class="icon-bag"></i></a>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="quickviewbtn">
-                                                                        <a href="#" title="So sánh"><i
-                                                                                class="fa fa-retweet"></i></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="product-content">
                                                             <h2 class="product-name"><a
-                                                                    href="{{ route('get.detail.product', [$item->Category->slug,$item->ProductType->slug,$item->slug]) }}">{{ $item->name }}</a>
+                                                                    href="{{ route('get.detail.product', [$item->slug]) }}">{{ $item->name }}</a>
                                                             </h2>
                                                             <div class="product-price">
                                                                 @if ($item->promotion > 0)
@@ -98,7 +97,7 @@
                         </div>
                         <!-- shop toolbar start -->
                         <div class="text-center">
-                            {{ $listPrd->appends(['key'=>request()->key, 'orderby'=>request()->orderby])->render('client.layouts.paginate') }}
+                            {{ $listProduct->appends(['key'=>request()->key, 'orderby'=>request()->orderby])->render('client.layouts.paginate') }}
                         </div>
                         <!-- shop toolbar end -->
                     </div>

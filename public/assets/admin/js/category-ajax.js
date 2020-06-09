@@ -11,6 +11,7 @@ $(document).ready(function () {
         let errorAddCatJS = $(".errorAddCatJS");
         let nameAddCatJS = $(".nameAddCatJS");
         let statusAddCatJS = $(".statusAddCatJS");
+        errorAddCatJS.addClass("d-none");
         $.ajax({
             url: url,
             data: {
@@ -46,6 +47,8 @@ $(document).ready(function () {
         let id = $(this).data('id');
         $('.idEditCatJS').val(id);
         let statusEditCatJS = $(".statusEditCatJS");
+        let errorEditCatJS = $(".errorEditCatJS");
+        errorEditCatJS.addClass("d-none");
         $.ajax({
             url: url,
             dataType: "json",

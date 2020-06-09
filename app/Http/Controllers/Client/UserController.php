@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function index()
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -38,7 +32,7 @@ class UserController extends Controller
     {
         \Assets::removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
         $idUser = Auth::guard('web')->id();
-        $orderList = Order::where('idUser', $idUser)->orderByDesc('id')->get();
+        $orderList = Order::with('products')->where('idUser', $idUser)->orderByDesc('id')->get();
         return view('client.users.orderList', compact('orderList'));
     }
 }

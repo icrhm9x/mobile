@@ -10,12 +10,6 @@ use Illuminate\Support\Facades\View;
 
 class SearchController extends Controller
 {
-    public function __construct()
-    {
-        $category = Category::where('status', 1)->get();
-        View::share('category', $category);
-    }
-
     public function list(Request $request)
     {
         \Assets::addStyles(['jquery-ui'])->removeStyles(['owl-carousel'])->removeScripts(['owl-carousel']);
@@ -40,9 +34,9 @@ class SearchController extends Controller
             }
         }
 
-        $listPrd = $product->paginate(12);
+        $listProduct = $product->paginate(12);
         $data = [
-            'listPrd' => $listPrd
+            'listProduct' => $listProduct
         ];
         return view('client.search.index', $data);
     }

@@ -46,7 +46,13 @@
                      </div>
                  </div>
                 @empty
-                    <div>chưa có bài biết nào</div>
+                    <div class="row">
+                        <div class="col-md-12 my-2">
+                            <div class="f-title text-center">
+                                <h3 class="title text-uppercase">Đang cập nhật bài viết</h3>
+                            </div>
+                        </div>
+                    </div>
                 @endforelse
             </div>
         </div>

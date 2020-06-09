@@ -12,6 +12,7 @@ $(document).ready(function() {
         let nameAddPrTypeJS = $(".nameAddPrTypeJS");
         let statusAddPrTypeJS = $(".statusAddPrTypeJS");
         let idCatAddPrTypeJS = $(".idCatAddPrTypeJS");
+        errorAddPrType.addClass("d-none");
         $.ajax({
             url: url,
             data: {
@@ -47,7 +48,9 @@ $(document).ready(function() {
         let url = $(this).data('url');
         let id = $(this).data("id");
         let name = $(".nameEditPrTypeJS");
-        let statusEditPrTypeJS = $(".statusEditPrTypeJS")
+        let statusEditPrTypeJS = $(".statusEditPrTypeJS");
+        let errorEditPrType = $(".errorEditPrTypeJS");
+        errorEditPrType.addClass("d-none");
         $(".idEditPrTypeJS").val(id);
         $.ajax({
             url: url,

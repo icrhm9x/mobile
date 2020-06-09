@@ -42,6 +42,11 @@ class OrderPolicy
         return $member->checkPermissionAccess('order_cancel');
     }
 
+    public function delete(Member $member)
+    {
+        return $member->checkPermissionAccess('order_delete');
+    }
+
     /**
      * Determine whether the user can restore the order.
      */
@@ -52,10 +57,6 @@ class OrderPolicy
 
     /**
      * Determine whether the user can permanently delete the order.
-     *
-     * @param  \App\Models\Member  $member
-     * @param  \App\Models\Order  $order
-     * @return mixed
      */
     public function forceDelete(Member $member, Order $order)
     {

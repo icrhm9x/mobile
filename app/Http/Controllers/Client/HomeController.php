@@ -12,18 +12,19 @@ use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    private $product;
+
+    public function __construct(Product $product)
     {
-        $category = Category::where('status', 1)->get();
-        View::share('category',$category);
+        $this->product = $product;
     }
 
     public function index()
     {
         \Assets::addStyles(['jquery-ui', 'nivo-slider', 'preview'])->addScripts(['Nivo-slider', 'home']);
-        $bestSellers = Product::orderByDesc('purchase_number')->limit('8')->get();
-        $promotion = Product::where('promotion', '>', 0)->orderByDesc('promotion')->limit('8')->get();
-        $newprds = Product::orderByDesc('id')->limit('8')->get();
+        $bestSellers = $this->product->orderByDesc('purchase_number')->limit('8')->get();
+        $promotion = $this->product->where('promotion', '>', 0)->orderByDesc('promotion')->limit('8')->get();
+        $newprds = $this->product->orderByDesc('id')->limit('8')->get();
         $news = News::whereStatus(1)->orderByDesc('id')->limit(3)->get();
         $data = [
             'bestSellers' => $bestSellers,

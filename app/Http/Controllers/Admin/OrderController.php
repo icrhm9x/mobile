@@ -41,7 +41,7 @@ class OrderController extends Controller
             $product = Product::find($orderDetail->idProduct);
             $product->quantity += $orderDetail->quantity;
             $product->purchase_number -= $orderDetail->quantity;
-            if($product->status == 0) {
+            if($product->status == 3) {
                 $product->status = 1;
             }
             $product->save();

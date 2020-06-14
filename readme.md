@@ -22,3 +22,7 @@ pass: 123456
 admin id = 1 có full quyền trong trang quản trị
 
 tạo quyền với key_code có sẵn để phân quyền cho thành viên mới
+
+## Description
+- Laravel version 5.7
+- packages : botble/assets, gloudemans/shoppingcart, unisharp/laravel-filemanager

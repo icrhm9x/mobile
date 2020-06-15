@@ -25,4 +25,4 @@ tạo quyền với key_code có sẵn để phân quyền cho thành viên mớ
 
 ## Description
 - Laravel version 5.7
-- packages : botble/assets, gloudemans/shoppingcart, unisharp/laravel-filemanager
+- packages : botble/assets, gloudemans/shoppingcart, unisharp/laravel-filemanager, toastr
